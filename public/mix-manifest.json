@@ -1,0 +1,8 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/js/login/index.js": "/js/login/index.js",
+    "/js/individual/dashboard/index.js": "/js/individual/dashboard/index.js",
+    "/js/individual/loanApplication/index.js": "/js/individual/loanApplication/index.js",
+    "/css/global.css": "/css/global.css",
+    "/css/app.css": "/css/app.css"
+}

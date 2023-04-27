@@ -1,0 +1,36 @@
+.text-14 {
+    font-size: 0.875rem !important;
+}
+.pointer{
+    cursor: pointer;
+}
+.green{
+    color: #00D0B5;
+}
+.stat-widget-two{
+    text-align: left !important;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* 
+* 自定义表单错误信息样式
+*/
+label.validateErrors{
+    color: red;
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
+    animation: 1s fade-up;
+}
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
