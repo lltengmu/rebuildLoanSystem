@@ -55,7 +55,7 @@ export default class LoanApplicationDataTable {
                 },
                 {
                     targets: [7],
-                    width:"auto",
+                    width:"200px",
                     render: (data, type, row, meta) => {
                         if (row.case_status == 5) {
                             return `
@@ -68,7 +68,7 @@ export default class LoanApplicationDataTable {
                             <div class="form-group" style="margin-top:0.65rem;">
                                 <select class="form-control form-control-sm" id="select-case-status-${row.id}" onchange="_handleCaseStatus(${row.id})">
                                     <option value="1" ${row.case_status == 1 ? "selected" : ""}>提交</option>
-                                    <option value="2" ${row.case_status == 3 ? "selected" : ""}>轉交到服務提供者</option>
+                                    <option value="3" ${row.case_status == 3 ? "selected" : ""}>轉交到服務提供者</option>
                                     <option value="5" ${row.case_status == 5 ? "selected" : ""}>申請失敗</option>
                                 </select>
                             </div>
@@ -124,13 +124,14 @@ export default class LoanApplicationDataTable {
                 const value = (document.querySelector(`#select-case-status-${id}`)! as HTMLSelectElement).value;
                 const _token = (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content;
                 //发送请求
+                console.log([{ case_status:value }])
                 await new Promise((resolve,reject) =>{
                     $.ajax({
                         url:url(`/cases/${id}`),
                         method:"PUT",
                         data: {
                             _token,
-                            case_status:value,
+                            update:[{ case_status:Number(value) }]
                         },
                         success:(res)=>resolve(res),
                         error:(error)=>reject(error)
@@ -138,7 +139,7 @@ export default class LoanApplicationDataTable {
                 }).then(
                     (value)=>{
                         loading.close();
-                        this.tableInstance.reload();
+                        this.tableInstance.ajax.reload();
                     },
                     (error) =>{
                         loading.close();

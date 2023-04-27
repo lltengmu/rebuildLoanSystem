@@ -178,12 +178,12 @@ var LoanApplicationDataTable = /** @class */function () {
         "width": "5%"
       }, {
         targets: [7],
-        width: "auto",
+        width: "200px",
         render: function render(data, type, row, meta) {
           if (row.case_status == 5) {
             return "\n                                <div class=\"bootstrap-badge center\">\n                                    <span class=\"badge badge-danger\">\u7533\u8ACB\u5931\u6557\uFF0C\u8ACB\u91CD\u65B0\u9078\u64C7\u670D\u52D9\u63D0\u4F9B\u5546</span>\n                                </div>\n                            ";
           }
-          return "\n                            <div class=\"form-group\" style=\"margin-top:0.65rem;\">\n                                <select class=\"form-control form-control-sm\" id=\"select-case-status-".concat(row.id, "\" onchange=\"_handleCaseStatus(").concat(row.id, ")\">\n                                    <option value=\"1\" ").concat(row.case_status == 1 ? "selected" : "", ">\u63D0\u4EA4</option>\n                                    <option value=\"2\" ").concat(row.case_status == 3 ? "selected" : "", ">\u8F49\u4EA4\u5230\u670D\u52D9\u63D0\u4F9B\u8005</option>\n                                    <option value=\"5\" ").concat(row.case_status == 5 ? "selected" : "", ">\u7533\u8ACB\u5931\u6557</option>\n                                </select>\n                            </div>\n                        ");
+          return "\n                            <div class=\"form-group\" style=\"margin-top:0.65rem;\">\n                                <select class=\"form-control form-control-sm\" id=\"select-case-status-".concat(row.id, "\" onchange=\"_handleCaseStatus(").concat(row.id, ")\">\n                                    <option value=\"1\" ").concat(row.case_status == 1 ? "selected" : "", ">\u63D0\u4EA4</option>\n                                    <option value=\"3\" ").concat(row.case_status == 3 ? "selected" : "", ">\u8F49\u4EA4\u5230\u670D\u52D9\u63D0\u4F9B\u8005</option>\n                                    <option value=\"5\" ").concat(row.case_status == 5 ? "selected" : "", ">\u7533\u8ACB\u5931\u6557</option>\n                                </select>\n                            </div>\n                        ");
         }
       }, {
         targets: [8],
@@ -247,13 +247,18 @@ var LoanApplicationDataTable = /** @class */function () {
                 value = document.querySelector("#select-case-status-".concat(id)).value;
                 _token = document.querySelector("meta[name=\"csrf-token\"]").content;
                 //发送请求
+                console.log([{
+                  case_status: value
+                }]);
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
                   jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
                     url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/cases/".concat(id)),
                     method: "PUT",
                     data: {
                       _token: _token,
-                      case_status: value
+                      update: [{
+                        case_status: Number(value)
+                      }]
                     },
                     success: function success(res) {
                       return resolve(res);
@@ -264,13 +269,12 @@ var LoanApplicationDataTable = /** @class */function () {
                   });
                 }).then(function (value) {
                   _utils__WEBPACK_IMPORTED_MODULE_1__.loading.close();
-                  _this.tableInstance.reload();
+                  _this.tableInstance.ajax.reload();
                 }, function (error) {
                   _utils__WEBPACK_IMPORTED_MODULE_1__.loading.close();
                   console.log(error);
                 })];
               case 1:
-                //发送请求
                 _a.sent();
                 return [2 /*return*/];
             }

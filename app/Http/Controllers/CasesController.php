@@ -120,11 +120,11 @@ class CasesController extends Controller
      */
     public function update(Request $request,$id)
     {
+        //模拟延迟
         sleep(1);
-        $cases = Cases::find($id);
-        if($request->case_status)$cases->case_status = $request->case_status;
-        $cases->save();
-        return ["msg" => "update successfull"];
+        //前端需要提供一个update数组,数组中只有一个对象 对象中记录需要更新哪些字段. 实现动态更新数据 
+        $resoult = Cases::where('id',$id)->update(...$request->update);
+        return $resoult ? ["success"=>"updated success"] : ["error" => "no case updated"];
     }
 
     /**
