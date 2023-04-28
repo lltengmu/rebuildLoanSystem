@@ -7,13 +7,27 @@ use App\Http\Controllers\Controller;
 use App\Models\Cases;
 use Illuminate\Http\Request;
 use App\Exports\ExportCaseItem;
+use App\Http\Requests\ClientExitsRequest;
+use App\Models\LboAppellations;
+use App\Models\LboDistrict;
+use App\Models\LboEmployment;
+use App\Models\LboLoanPurpose;
 use Maatwebsite\Excel\Facades\Excel;
 
 class LoanApplication extends Controller
 {
     public function index()
     {
-        return view('pages.individual.loanApplication');
+        $appellations = LboAppellations::all();
+        $area = LboDistrict::all();
+        $job = LboEmployment::all();
+        $purpose = LboLoanPurpose::all();
+        return view('pages.individual.loanApplication',[
+            "appellations" => $appellations,
+            "area" => $area,
+            "job"  => $job,
+            "purpose" => $purpose
+        ]);
     }
     /**
      * @return dataTable data source
@@ -125,5 +139,10 @@ class LoanApplication extends Controller
         }, $case);
         // dd($data);
         return Excel::download(new ExportCaseAll([$data[0]], $head), $fileName);
+    }
+    public function clientExits(ClientExitsRequest $request)
+    {
+        return ['success' => "沒有此用戶，請爲新用戶創建貸款"];
+        return view('public.components.form');
     }
 }

@@ -1,3 +1,6 @@
 import LoanApplicationDataTable from "./dataTable";
-
-window.onload = () => new LoanApplicationDataTable();
+import AddLoanApplication from "./addLoanApplication";
+window.onload = () => {
+    new LoanApplicationDataTable();
+    new AddLoanApplication();
+};

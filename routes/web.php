@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post("/cases",[LoanApplication::class,"cases"]);
             Route::get("/export/{id}",[LoanApplication::class,"exportCaseItem"]);
             Route::get("/exportAll",[LoanApplication::class,"exportAll"]);
+            Route::post("/exits",[LoanApplication::class,"clientExits"]);
         });
     });
 });

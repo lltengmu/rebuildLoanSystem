@@ -12,6 +12,10 @@
         align-items: center;
         gap: 10px;
     }
+
+    ::-webkit-input-placeholder {
+        color: #bdc3c7;
+    }
 </style>
 @endsection
 @section('content')
@@ -27,7 +31,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-2 btns">
-                            <button type="button" class="btn btn-primary">創建貸款</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#queryModalCenter">創建貸款</button>
                             <button type="button" class="btn btn-primary">匯入Excel</button>
                             <button type="button" class="btn btn-primary" onclick="_handleExportAll()">匯出所有</button>
                         </div>
@@ -52,6 +56,7 @@
         </div>
     </div>
 </div>
+@include('public.components.model.center')
 @endsection
 
 @section('javascript')
