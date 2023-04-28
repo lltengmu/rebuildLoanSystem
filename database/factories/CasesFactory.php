@@ -18,6 +18,7 @@ class CasesFactory extends Factory
     {
         $clientsIdList = Client::select('id')->get();
         $serciceProviderIDList = ServiceProvider::select('id')->get();
+        $paymentMethods = ["wechat","aliyun"];
         return [
             'sys_id'    => substr($this->faker->sha1(),1,10),
             'client_id' => $this->faker->randomElement($clientsIdList),
@@ -26,12 +27,15 @@ class CasesFactory extends Factory
             'service_provider_id' =>$this->faker->randomElement($serciceProviderIDList),
             'loan_amount' => mt_rand(1,10000),
             'payment_amount' => mt_rand(1,10000),
+            'payment_method' =>$this->faker->randomElement($paymentMethods),
             'purpose' => mt_rand(1,3),
             'case_remark' => $this->faker->realText(),
             'disbursement_date' => date('Y-m-d h:i:s'),
             'repayment_period' => date('Y-m-d h:i:s',time() + 3600 * 24 * 30),
             'status' => mt_rand(1,5),
-            'create_datetime' => date('Y-m-d h:m:s')
+            'create_datetime' => date('Y-m-d h:m:s'),
+            'co_signer_first_name' => $this->faker->firstName(),
+            'co_signer_last_name' => $this->faker->lastName(),
         ];
     }
 }

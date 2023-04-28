@@ -3,6 +3,16 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/datatables/css/jquery.dataTables.min.css') }}">
+<style>
+    .btns {
+        width: 100%;
+        margin-left: 0px !important;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+    }
+</style>
 @endsection
 @section('content')
 <div class="content-body">
@@ -16,6 +26,11 @@
                         <h4 class="card-title">Cases Datatable</h4>
                     </div>
                     <div class="card-body">
+                        <div class="row mb-2 btns">
+                            <button type="button" class="btn btn-primary">創建貸款</button>
+                            <button type="button" class="btn btn-primary">匯入Excel</button>
+                            <button type="button" class="btn btn-primary" onclick="_handleExportAll()">匯出所有</button>
+                        </div>
                         <table id="example" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>

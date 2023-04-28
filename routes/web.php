@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/loanApplication')->group(function(){
             Route::get("/",[LoanApplication::class,"index"]);
             Route::post("/cases",[LoanApplication::class,"cases"]);
+            Route::get("/export/{id}",[LoanApplication::class,"exportCaseItem"]);
+            Route::get("/exportAll",[LoanApplication::class,"exportAll"]);
         });
     });
 });

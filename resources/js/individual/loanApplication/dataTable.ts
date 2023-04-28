@@ -17,7 +17,9 @@ export default class LoanApplicationDataTable {
                 method: "post",
                 //post请求需要在data里面传递 token
                 data: { _token: (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content },
-                dataSrc: (myJson) => myJson,
+                dataSrc: (myJson) => {
+                    return myJson;
+                },
             },
             columns: [
                 {
@@ -68,8 +70,8 @@ export default class LoanApplicationDataTable {
                             <div class="form-group" style="margin-top:0.65rem;">
                                 <select class="form-control form-control-sm" id="select-case-status-${row.id}" onchange="_handleCaseStatus(${row.id})">
                                     <option value="1" ${row.case_status == 1 ? "selected" : ""}>提交</option>
-                                    <option value="3" ${row.case_status == 3 ? "selected" : ""}>轉交到服務提供者</option>
-                                    <option value="5" ${row.case_status == 5 ? "selected" : ""}>申請失敗</option>
+                                    <option value="2" ${row.case_status == 2 ? "selected" : ""}>轉交到服務提供者</option>
+                                    <option value="5" ${row.case_status == 5 ? "selected" : ""}>申請失败</option>
                                 </select>
                             </div>
                         `
@@ -84,7 +86,7 @@ export default class LoanApplicationDataTable {
                                 <button type="button" class="btn btn-outline-primary" onclick="_export(${row.id})">匯出xlsx</button>
                                 <button type="button" class="btn btn-outline-info" onclick="_view(${row.id})">查看</button>
                                 <button type="button" class="btn btn-outline-secondary" onclick="_viewFile(${row.id})">文件查看</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="_del(${row.id})">删除</button>
+                                <button type="button" class="btn btn-outline-danger" onclick="_del(${row})">删除</button>
                             </div>
                         `
                     }
@@ -113,10 +115,14 @@ export default class LoanApplicationDataTable {
      */
     private opration(): { [key: string]: Function } {
         return {
-            _export: (id: number) => console.log(`到处excel:id->${id}`),
+            //导出单条数据为excel
+            _export: (id:number) => window.location.href = url(`/individual/loanApplication/export/${id}`),
             _viewFile: (id: number) => console.log(`文件查看:id->${id}`),
             _view: (id: number) => console.log(`查看:id->${id}`),
-            _del: (id: number) => console.log(`导出：id->${id}`),
+            _del: (id: number) => console.log(`删除：id->${id}`),
+            //导出所有事件处理函数
+            _handleExportAll:() =>window.location.href = url(`/individual/loanApplication/exportAll`),
+            //改变case状态
             _handleCaseStatus:async (id)=>{
                 //开启加载动画
                 loading.open();
@@ -124,7 +130,6 @@ export default class LoanApplicationDataTable {
                 const value = (document.querySelector(`#select-case-status-${id}`)! as HTMLSelectElement).value;
                 const _token = (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content;
                 //发送请求
-                console.log([{ case_status:value }])
                 await new Promise((resolve,reject) =>{
                     $.ajax({
                         url:url(`/cases/${id}`),
