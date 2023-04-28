@@ -52,7 +52,7 @@ export default class AddLoanApplication {
         tablist[1].classList.add("active");
         model.style.maxWidth = "70vw"
         $(`input[name="HKID"]`).val(this.HKID)
-        $("#addLoanApplication").validate().showErrors({HKID:"沒有此用戶，請爲新用戶創建貸款"})
+        $("#addLoanApplication").validate().showErrors({ HKID:"沒有此用戶，請爲新用戶創建貸款" })
     }
     /**
      *  add loan application form submit function
