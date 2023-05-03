@@ -20,7 +20,7 @@
     }
     .mask:hover{
         border: 20px solid rgba(0,0,0,.1);
-        background-color: rgba(255,255,255,.3);
+        background-color: rgba(255,255,255,0);
     }
 </style>
 @endsection
