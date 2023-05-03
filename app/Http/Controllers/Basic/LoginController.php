@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Basic;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\Client;
@@ -10,6 +10,7 @@ use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Controller;
 
 class LoginController extends Controller
 {

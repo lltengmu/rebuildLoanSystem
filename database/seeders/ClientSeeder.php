@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 
 class ClientSeeder extends Seeder
 {
@@ -14,9 +15,13 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        Client::factory(20)->create();
+        $all = Client::factory(20)->create();
         $client = Client::first();
         $client->email = 'client@qq.com';
         $client->save();
+        foreach($all as $item){
+            $item->sys_id = Crypt::encrypt($item->id);
+            $item->save();
+        }
     }
 }

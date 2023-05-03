@@ -1,0 +1,16 @@
+/* 
+* 自定义表单错误信息样式
+*/
+label.validateErrors{
+    color: red;
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
+    animation: 1s fade-up;
+}
+
+/*
+ * disable form element css
+*/
+input[disabled],select[disable]{
+    background-color: #ecf0f1 !important;
+}

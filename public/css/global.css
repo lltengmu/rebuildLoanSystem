@@ -1,27 +1,6 @@
 .text-14 {
     font-size: 0.875rem !important;
 }
-.pointer{
-    cursor: pointer;
-}
-.green{
-    color: #00D0B5;
-}
-.stat-widget-two{
-    text-align: left !important;
-}
-.h-20{
-    height: 20vh !important;
-}
-/* 
-* 自定义表单错误信息样式
-*/
-label.validateErrors{
-    color: red;
-    font-size: 0.6rem;
-    margin-top: 0.2rem;
-    animation: 1s fade-up;
-}
 @keyframes fade-up {
     from {
         opacity: 0;
@@ -32,3 +11,33 @@ label.validateErrors{
         transform: translateY(0);
     }
 }
+/* 
+* 自定义表单错误信息样式
+*/
+label.validateErrors{
+    color: red;
+    font-size: 0.6rem;
+    margin-top: 0.2rem;
+    animation: 1s fade-up;
+}
+
+/*
+ * disable form element css
+*/
+input[disabled],select[disable]{
+    background-color: #ecf0f1 !important;
+}
+.pointer{
+    cursor: pointer;
+}
+.green{
+    color: #00D0B5;
+}
+.stat-widget-two{
+    text-align: left !important;
+}
+.content-body {
+    min-height: auto !important;
+}
+
+

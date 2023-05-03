@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void()" aria-expanded="false">
+                <a href="{{ url('/individual/approvalManagment') }}" aria-expanded="false">
                     <i class="icon icon-app-store"></i>
                     <span class="nav-text">审批管理</span>
                 </a>
@@ -36,7 +36,7 @@
 
             <li class="nav-label">authorization management</li>
             <li>
-                <a href="javascript:void()" aria-expanded="false">
+                <a href="{{ url('/individual/clientsManagment') }}" aria-expanded="false">
                     <i class="icon icon-world-2"></i>
                     <span class="nav-text">客戶管理</span>
                 </a>

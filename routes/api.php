@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('register',RegisterController::class);
-Route::post('login',LoginController::class);
-Route::post('code/guest',[ValidateCodeController::class,'guest']);
-Route::put('config/{name}',[ConfigController::class,'update']);
-Route::get('clients',ClientController::class);
+// Route::post('register',RegisterController::class);
+// Route::post('login',LoginController::class);
+// Route::post('code/guest',[ValidateCodeController::class,'guest']);
+// Route::put('config/{name}',[ConfigController::class,'update']);
+// Route::get('clients',ClientController::class);
 /**
  * 资源api
  */
-Route::resource('cases',CasesController::class);
+// Route::resource('cases',CasesController::class);

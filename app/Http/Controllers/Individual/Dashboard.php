@@ -100,6 +100,7 @@ class Dashboard extends Controller
             $now = Carbon::now();
             $monthNow = Carbon::now();
             // 将月份的月初日期和月尾日期添加到 $months 数组中
+            // dump($monthNow->subMonths($i)->format("F"));
             $months[] = [
                 //每个月份的名称
                 'month' => $monthNow->subMonths($i)->format("F"),

@@ -17,7 +17,7 @@ class ClientFactory extends Factory
         return [
             'first_name' => $this->faker->firstName(),
             'last_name'   => $this->faker->lastName(),
-            'appellation' => mt_rand(0, 4),
+            'appellation' => mt_rand(1, 4),
             'password'   => sha1(123456),
             'HKID'       => mt_rand(0, 100000),
             'date_of_birth' => $this->faker->date(),
@@ -25,7 +25,7 @@ class ClientFactory extends Factory
             'mobile'     => $this->faker->phoneNumber(),
             'email'      => $this->faker->email(),
             'nationality' => $this->faker->country(),
-            'area'       => $this->faker->city(),
+            'area'       => mt_rand(1,3),
             'addres'     => $this->faker->address(),
             'addressOne'     => $this->faker->address(),
             'addressTwo'     => $this->faker->address(),

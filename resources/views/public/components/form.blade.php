@@ -3,19 +3,17 @@
         <div class="col-xl-3">
             <h5>基本个人资料:</h1>
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-4 pt-0">
+                    <label class="col-form-label col-lg-4">
                         稱謂
                         <span class="text-danger">*</span>
                     </label>
-                    <div class="col-lg-8 row" style="display: flex;justify-content: flex-end;">
-                        @foreach($appellations as $key => $item)
-                        <div class="form-check col-lg-5">
-                            <input class="form-check-input" id="appellations-{{$item->id}}" type="radio" name="appellations" value="{{$item->id}}">
-                            <label class="form-check-label" for="appellations-{{$item->id}}">
-                                {{ $item->label_tc }}
-                            </label>
-                        </div>
-                        @endforeach
+                    <div class="col-lg-8">
+                        <select class="form-control" id="job_status" name="job_status">
+                            <option value="0">請選擇</option>
+                            @foreach($appellations as $key=>$item)
+                            <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -76,12 +74,12 @@
         <div class="col-xl-3">
             <h5>住宅地址:</h5>
             <div class="form-group row">
-                <label class="col-lg-4 col-form-label" for="building">
+                <label class="col-lg-4 col-form-label" for="unit">
                     單位
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-lg-8">
-                    <input type="text" class="form-control" id="building" name="building">
+                    <input type="text" class="form-control" id="unit" name="unit">
                 </div>
             </div>
             <div class="form-group row">
@@ -94,12 +92,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-4 col-form-label" for="unit">
+                <label class="col-lg-4 col-form-label" for="building">
                     座數
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-lg-8">
-                    <input type="text" class="form-control" id="unit" name="unit">
+                    <input type="text" class="form-control" id="building" name="building">
                 </div>
             </div>
             <div class="form-group row">
@@ -218,24 +216,29 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-4 col-form-label" for="company_contact">
-                    貸款用途
-                    <span class="text-danger">*</span>
-                </label>
-                <div class="col-lg-8">
-                    <input type="text" class="form-control" id="company_contact" name="company_contact">
-                </div>
-            </div>
-            <div class="form-group row">
                 <label class="col-lg-4 col-form-label" for="job_status">
                     貸款用途
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-lg-8">
                     <select class="form-control" id="job_status" name="job_status">
-                        <option value="">請選擇</option>
+                        <option value="0">請選擇</option>
                         @foreach($purpose as $key=>$item)
                         <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="company_id">
+                    服務提供商
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" id="company_id" name="company_id">
+                        <option value="0">請選擇</option>
+                        @foreach($company as $key=>$item)
+                        <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
                 </div>

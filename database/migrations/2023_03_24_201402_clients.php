@@ -15,6 +15,7 @@ class Clients extends Migration
     {
         Schema::create('clients',function(Blueprint $table){
             $table->bigIncrements('id')->comment('主键');
+            $table->string("sys_id")->nullable()->comment("加密ID");
             $table->string('first_name',100)->nullable()->comment('名字');
             $table->string('last_name',100)->nullable()->comment('姓氏');
             $table->integer('appellation')->nullable()->comment('称谓');
@@ -25,13 +26,13 @@ class Clients extends Migration
             $table->bigInteger('mobile')->nullable()->comment('手机号');
             $table->string('email',100)->nullable()->comment('邮箱');
             $table->string('nationality',100)->nullable()->comment('国籍');
-            $table->text('area')->nullable()->comment('地區');
+            $table->integer('area')->nullable()->comment('地區');
             $table->text('addres')->nullable()->comment('地址');
             $table->text('addressOne')->nullable()->comment('地址一行');
             $table->text('addressTwo')->nullable()->comment('地址第二行');
-            $table->text('building')->nullable()->comment('单位');
+            $table->text('building')->nullable()->comment('座數');
             $table->text('floor')->nullable()->comment('楼层');
-            $table->text('unit')->nullable()->comment('座數');
+            $table->text('unit')->nullable()->comment('单位');
             $table->integer('job_status')->nullable()->comment('工作状态');
             $table->integer('salary')->nullable()->comment('薪水');
             $table->text('company_name')->nullable()->comment('公司名称');
@@ -47,6 +48,7 @@ class Clients extends Migration
             $table->string('token')->nullable()->comment('token');
             $table->string('device')->nullable()->comment('设备');
             $table->boolean('status')->default(1)->comment('状态 0=禁用,1=启用');
+            $table->softDeletes();
         });
     }
 

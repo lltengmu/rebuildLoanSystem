@@ -1,4 +1,6 @@
 @import "./font-size.css";
+@import "./animation.css";
+@import "./formElement.css";
 .pointer{
     cursor: pointer;
 }
@@ -8,25 +10,7 @@
 .stat-widget-two{
     text-align: left !important;
 }
-.h-20{
-    height: 20vh !important;
+.content-body {
+    min-height: auto !important;
 }
-/* 
-* 自定义表单错误信息样式
-*/
-label.validateErrors{
-    color: red;
-    font-size: 0.6rem;
-    margin-top: 0.2rem;
-    animation: 1s fade-up;
-}
-@keyframes fade-up {
-    from {
-        opacity: 0;
-        transform: translateY(100%);
-    }
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+

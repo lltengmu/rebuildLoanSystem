@@ -8,6 +8,8 @@ use App\Models\Cases;
 use Illuminate\Http\Request;
 use App\Exports\ExportCaseItem;
 use App\Http\Requests\ClientExitsRequest;
+use App\Imports\ImportExcel;
+use App\Models\Company;
 use App\Models\LboAppellations;
 use App\Models\LboDistrict;
 use App\Models\LboEmployment;
@@ -22,11 +24,13 @@ class LoanApplication extends Controller
         $area = LboDistrict::all();
         $job = LboEmployment::all();
         $purpose = LboLoanPurpose::all();
+        $company = Company::all();
         return view('pages.individual.loanApplication',[
             "appellations" => $appellations,
             "area" => $area,
             "job"  => $job,
-            "purpose" => $purpose
+            "purpose" => $purpose,
+            "company" =>$company
         ]);
     }
     /**
@@ -37,6 +41,7 @@ class LoanApplication extends Controller
         //读取数据
         $caseTable = Cases::with("company:id,name")->with("client:id,first_name,last_name")->whereIn("case_status", [1, 2, 5])->select([
             'id',
+            'sys_id',
             'client_id',
             'company_id',
             'loan_amount',
@@ -48,9 +53,10 @@ class LoanApplication extends Controller
         ])->get()->toArray();
 
         //数据处理
-        $data = array_map(function ($item) {
+        $data = array_map(function ($key,$item) {
             return [
-                "id" => $item["id"],
+                "num" => $key + 1,
+                "id" => $item["sys_id"],
                 "first_name" => !empty($item["client"]) ? $item["client"]["first_name"] : null,
                 "last_name" => !empty($item["client"]) ? $item["client"]["last_name"] : null,
                 "loan_amount" => $item["loan_amount"],
@@ -60,7 +66,7 @@ class LoanApplication extends Controller
                 "create_datetime" => $item["create_datetime"],
                 "case_status"     => $item["case_status"],
             ];
-        }, $caseTable);
+        }, array_keys($caseTable),array_values($caseTable));
         return $data;
     }
     /**
@@ -76,7 +82,7 @@ class LoanApplication extends Controller
         $case = Cases::with('company:id,name')
             ->with('client:id,last_name,first_name')
             ->with('LboCaseStatus:id,label_tc')
-            ->where('id', $id)
+            ->where('id', $this->decryptID($id))
             ->select([
                 "id",
                 "client_id",
@@ -137,12 +143,18 @@ class LoanApplication extends Controller
                 $item["lbo_case_status"]["label_tc"] ?? "",
             ];
         }, $case);
-        // dd($data);
-        return Excel::download(new ExportCaseAll([$data[0]], $head), $fileName);
+        return Excel::download(new ExportCaseAll($data, $head), $fileName);
     }
     public function clientExits(ClientExitsRequest $request)
     {
+        //已经过表单验证
         return ['success' => "沒有此用戶，請爲新用戶創建貸款"];
-        return view('public.components.form');
+    }
+    public function uploadExcel(Request $request)
+    {
+        $file = $request->file("file");
+        Excel::import(new ImportExcel,$file);
+        //执行到这里说明已经导入成功，不然会报错
+        return ['success' => "import successful"];
     }
 }

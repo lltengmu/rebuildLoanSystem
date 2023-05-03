@@ -32,10 +32,10 @@
                     <div class="card-body">
                         <div class="row mb-2 btns">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#queryModalCenter">創建貸款</button>
-                            <button type="button" class="btn btn-primary">匯入Excel</button>
+                            <button type="button" class="btn btn-primary" onclick="_uploadExcel()">匯入Excel</button>
                             <button type="button" class="btn btn-primary" onclick="_handleExportAll()">匯出所有</button>
                         </div>
-                        <table id="example" class="display" style="min-width: 845px">
+                        <table id="caseTable" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
                                     <th>編號</th>
@@ -56,10 +56,24 @@
         </div>
     </div>
 </div>
+<!-- 确认提示框 -->
+<div class="modal fade delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-black">您确定删除此记录吗？</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary confirm">是的，删除</button>
+                <button type="button" class="btn btn-primary" id="cancel" data-dismiss="modal">再想想</button>
+            </div>
+        </div>
+    </div>
+</div>
 @include('public.components.model.center')
+@include('public.components.uploadFile')
 @endsection
 
 @section('javascript')
+<!-- 引入 layui.js -->
 <!-- 业务逻辑文件 -->
 <script src="{{ asset('/js/individual/loanApplication/index.js') }}"></script>
 @endsection

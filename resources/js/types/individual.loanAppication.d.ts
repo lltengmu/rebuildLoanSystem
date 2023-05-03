@@ -1,5 +1,6 @@
 type caseTable = {
-    id:number,
+    id:string,
+    num:number,
     last_name:string,
     first_name:string
     case_status:number

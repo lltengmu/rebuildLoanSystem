@@ -6,6 +6,8 @@ use App\Models\Config;
 use App\Service\CaptchaService;
 use App\Service\CodeService;
 use App\Service\SmsService;
+use App\Service\UploadService;
+use App\Service\UtilsService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance('code',new CodeService());
         //注册短信服务
         $this->app->instance('sms',new SmsService);
+        //注册文件上传服务
+        $this->app->instance('upload', new UploadService);
+        //注册工具助手服务
+        $this->app->instance("utils",new UtilsService);
     }
 
     /**
