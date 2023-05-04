@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
 
-class ExportCaseAll implements FromArray, WithHeadings
+class Export implements FromArray, WithHeadings
 {
     use Exportable;
     

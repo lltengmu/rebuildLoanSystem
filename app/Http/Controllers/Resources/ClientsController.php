@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Resources;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Exports\Export;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ClientsController extends Controller
 {
@@ -93,5 +95,112 @@ class ClientsController extends Controller
         Client::destroy($this->decryptID($id));
         $data = Client::find($this->decryptID($id))->toArray();
         return empty($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
+    }
+    /**
+     * export client information
+     */
+    public function exportClientInformation($id)
+    {
+        //定义文件名
+        $fileName = "貸款用戶信息-" . date("YmdHis") . ".xlsx";
+        //定义表头
+        $header = ["ID", "電郵", "名字", "姓氏", "HKID", "出生日期", "電話", "國籍", "地區", "地址", "建築", "樓層", "單元", "公司名稱", "公司聯絡人", "公司地址"];
+        //获取数据
+        $case = Client::where('id', $this->decryptID($id))
+            ->select([
+                "id",
+                "email",
+                "first_name",
+                "last_name",
+                "HKID",
+                "date_of_birth",
+                "mobile",
+                "nationality",
+                "area",
+                "addressOne",
+                "building",
+                "floor",
+                "unit",
+                "company_name",
+                "company_contact",
+                "company_addres"
+            ])
+            ->get()
+            ->toArray();
+        //数据处理
+        $data = array_map(function ($item) {
+            return [
+                $item["id"],
+                $item["email"] ?? "",
+                $item["first_name"] ?? "",
+                $item["last_name"] ?? "",
+                $item["HKID"] ?? "",
+                $item["date_of_birth"] ?? "",
+                $item["mobile"] ?? "",
+                $item["nationality"] ?? "",
+                $item["area"] ?? "",
+                $item["addressOne"] ?? "",
+                $item["building"] ?? "",
+                $item["floor"] ?? "",
+                $item["unit"] ?? "",
+                $item["company_name"] ?? "",
+                $item["company_contact"] ?? "",
+                $item["company_addres"] ?? "",
+            ];
+        }, $case);
+        return Excel::download(new Export($data, $header), $fileName);
+    }
+    /**
+     * export all
+     */
+    public function exportAll()
+    {
+        //定义文件名
+        $fileName = "所有貸款用戶信息-" . date("YmdHis") . ".xlsx";
+        //定义表头
+        $header = ["ID", "電郵", "名字", "姓氏", "HKID", "出生日期", "電話", "國籍", "地區", "地址", "建築", "樓層", "單元", "公司名稱", "公司聯絡人", "公司地址"];
+        //获取数据
+        $case = Client::select([
+                "id",
+                "email",
+                "first_name",
+                "last_name",
+                "HKID",
+                "date_of_birth",
+                "mobile",
+                "nationality",
+                "area",
+                "addressOne",
+                "building",
+                "floor",
+                "unit",
+                "company_name",
+                "company_contact",
+                "company_addres"
+            ])
+            ->get()
+            ->toArray();
+        //数据处理
+        $data = array_map(function ($item) {
+            return [
+                $item["id"],
+                $item["email"] ?? "",
+                $item["first_name"] ?? "",
+                $item["last_name"] ?? "",
+                $item["HKID"] ?? "",
+                $item["date_of_birth"] ?? "",
+                $item["mobile"] ?? "",
+                $item["nationality"] ?? "",
+                $item["area"] ?? "",
+                $item["addressOne"] ?? "",
+                $item["building"] ?? "",
+                $item["floor"] ?? "",
+                $item["unit"] ?? "",
+                $item["company_name"] ?? "",
+                $item["company_contact"] ?? "",
+                $item["company_addres"] ?? "",
+            ];
+        }, $case);
+        return Excel::download(new Export($data, $header), $fileName);
     }
 }

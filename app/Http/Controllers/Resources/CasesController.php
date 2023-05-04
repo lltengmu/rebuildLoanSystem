@@ -13,6 +13,8 @@ use App\Models\LboDistrict;
 use App\Models\LboEmployment;
 use App\Models\LboLoanPurpose;
 use Illuminate\Http\Request;
+use App\Exports\Export;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 
 
@@ -177,5 +179,96 @@ class CasesController extends Controller
             "purpose" => $purpose,
             "company" => $company
         ]);
+    }
+    /**
+     * export case item
+     */
+    public function exportCaseItem($id)
+    {
+        //定义文件名
+        $fileName = "loanSystem-loan-record-" . date("YmdHis") . ".xlsx";
+        //定义表头
+        $header = ["ID", "名字", "姓氏", "貸款額", "付款日期", "付款方式", "還款期", "共同簽字人姓名", "共同簽字人姓氏", "提交至服務提供商", "狀態"];
+        //获取导出的 case 数据
+        $case = Cases::with('company:id,name')
+            ->with('client:id,last_name,first_name')
+            ->with('LboCaseStatus:id,label_tc')
+            ->where('id', $this->decryptID($id))
+            ->select([
+                "id",
+                "client_id",
+                "company_id",
+                "case_status",
+                "loan_amount",
+                "disbursement_date",
+                "payment_method",
+                "repayment_period",
+                "co_signer_first_name",
+                "co_signer_last_name",
+                "status"
+            ])
+            ->get()
+            ->toArray();
+        $data = array_map(function ($item) {
+            return [
+                $item["id"],
+                $item["client"]["first_name"] ?? "",
+                $item["client"]["last_name"] ?? "",
+                $item["loan_amount"] ?? "",
+                $item["disbursement_date"] ?? "",
+                $item["payment_method"] ?? "",
+                $item["repayment_period"] ?? "",
+                $item["co_signer_first_name"] ?? "",
+                $item["co_signer_last_name"] ?? "",
+                $item["company"]["name"] ?? "",
+                $item["lbo_case_status"]["label_tc"] ?? "",
+            ];
+        }, $case);
+        return Excel::download(new Export($data,$header), $fileName);
+    }
+    /**
+     * export all case as excel
+     */
+    public function exportAll()
+    {
+        $case = Cases::with('company:id,name')
+            ->with('client:id,last_name,first_name')
+            ->with('LboCaseStatus:id,label_tc')
+            ->select([
+                "id",
+                "client_id",
+                "company_id",
+                "case_status",
+                "loan_amount",
+                "disbursement_date",
+                "payment_method",
+                "repayment_period",
+                "co_signer_first_name",
+                "co_signer_last_name",
+                "status"
+            ])
+            ->get()
+            ->toArray();
+        //定义文件名
+        $fileName = "loanSystem-all-loan-record" . date("YmdHis") . ".xlsx";
+        //定义表头
+        $head = ["ID", "名字", "姓氏", "貸款額", "付款日期", "付款方式", "還款期", "共同簽字人姓名", "共同簽字人姓氏", "提交至服務提供商", "狀態"];
+        //处理excel表数据
+        $data = array_map(function ($item) {
+            return [
+                $item["id"],
+                $item["client"]["first_name"] ?? "",
+                $item["client"]["last_name"] ?? "",
+                $item["loan_amount"] ?? "",
+                $item["disbursement_date"] ?? "",
+                $item["payment_method"] ?? "",
+                $item["repayment_period"] ?? "",
+                $item["co_signer_first_name"] ?? "",
+                $item["co_signer_last_name"] ?? "",
+                $item["company"]["name"] ?? "",
+                $item["lbo_case_status"]["label_tc"] ?? "",
+            ];
+        }, $case);
+        return Excel::download(new Export($data, $head), $fileName);
     }
 }

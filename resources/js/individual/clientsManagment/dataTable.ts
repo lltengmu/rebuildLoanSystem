@@ -107,7 +107,7 @@ export default class LoanApplicationDataTable {
     private opration(): { [key: string]: Function } {
         return {
             //导出excel
-            _export: (id: string) => { },
+            _export: (id: string) => window.location.href = url(`/individual/clientsManagment/export/${id}`),
             //查看详情
             _view: (id: string) => window.location.href = url(`/individual/clientsManagment/details/${id}`),
             //删除功能
@@ -115,6 +115,9 @@ export default class LoanApplicationDataTable {
                 const confirmButton = document.querySelector(".modal .confirm") as HTMLButtonElement
                 confirmButton.onclick = () => this.confirmDelete(id)
             },
+            //"导出所有"事件处理函数
+            _handleExportAll: () => window.location.href = url(`/individual/clientsManagment/exportAll`),
+            //修改状态事件处理函数
             _handleCaseStatus: async (id:string) => {
                 //开启加载动画
                 loading.open();

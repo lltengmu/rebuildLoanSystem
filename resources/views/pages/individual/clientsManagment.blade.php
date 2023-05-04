@@ -31,6 +31,7 @@
                     <div class="card-body">
                         <div class="row mb-2 btns">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id">創建賬號</button>
+                            <button type="button" class="btn btn-primary" onclick="_handleExportAll()">匯出所有</button>
                         </div>
                         <table id="clientsTable" class="display" style="min-width: 845px">
                             <thead>

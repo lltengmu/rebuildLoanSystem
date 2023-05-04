@@ -222,7 +222,9 @@ var LoanApplicationDataTable = /** @class */function () {
     var _this = this;
     return {
       //导出excel
-      _export: function _export(id) {},
+      _export: function _export(id) {
+        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/export/".concat(id));
+      },
       //查看详情
       _view: function _view(id) {
         return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/details/".concat(id));
@@ -234,6 +236,11 @@ var LoanApplicationDataTable = /** @class */function () {
           return _this.confirmDelete(id);
         };
       },
+      //"导出所有"事件处理函数
+      _handleExportAll: function _handleExportAll() {
+        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/exportAll");
+      },
+      //修改状态事件处理函数
       _handleCaseStatus: function _handleCaseStatus(id) {
         return __awaiter(_this, void 0, void 0, function () {
           var value;

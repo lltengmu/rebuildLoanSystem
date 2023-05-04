@@ -14,13 +14,17 @@
         align-items: center;
     }
     .mask i{
-        display: none;
         color: white;
         font-size: 50px;
+        opacity: 0;
+        transition: 1s ease;
     }
     .mask:hover{
         border: 20px solid rgba(0,0,0,.1);
         background-color: rgba(255,255,255,0);
+    }
+    .mask:hover i{
+        opacity: 1;
     }
 </style>
 @endsection
@@ -49,13 +53,13 @@
                                     <div class="row">
                                         <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                             <div class="profile-name">
-                                                <h4 class="text-primary">{{ $data['client']['last_name'].$data['client']['first_name'] }}</h4>
+                                                <h4 class="text-primary">{{ $data['last_name'].$data['first_name'] }}</h4>
                                                 <p>这个人很懒，什么都没留下....</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-4 col-sm-4 border-right-1 prf-col">
                                             <div class="profile-email">
-                                                <h4 class="text-muted">{{ $data['client']['email'] }}</h4>
+                                                <h4 class="text-muted">{{ $data['email'] }}</h4>
                                                 <p>Email</p>
                                             </div>
                                         </div>
@@ -119,62 +123,62 @@
                                                             <select id="appellations" name="appellations" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($appellations as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["client"]["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="0" {{ $item->label_tc == $data["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="last_name">姓氏:</label>
-                                                            <input type="text" id="last_name" name="last_name" class="form-control" value="{{ $data['client']['last_name'] }}">
+                                                            <input type="text" id="last_name" name="last_name" class="form-control" value="{{ $data['last_name'] }}">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="first_name">名字:</label>
-                                                            <input type="text" id="first_name" name="first_name" class="form-control" value="{{ $data['client']['first_name'] }}">
+                                                            <input type="text" id="first_name" name="first_name" class="form-control" value="{{ $data['first_name'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-3">
                                                             <label for="mobile">電話號碼:</label>
-                                                            <input type="text" id="mobile" name="mobile" class="form-control" value="{{ $data['client']['mobile'] }}">
+                                                            <input type="text" id="mobile" name="mobile" class="form-control" value="{{ $data['mobile'] }}">
                                                         </div>
                                                         <div class="form-group col-md-3">
                                                             <label for="email">電郵地址:</label>
-                                                            <input type="text" id="email" name="email" class="form-control" value="{{ $data['client']['email'] }}">
+                                                            <input type="text" id="email" name="email" class="form-control" value="{{ $data['email'] }}">
                                                         </div>
                                                         <div class="form-group col-md-3">
                                                             <label for="nationality">國籍:</label>
-                                                            <input type="text" id="nationality" name="nationality" class="form-control" value="{{ $data['client']['nationality'] }}">
+                                                            <input type="text" id="nationality" name="nationality" class="form-control" value="{{ $data['nationality'] }}">
                                                         </div>
                                                         <div class="form-group col-md-3">
                                                             <label for="date_of_birth">出生日期:</label>
-                                                            <input type="text" id="date_of_birth" name="date_of_birth" class="form-control" value="{{ $data['client']['date_of_birth'] }}">
+                                                            <input type="text" id="date_of_birth" name="date_of_birth" class="form-control" value="{{ $data['date_of_birth'] }}">
                                                         </div>
                                                     </div>
                                                     <h5 class="text-primary">住宅地址</h5>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="addressOne">地址第一行:</label>
-                                                            <input type="text" id="addressOne" name="addressOne" class="form-control" value="{{ $data['client']['addressOne'] }}">
+                                                            <input type="text" id="addressOne" name="addressOne" class="form-control" value="{{ $data['addressOne'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="addressTwo">地址第二行:</label>
-                                                            <input type="text" id="addressTwo" name="addressTwo" class="form-control" value="{{ $data['client']['addressTwo'] }}">
+                                                            <input type="text" id="addressTwo" name="addressTwo" class="form-control" value="{{ $data['addressTwo'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
                                                             <label for="unit">單位:</label>
-                                                            <input type="text" id="unit" name="unit" class="form-control" value="{{ $data['client']['unit'] }}">
+                                                            <input type="text" id="unit" name="unit" class="form-control" value="{{ $data['unit'] }}">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="floor">樓層:</label>
-                                                            <input type="text" id="floor" name="floor" class="form-control" value="{{ $data['client']['floor'] }}">
+                                                            <input type="text" id="floor" name="floor" class="form-control" value="{{ $data['floor'] }}">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="building">座數:</label>
-                                                            <input type="text" id="building" name="building" class="form-control" value="{{ $data['client']['building'] }}">
+                                                            <input type="text" id="building" name="building" class="form-control" value="{{ $data['building'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
@@ -183,13 +187,13 @@
                                                             <select id="area" name="area" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($area as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["client"]["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="0" {{ $item->label_tc == $data["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="HKID">身分證明:</label>
-                                                            <input type="text" id="HKID" name="HKID" class="form-control" value="{{ $data['client']['HKID'] }}">
+                                                            <input type="text" id="HKID" name="HKID" class="form-control" value="{{ $data['HKID'] }}">
                                                         </div>
                                                     </div>
                                                     <h5 class="text-primary">就業資料</h5>
@@ -199,23 +203,23 @@
                                                             <select type="text" id="job_status" name="job_status" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($job as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["client"]["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="0" {{ $item->label_tc == $data["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="company_name">公司名稱:</label>
-                                                            <input type="text" id="company_name" name="company_name" class="form-control" value="{{ $data['client']['company_name'] }}">
+                                                            <input type="text" id="company_name" name="company_name" class="form-control" value="{{ $data['company_name'] }}">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="company_contact">公司電話:</label>
-                                                            <input type="text" id="company_contact" name="company_contact" class="form-control" value="{{ $data['client']['company_contact'] }}">
+                                                            <input type="text" id="company_contact" name="company_contact" class="form-control" value="{{ $data['company_contact'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="company_addres">公司地址:</label>
-                                                            <input type="text" id="company_addres" name="company_addres" class="form-control" value="{{ $data['client']['company_addres'] }}">
+                                                            <input type="text" id="company_addres" name="company_addres" class="form-control" value="{{ $data['company_addres'] }}">
                                                         </div>
                                                     </div>
                                                     <button class="btn btn-primary" type="submit">提交</button>

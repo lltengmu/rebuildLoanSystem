@@ -15,6 +15,6 @@ class Controller extends BaseController
     protected function decryptID(string $cryptID)
     {
         preg_match_all('/\d+/',Crypt::decryptString($cryptID),$id);
-        return $id;
+        return $id[0][0];
     } 
 }

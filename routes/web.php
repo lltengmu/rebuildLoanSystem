@@ -46,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/loanApplication')->group(function(){
             Route::get("/",[LoanApplication::class,"index"]);
             Route::post("/cases",[LoanApplication::class,"cases"]);
-            Route::get("/export/{id}",[LoanApplication::class,"exportCaseItem"]);
-            Route::get("/exportAll",[LoanApplication::class,"exportAll"]);
+            Route::get("/export/{id}",[CasesController::class,"exportCaseItem"]);
+            Route::get("/exportAll",[CasesController::class,"exportAll"]);
             Route::post("/exits",[LoanApplication::class,"clientExits"]);
             Route::post("/uploadExcel",[LoanApplication::class,"uploadExcel"]);
         });
@@ -61,6 +61,8 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/clientsManagment')->group(function(){
             Route::get("/",[ClientManagment::class,"index"]);
             Route::get("/details/{id}",[ClientManagment::class,"details"]);
+            Route::get("/exportAll",[ClientsController::class,"exportAll"]);
+            Route::get("/export/{id}",[ClientsController::class,"exportClientInformation"]);
         });
     });
 
