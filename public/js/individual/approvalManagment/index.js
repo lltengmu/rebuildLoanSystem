@@ -136,12 +136,12 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
-var LoanApplicationDataTable = /** @class */function () {
-  function LoanApplicationDataTable() {
+var ApprovalManagmentDataTable = /** @class */function () {
+  function ApprovalManagmentDataTable() {
     this.registerDataTable();
     this.registerOpration();
   }
-  LoanApplicationDataTable.prototype.registerDataTable = function () {
+  ApprovalManagmentDataTable.prototype.registerDataTable = function () {
     this.tableInstance = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#caseTable").DataTable({
       autoWidth: true,
       order: [0, "desc"],
@@ -191,7 +191,7 @@ var LoanApplicationDataTable = /** @class */function () {
    * 注册按钮点击事件
    * register button click event
    */
-  LoanApplicationDataTable.prototype.registerOpration = function () {
+  ApprovalManagmentDataTable.prototype.registerOpration = function () {
     var _this = this;
     var exits = false;
     //检查window对象 是否与点击事件函数命名冲突
@@ -213,7 +213,7 @@ var LoanApplicationDataTable = /** @class */function () {
    * 定义按钮点击事件处理函数
    * Define button click event handling functions
    */
-  LoanApplicationDataTable.prototype.opration = function () {
+  ApprovalManagmentDataTable.prototype.opration = function () {
     var _this = this;
     return {
       //查看详情
@@ -232,7 +232,7 @@ var LoanApplicationDataTable = /** @class */function () {
   /**
    * delete case
    */
-  LoanApplicationDataTable.prototype.confirmDelete = function (id) {
+  ApprovalManagmentDataTable.prototype.confirmDelete = function (id) {
     return __awaiter(this, void 0, void 0, function () {
       var _this = this;
       return __generator(this, function (_a) {
@@ -265,9 +265,9 @@ var LoanApplicationDataTable = /** @class */function () {
     });
   };
 
-  return LoanApplicationDataTable;
+  return ApprovalManagmentDataTable;
 }();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoanApplicationDataTable);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ApprovalManagmentDataTable);
 
 /***/ }),
 

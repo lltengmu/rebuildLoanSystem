@@ -4,23 +4,27 @@ import notification from "../../plugins/notification";
 import 'datatables.net';
 
 
-export default class ClientsManagmentDataTable {
+export default class DataTables {
     private tableInstance;
     constructor() {
         this.registerDataTable();
         this.registerOpration();
     }
     private registerDataTable() {
-        this.tableInstance = $("#clientsTable").DataTable({
+        console.log(url("/serviceProvider"));
+        this.tableInstance = $("#serviceProviderTable").DataTable({
             autoWidth: true,
             order: [0, "desc"],
             ajax: {
-                url: url("/clients"),
+                url: url("/serviceProvider"),
                 method: "get",
                 headers: {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                 },
-                dataSrc: (myJson) => myJson,
+                dataSrc: (myJson) => {
+                    console.log(myJson);
+                    return myJson;
+                },
             },
             columns: [
                 {
@@ -33,13 +37,10 @@ export default class ClientsManagmentDataTable {
                     "data": "last_name"
                 },
                 {
+                    "data": "company"
+                },
+                {
                     "data": "email"
-                },
-                {
-                    "data": "mobile"
-                },
-                {
-                    "data": "nationality"
                 },
                 {
                     "data": "status"
@@ -54,7 +55,7 @@ export default class ClientsManagmentDataTable {
                     "width": "5%"
                 },
                 {
-                    targets: [6],
+                    targets: [5],
                     width: "200px",
                     render: (data, type, row, meta) => {
                         const id = row.id
@@ -69,14 +70,14 @@ export default class ClientsManagmentDataTable {
                     }
                 },
                 {
-                    targets: [7],
+                    targets: [6],
                     width: "25%",
                     render: (data, type, row, meta) => {
                         const id = row.id;
                         return `
                             <div class="opration">
-                                <button type="button" class="btn btn-outline-primary" onclick="_export('${id}')">匯出xlsx</button>
                                 <button type="button" class="btn btn-outline-info" onclick="_view('${id}')">查看</button>
+                                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".drawer">查看</button>
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target=".delete-modal" onclick="_del('${id}')">删除</button>
                             </div>
                         `
@@ -106,8 +107,6 @@ export default class ClientsManagmentDataTable {
      */
     private opration(): { [key: string]: Function } {
         return {
-            //导出excel
-            _export: (id: string) => window.location.href = url(`/individual/clientsManagment/export/${id}`),
             //查看详情
             _view: (id: string) => window.location.href = url(`/individual/clientsManagment/details/${id}`),
             //删除功能
@@ -161,7 +160,7 @@ export default class ClientsManagmentDataTable {
         $(`.delete-modal #cancel`).click()
         //发起请求删除
         $.ajax({
-            url: url(`/clients/${id}`),
+            url: url(`/serviceProvider/${id}`),
             method: "delete",
             headers: {
                 "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,

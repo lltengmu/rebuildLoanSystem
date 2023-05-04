@@ -13,4 +13,11 @@ class Company extends Model
     {
         $this->hasMany(Cases::class);
     }
+    /**
+     * 管理serviceProvider表
+     */
+    public function ServiceProviders()
+    {
+        return $this->hasMany(ServiceProvider::class);
+    }
 }

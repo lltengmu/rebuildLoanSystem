@@ -20,7 +20,8 @@ class ServiceProviderFactory extends Factory
             'password'   => sha1(123456),
             'mobile'     => $this->faker->phoneNumber(),
             'company_id' => mt_rand(1,2),
-            "create_datetime" =>date("Y-m-d H:m:s")
+            "create_datetime" =>date("Y-m-d H:m:s"),
+            "status" => mt_rand(0,1)
         ];
     }
 }

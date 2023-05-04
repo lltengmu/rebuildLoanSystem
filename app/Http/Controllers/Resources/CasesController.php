@@ -145,8 +145,8 @@ class CasesController extends Controller
     public function destroy($id)
     {
         Cases::destroy($this->decryptID($id));
-        $data = Cases::find($this->decryptID($id))->toArray();
-        return empty($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
+        $data = Cases::find($this->decryptID($id));
+        return is_null($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
     }
     /**
      * view case details

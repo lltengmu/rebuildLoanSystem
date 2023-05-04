@@ -17,6 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
     .ts('resources/js/individual/loanApplication/index.ts','public/js/individual/loanApplication')
     .ts('resources/js/individual/approvalManagment/index.ts','public/js/individual/approvalManagment')
     .ts('resources/js/individual/clientsManagment/index.ts','public/js/individual/clientsManagment')
+    .ts('resources/js/individual/serviceProviderManagement/index.ts','public/js/individual/serviceProviderManagement')
     .postCss('resources/css/global.css','public/css')
     .postCss('resources/css/app.css', 'public/css', [
         //

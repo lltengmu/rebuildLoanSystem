@@ -15,6 +15,7 @@ class CreateServiceProvidersTable extends Migration
     {
         Schema::create('service_providers',function(Blueprint $table){
             $table->bigIncrements('id')->comment('主键');
+            $table->string('sys_id')->nullable()->comment('加密id');
             $table->string('first_name',100)->nullable()->comment('名字');
             $table->string('last_name',100)->nullable()->comment('姓氏');
             $table->string('email',100)->unique()->nullable()->comment('邮箱');
@@ -35,6 +36,7 @@ class CreateServiceProvidersTable extends Migration
             $table->integer('permission3')->nullable();
             $table->integer('permission4')->nullable();
             $table->integer('update_by')->nullable();
+            $table->softDeletes();
         });
     }
 

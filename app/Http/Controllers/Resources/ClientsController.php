@@ -93,8 +93,8 @@ class ClientsController extends Controller
     public function destroy($id)
     {
         Client::destroy($this->decryptID($id));
-        $data = Client::find($this->decryptID($id))->toArray();
-        return empty($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
+        $data = Client::find($this->decryptID($id));
+        return is_null($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
     }
     /**
      * export client information

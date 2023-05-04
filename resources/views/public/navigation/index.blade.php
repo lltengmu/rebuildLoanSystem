@@ -42,7 +42,7 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void()" aria-expanded="false">
+                <a href="{{ url('/individual/serviceProviderManagement') }}" aria-expanded="false">
                     <i class="icon icon-plug"></i>
                     <span class="nav-text">服務提供商管理</span>
                 </a>

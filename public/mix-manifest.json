@@ -5,6 +5,7 @@
     "/js/individual/loanApplication/index.js": "/js/individual/loanApplication/index.js",
     "/js/individual/approvalManagment/index.js": "/js/individual/approvalManagment/index.js",
     "/js/individual/clientsManagment/index.js": "/js/individual/clientsManagment/index.js",
+    "/js/individual/serviceProviderManagement/index.js": "/js/individual/serviceProviderManagement/index.js",
     "/css/global.css": "/css/global.css",
     "/css/app.css": "/css/app.css"
 }

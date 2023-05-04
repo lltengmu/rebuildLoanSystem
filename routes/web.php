@@ -1,16 +1,20 @@
 <?php
 
+
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Individual\Dashboard;
 use App\Http\Controllers\Individual\LoanApplication;
 use App\Http\Controllers\Resources\CasesController;
 use App\Http\Controllers\Basic\LoginController;
 use App\Http\Controllers\individual\ApprovalManagment;
 use App\Http\Controllers\individual\ClientManagment;
+use App\Http\Controllers\individual\ServiceProvider;
 use App\Http\Controllers\Resources\ClientsController;
-use App\Models\User;
+use App\Http\Controllers\Resources\ServiceProvide;
 use App\Notifications\EmailValidateCodeNotification;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     //资源接口
     Route::resource('cases',CasesController::class);
     Route::resource('clients',ClientsController::class);
+    Route::resource('serviceProvider',ServiceProvide::class);
     //公共路由
     Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
     //定义individual 路由前缀
@@ -63,6 +68,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/details/{id}",[ClientManagment::class,"details"]);
             Route::get("/exportAll",[ClientsController::class,"exportAll"]);
             Route::get("/export/{id}",[ClientsController::class,"exportClientInformation"]);
+        });
+        //定义服务提供商管理页面路由
+        Route::prefix('/serviceProviderManagement')->group(function(){
+            Route::get("/",[ServiceProvider::class,"index"]);
         });
     });
 

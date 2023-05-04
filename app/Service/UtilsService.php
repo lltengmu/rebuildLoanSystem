@@ -37,9 +37,12 @@ class UtilsService
     /**
      * @return company id
      */
-    public function company($text): int
+    public function company($value)
     {
-        return Company::where("name",$text)->first()->id;
+        if(!is_int($value)){
+            return Company::where("label_tc",$value)->orWhere("label_en",$value)->first()->id;
+        }
+        return Company::where("id",$value)->first()->name;
     }
     /**
      * @return job_status id or label_tc

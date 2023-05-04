@@ -4,7 +4,7 @@ import notification from "../../plugins/notification";
 import 'datatables.net';
 
 
-export default class LoanApplicationDataTable {
+export default class ApprovalManagmentDataTable {
     private tableInstance;
     constructor() {
         this.registerDataTable();

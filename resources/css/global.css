@@ -13,4 +13,18 @@
 .content-body {
     min-height: auto !important;
 }
-
+/*
+* drawer model css
+*/
+#drawer{
+    padding-right:0px !important ;
+}
+#drawer .modal-dialog{
+    max-width: 100vw !important;
+    margin: 0 auto !important;
+}
+#drawer .modal-content{
+    width: 30vw;
+    float: right;
+    height: 100vh;
+}
