@@ -368,7 +368,6 @@ var LoanApplicationDataTable = /** @class */function () {
           "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
         },
         dataSrc: function dataSrc(myJson) {
-          console.log(myJson);
           return myJson;
         }
       },

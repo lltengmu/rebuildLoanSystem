@@ -6,6 +6,7 @@ import 'datatables.net';
 
 export default class DataTables {
     private tableInstance;
+    private current;
     constructor() {
         this.registerDataTable();
         this.registerOpration();
@@ -108,7 +109,21 @@ export default class DataTables {
     private opration(): { [key: string]: Function } {
         return {
             //查看详情
-            _view: (id: string) => window.location.href = url(`/individual/clientsManagment/details/${id}`),
+            _view: (id: string) => {
+                // loading.open();
+                const els = [...Array.from(document.querySelectorAll(`#spdetails input`)),...Array.from(document.querySelectorAll(`#spdetails select`))]
+                // console.log(els);
+                const handleSuccess = (res) =>{}
+                $.ajax({
+                    url:url(`/individual/serviceProviderManagement/details/${id}`),
+                    method:"get",
+                    headers:{
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    success:(res) =>handleSuccess(res),
+                    error:(error) =>{}
+                })
+            },
             //删除功能
             _del: (id: string) => {
                 const confirmButton = document.querySelector(".modal .confirm") as HTMLButtonElement

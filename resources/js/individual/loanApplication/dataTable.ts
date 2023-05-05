@@ -21,10 +21,7 @@ export default class LoanApplicationDataTable {
                 headers: {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                 },
-                dataSrc: (myJson) => {
-                    console.log(myJson);
-                    return myJson;
-                },
+                dataSrc: (myJson) => myJson,
             },
             columns: [
                 {

@@ -132,6 +132,15 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
     };
   }
 };
+var __spreadArray = undefined && undefined.__spreadArray || function (to, from, pack) {
+  if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+    if (ar || !(i in from)) {
+      if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+      ar[i] = from[i];
+    }
+  }
+  return to.concat(ar || Array.prototype.slice.call(from));
+};
 
 
 
@@ -223,7 +232,21 @@ var DataTables = /** @class */function () {
     return {
       //查看详情
       _view: function _view(id) {
-        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/details/".concat(id));
+        // loading.open();
+        var els = __spreadArray(__spreadArray([], Array.from(document.querySelectorAll("#spdetails input")), true), Array.from(document.querySelectorAll("#spdetails select")), true);
+        // console.log(els);
+        var handleSuccess = function handleSuccess(res) {};
+        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/serviceProviderManagement/details/".concat(id)),
+          method: "get",
+          headers: {
+            "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+          },
+          success: function success(res) {
+            return handleSuccess(res);
+          },
+          error: function error(_error) {}
+        });
       },
       //删除功能
       _del: function _del(id) {
@@ -263,8 +286,8 @@ var DataTables = /** @class */function () {
                     success: function success(res) {
                       return resolve(res);
                     },
-                    error: function error(_error) {
-                      return reject(_error);
+                    error: function error(_error2) {
+                      return reject(_error2);
                     }
                   });
                 }).then(function (value) {
@@ -28235,7 +28258,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.onload = function () {
-  return new _dataTable__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  new _dataTable__WEBPACK_IMPORTED_MODULE_0__["default"]();
 };
 })();
 

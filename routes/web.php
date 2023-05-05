@@ -72,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
         //定义服务提供商管理页面路由
         Route::prefix('/serviceProviderManagement')->group(function(){
             Route::get("/",[ServiceProvider::class,"index"]);
+            Route::get("/details/{id}",[ServiceProvider::class,"details"]);
         });
     });
 

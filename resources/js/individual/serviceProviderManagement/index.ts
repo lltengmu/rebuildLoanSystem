@@ -1,3 +1,5 @@
 import DataTableManagement  from "./dataTable";
 import "animate.css";
-window.onload = () =>new DataTableManagement();
+window.onload = () =>{
+    new DataTableManagement()
+};

@@ -21,7 +21,7 @@ class CreateServiceProvidersTable extends Migration
             $table->string('email',100)->unique()->nullable()->comment('邮箱');
             $table->string('password',100)->nullable()->comment('密码');
             $table->string('mobile',100)->nullable()->comment('手机号');
-            $table->string('contact',100)->nullable()->comment('联系方式');
+            $table->bigInteger('contact')->nullable()->comment('常联系人');
             $table->integer('role')->nullable()->comment('规则');
             $table->integer('company_id')->comment('所属机构id');
             $table->dateTime('create_datetime',$precision = 0)->nullable()->comment('创建时间');
