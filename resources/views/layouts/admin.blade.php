@@ -32,7 +32,15 @@
         @include('public.header.index')
         
         <!-- navigation bar -->
-        @include('public.navigation.index')
+        @switch(session("_user_info.identify"))
+            @case("individual")
+                @include('public.navigation.index')
+                @break
+            @case("client")
+                @include('public.navigation.client')
+                @break
+        @endswitch
+        
         
         <!-- content body -->
         @yield('content')

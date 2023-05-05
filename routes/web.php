@@ -4,14 +4,18 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Controllers\Basic\LoginController;
+use App\Http\Controllers\Client\LoanApplication as ClientLoanApplication;
+use App\Http\Controllers\Client\LoanApplicationDetail;
 use App\Http\Controllers\Individual\Dashboard;
 use App\Http\Controllers\Individual\LoanApplication;
+use App\Http\Controllers\Individual\ApprovalManagment;
+use App\Http\Controllers\Individual\ClientManagment;
+use App\Http\Controllers\Individual\ServiceProvider;
+use App\Http\Controllers\Individual\IndividualManagement;
 use App\Http\Controllers\Resources\CasesController;
-use App\Http\Controllers\Basic\LoginController;
-use App\Http\Controllers\individual\ApprovalManagment;
-use App\Http\Controllers\individual\ClientManagment;
-use App\Http\Controllers\individual\ServiceProvider;
 use App\Http\Controllers\Resources\ClientsController;
+use App\Http\Controllers\Resources\IndividualController;
 use App\Http\Controllers\Resources\ServiceProvide;
 use App\Notifications\EmailValidateCodeNotification;
 
@@ -33,12 +37,14 @@ Route::match(['get', 'post'], '{identify}/login', LoginController::class);
 Route::middleware(['auth'])->group(function () {
     //资源接口
     Route::resource('cases',CasesController::class);
-    Route::resource('clients',ClientsController::class);
+    Route::resource('clientsResource',ClientsController::class);
     Route::resource('serviceProvider',ServiceProvide::class);
+    //这里不能使用individual，与下面路由冲突，所以使用admin
+    Route::resource('admin',IndividualController::class);
     //公共路由
     Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
     //定义individual 路由前缀
-    Route::prefix('individual')->group(function () {
+    Route::prefix('/individual')->group(function () {
         //定义首页路由及api接口
         Route::prefix("/home")->group(function(){
             Route::get('/',[Dashboard::class,'index']);
@@ -74,6 +80,21 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/",[ServiceProvider::class,"index"]);
             Route::get("/details/{id}",[ServiceProvider::class,"details"]);
         });
+        //定义用户管理页面路由
+        Route::prefix('/individualManagement')->group(function(){
+            Route::get("/",[IndividualManagement::class,"index"]);
+            Route::get("/details/{id}",[IndividualManagement::class,"details"]);
+        });
     });
-
+    Route::prefix("/client")->group(function(){
+        Route::prefix('/home')->group(function(){
+            Route::get("/",[ClientLoanApplication::class,"index"]);
+            Route::get("/loan-details",[ClientLoanApplication::class,"loanDetails"]);
+            Route::get("/cases",[ClientLoanApplication::class,"cases"]);
+            Route::post("/edit/{id}",[ClientLoanApplication::class,"edit"]);
+        });
+        Route::prefix('/LoanApplicationDetail')->group(function(){
+            Route::get("/",[LoanApplicationDetail::class,"index"]);
+        });
+    });
 });

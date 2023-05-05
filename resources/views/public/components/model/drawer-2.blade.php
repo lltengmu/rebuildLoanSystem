@@ -44,17 +44,6 @@
                             <input type="text" id="contact" name="contact" class="form-control">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="company_id">服務提供商*:</label>
-                            <select id="company_id" name="company_id" class="form-control">
-                                <option value="0">請選擇</option>
-                                @foreach($company as $key=>$item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消</button>
                         <button type="button" class="btn btn-primary">确认</button>

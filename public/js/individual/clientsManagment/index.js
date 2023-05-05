@@ -146,7 +146,7 @@ var ClientsManagmentDataTable = /** @class */function () {
       autoWidth: true,
       order: [0, "desc"],
       ajax: {
-        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients"),
+        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clientsResource"),
         method: "get",
         headers: {
           "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
@@ -254,7 +254,7 @@ var ClientsManagmentDataTable = /** @class */function () {
                 //发送请求
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
                   jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-                    url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/".concat(id)),
+                    url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clientsResource/".concat(id)),
                     method: "PUT",
                     headers: {
                       "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
@@ -302,7 +302,7 @@ var ClientsManagmentDataTable = /** @class */function () {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-modal #cancel").click();
         //发起请求删除
         jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/".concat(id)),
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clientsResource/".concat(id)),
           method: "delete",
           headers: {
             "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content

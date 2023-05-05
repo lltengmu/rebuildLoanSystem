@@ -54,4 +54,10 @@ input[disabled],select[disable]{
     float: right;
     height: 100vh;
 }
+/*
+ hidden elements
+*/
+.hidden{
+    display: none;
+}
 

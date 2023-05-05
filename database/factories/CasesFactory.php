@@ -20,10 +20,9 @@ class CasesFactory extends Factory
         $serciceProviderIDList = ServiceProvider::select('id')->get();
         $paymentMethods = ["wechat","aliyun"];
         return [
-            // 'sys_id'    => substr($this->faker->sha1(),1,10),
             'client_id' => $this->faker->randomElement($clientsIdList),
             'case_status' => $this->faker->randomElement([1,2,3,4,5]),
-            'company_id' => mt_rand(0,2),
+            'company_id' => mt_rand(1,2),
             'service_provider_id' =>$this->faker->randomElement($serciceProviderIDList),
             'loan_amount' => mt_rand(1,10000),
             'payment_amount' => mt_rand(1,10000),

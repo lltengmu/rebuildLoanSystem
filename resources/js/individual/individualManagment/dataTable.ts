@@ -4,23 +4,27 @@ import notification from "../../plugins/notification";
 import 'datatables.net';
 
 
-export default class ClientsManagmentDataTable {
+export default class DataTables {
     private tableInstance;
+    private current;
     constructor() {
         this.registerDataTable();
         this.registerOpration();
     }
     private registerDataTable() {
-        this.tableInstance = $("#clientsTable").DataTable({
+        this.tableInstance = $("#individualTable").DataTable({
             autoWidth: true,
             order: [0, "desc"],
             ajax: {
-                url: url("/clientsResource"),
+                url: url("/admin"),
                 method: "get",
                 headers: {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                 },
-                dataSrc: (myJson) => myJson,
+                dataSrc: (myJson) => {
+                    console.log(myJson);
+                    return myJson;
+                },
             },
             columns: [
                 {
@@ -36,10 +40,10 @@ export default class ClientsManagmentDataTable {
                     "data": "email"
                 },
                 {
-                    "data": "mobile"
+                    "data":"mobile"
                 },
                 {
-                    "data": "nationality"
+                    "data":"contact"
                 },
                 {
                     "data": "status"
@@ -49,10 +53,6 @@ export default class ClientsManagmentDataTable {
                 }
             ],
             columnDefs: [
-                {
-                    "targets": [0],
-                    "width": "5%"
-                },
                 {
                     targets: [6],
                     width: "200px",
@@ -75,7 +75,6 @@ export default class ClientsManagmentDataTable {
                         const id = row.id;
                         return `
                             <div class="opration">
-                                <button type="button" class="btn btn-outline-primary" onclick="_export('${id}')">匯出xlsx</button>
                                 <button type="button" class="btn btn-outline-info" onclick="_view('${id}')">查看</button>
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target=".delete-modal" onclick="_del('${id}')">删除</button>
                             </div>
@@ -106,19 +105,42 @@ export default class ClientsManagmentDataTable {
      */
     private opration(): { [key: string]: Function } {
         return {
-            //导出excel
-            _export: (id: string) => window.location.href = url(`/individual/clientsManagment/export/${id}`),
             //查看详情
-            _view: (id: string) => window.location.href = url(`/individual/clientsManagment/details/${id}`),
+            _view: (id: string) => {
+                loading.open();
+                //获取数据之后的事件处理函数
+                const handleSuccess = (res) => {
+                    const response = res as { company_id?: string, contact?: number, email?: string, first_name?: string, last_name?: string, mobile?: number }
+                    Object.entries(response).forEach(([key, value]) => {
+                        const dom = document.querySelector(`#${key}`)
+                        if (dom?.tagName == "SELECT") {
+                            const el = dom as HTMLSelectElement;
+                            el.selectedIndex = Number(value);
+                        } else {
+                            const el = dom as HTMLInputElement;
+                            el.value = value as string;
+                        }
+                    })
+                    loading.close()
+                    $(`button[id="open"]`).click();
+                }
+                $.ajax({
+                    url: url(`/individual/individualManagement/details/${id}`),
+                    method: "get",
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    success: (res) => handleSuccess(res),
+                    error: (error) => { }
+                })
+            },
             //删除功能
             _del: (id: string) => {
                 const confirmButton = document.querySelector(".modal .confirm") as HTMLButtonElement
                 confirmButton.onclick = () => this.confirmDelete(id)
             },
-            //"导出所有"事件处理函数
-            _handleExportAll: () => window.location.href = url(`/individual/clientsManagment/exportAll`),
             //修改状态事件处理函数
-            _handleCaseStatus: async (id:string) => {
+            _handleCaseStatus: async (id: string) => {
                 //开启加载动画
                 loading.open();
                 //获取数据
@@ -126,7 +148,7 @@ export default class ClientsManagmentDataTable {
                 //发送请求
                 await new Promise((resolve, reject) => {
                     $.ajax({
-                        url: url(`/clientsResource/${id}`),
+                        url: url(`/admin/${id}`),
                         method: "PUT",
                         headers: {
                             "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
@@ -141,7 +163,7 @@ export default class ClientsManagmentDataTable {
                     (value) => {
                         loading.close();
                         this.tableInstance.ajax.reload();
-                        const res = value as unknown as { success?:string,error?:string }
+                        const res = value as unknown as { success?: string, error?: string }
                         const message = res.success as string
                         notification(message)
                     },
@@ -161,7 +183,7 @@ export default class ClientsManagmentDataTable {
         $(`.delete-modal #cancel`).click()
         //发起请求删除
         $.ajax({
-            url: url(`/clientsResource/${id}`),
+            url: url(`/admin/${id}`),
             method: "delete",
             headers: {
                 "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,

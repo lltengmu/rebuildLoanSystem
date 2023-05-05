@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\individual;
+namespace App\Http\Controllers\Individual;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cases;

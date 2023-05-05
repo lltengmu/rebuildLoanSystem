@@ -48,7 +48,7 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void()" aria-expanded="false">
+                <a href="{{ url('/individual/individualManagement') }}" aria-expanded="false">
                     <i class="icon icon-single-copy-06"></i>
                     <span class="nav-text">用戶管理</span>
                 </a>

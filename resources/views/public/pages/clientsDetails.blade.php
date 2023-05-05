@@ -114,7 +114,6 @@
                                     <div id="profile-settings" class="tab-pane fade active show">
                                         <div class="pt-3">
                                             <div class="settings-form">
-
                                                 <form>
                                                     <h5 class="text-primary">基本信息</h5>
                                                     <div class="form-row">

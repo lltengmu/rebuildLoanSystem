@@ -2,7 +2,7 @@
 
 @section('styles')
 <style>
-    ::-webkit-input-placeholder{
+    ::-webkit-input-placeholder {
         font-size: .5rem;
         color: #ddd !important;
     }
@@ -16,7 +16,7 @@
         <div class="row no-gutters">
             <div class="col-xl-12">
                 <div class="auth-form">
-                    <h4 class="text-center mb-4">clients login</h4>
+                    <h4 class="text-center mb-4">client login</h4>
                     <form id="login-form">
                         @csrf
                         <input type="hidden" name="_identify" value="clients">
@@ -37,7 +37,7 @@
                                 <img class="w-100" src="{{ url('captcha') }}" alt="captcha img">
                             </div>
                         </div>
-                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
+                        <div class="form-row d-flex justify-content-between mt-2 mb-2">
                             <div class="form-group">
                                 <div class="form-check ml-2">
                                     <input class="form-check-input" type="checkbox" id="remenber-me">
@@ -63,5 +63,6 @@
 @endsection
 
 @section('javascript')
-    <script src="asset('/js/login/index.js')"></script>
+<script src="{{ asset('focus-premium/focus/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('/js/login/index.js') }}"></script>
 @endsection

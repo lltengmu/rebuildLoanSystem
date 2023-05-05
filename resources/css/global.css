@@ -28,3 +28,9 @@
     float: right;
     height: 100vh;
 }
+/*
+ hidden elements
+*/
+.hidden{
+    display: none;
+}

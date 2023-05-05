@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
-use App\Models\ServiceProvider;
+use App\Models\Individuals;
 use Illuminate\Http\Request;
 
-class ServiceProvide extends Controller
+class IndividualController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,18 +16,19 @@ class ServiceProvide extends Controller
     public function index()
     {
         //获取数据
-        $data = ServiceProvider::select(["sys_id", "company_id","first_name", "last_name", "email", "status"])->get()->toArray();
+        $data = Individuals::select(["sys_id", "first_name","last_name","email", "mobile", "contact", "status"])->get()->toArray();
         //数据处理
         return array_map(function ($key, $item) {
             return [
-                "num" => $key + 1, 
+                "num" => $key + 1,
                 "id" => $item["sys_id"],
-                "company" => app("utils")->company($item["company_id"]),
                 "first_name" => $item["first_name"],
-                "last_name" =>$item["last_name"],
+                "last_name" => $item["last_name"],
                 "email"  => $item["email"],
-                "status" => $item["status"]
-             ];
+                "status" => $item["status"],
+                "mobile" => $item["mobile"],
+                "contact" => $item["contact"],
+            ];
         }, array_keys($data), array_values($data));
     }
 
@@ -86,7 +87,7 @@ class ServiceProvide extends Controller
         //模拟延迟
         sleep(1);
         //前端需要提供一个update数组,数组中只有一个对象 对象中记录需要更新哪些字段. 实现动态更新数据 
-        $resoult = ServiceProvider::where('id', $this->decryptID($id))->update(...$request->update);
+        $resoult = Individuals::where('id', $this->decryptID($id))->update(...$request->update);
         return $resoult ? ["success" => "updated success"] : ["error" => "no case updated"];
     }
 
@@ -98,8 +99,8 @@ class ServiceProvide extends Controller
      */
     public function destroy($id)
     {
-        ServiceProvider::destroy($this->decryptID($id));
-        $data = ServiceProvider::find($this->decryptID($id));
+        Individuals::destroy($this->decryptID($id));
+        $data = Individuals::find($this->decryptID($id));
         return is_null($data) ? ['success' => "删除成功"] : ['error' => "删除失败"];
     }
 }

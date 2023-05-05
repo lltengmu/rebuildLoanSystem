@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/js/individual/serviceProviderManagement/dataTable.ts":
-/*!************************************************************************!*\
-  !*** ./resources/js/individual/serviceProviderManagement/dataTable.ts ***!
-  \************************************************************************/
+/***/ "./resources/js/individual/individualManagment/dataTable.ts":
+/*!******************************************************************!*\
+  !*** ./resources/js/individual/individualManagment/dataTable.ts ***!
+  \******************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -142,17 +142,17 @@ var DataTables = /** @class */function () {
     this.registerOpration();
   }
   DataTables.prototype.registerDataTable = function () {
-    this.tableInstance = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#serviceProviderTable").DataTable({
+    this.tableInstance = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#individualTable").DataTable({
       autoWidth: true,
       order: [0, "desc"],
       ajax: {
-        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/serviceProvider"),
+        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/admin"),
         method: "get",
         headers: {
           "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
         },
         dataSrc: function dataSrc(myJson) {
-          //console.log(myJson);
+          console.log(myJson);
           return myJson;
         }
       },
@@ -163,26 +163,25 @@ var DataTables = /** @class */function () {
       }, {
         "data": "last_name"
       }, {
-        "data": "company"
-      }, {
         "data": "email"
+      }, {
+        "data": "mobile"
+      }, {
+        "data": "contact"
       }, {
         "data": "status"
       }, {
         "data": "operate"
       }],
       columnDefs: [{
-        "targets": [0],
-        "width": "5%"
-      }, {
-        targets: [5],
+        targets: [6],
         width: "200px",
         render: function render(data, type, row, meta) {
           var id = row.id;
           return "\n                            <div class=\"form-group\" style=\"margin-top:0.65rem;\">\n                                <select class=\"form-control form-control-sm\" id=\"status-".concat(id, "\" onchange=\"_handleCaseStatus('").concat(id, "')\">\n                                    <option value=\"1\" ").concat(row.status == 1 ? "selected" : "", ">\u5553\u7528</option>\n                                    <option value=\"0\" ").concat(row.status == 0 ? "selected" : "", ">\u7981\u7528</option>\n                                </select>\n                            </div>\n                        ");
         }
       }, {
-        targets: [6],
+        targets: [7],
         width: "25%",
         render: function render(data, type, row, meta) {
           var id = row.id;
@@ -225,13 +224,11 @@ var DataTables = /** @class */function () {
         _utils__WEBPACK_IMPORTED_MODULE_1__.loading.open();
         //获取数据之后的事件处理函数
         var handleSuccess = function handleSuccess(res) {
-          console.log(res);
           var response = res;
           Object.entries(response).forEach(function (_a) {
             var key = _a[0],
               value = _a[1];
             var dom = document.querySelector("#".concat(key));
-            console.log(dom);
             if ((dom === null || dom === void 0 ? void 0 : dom.tagName) == "SELECT") {
               var el = dom;
               el.selectedIndex = Number(value);
@@ -241,11 +238,10 @@ var DataTables = /** @class */function () {
             }
           });
           _utils__WEBPACK_IMPORTED_MODULE_1__.loading.close();
-          console.log(document.querySelector(".opration button[id=\"open\"]"));
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("button[id=\"open\"]").click();
         };
         jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/serviceProviderManagement/details/".concat(id)),
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/individualManagement/details/".concat(id)),
           method: "get",
           headers: {
             "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
@@ -263,10 +259,6 @@ var DataTables = /** @class */function () {
           return _this.confirmDelete(id);
         };
       },
-      //"导出所有"事件处理函数
-      _handleExportAll: function _handleExportAll() {
-        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/exportAll");
-      },
       //修改状态事件处理函数
       _handleCaseStatus: function _handleCaseStatus(id) {
         return __awaiter(_this, void 0, void 0, function () {
@@ -281,7 +273,7 @@ var DataTables = /** @class */function () {
                 //发送请求
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
                   jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-                    url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/serviceProvider/".concat(id)),
+                    url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/admin/".concat(id)),
                     method: "PUT",
                     headers: {
                       "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
@@ -329,7 +321,7 @@ var DataTables = /** @class */function () {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(".delete-modal #cancel").click();
         //发起请求删除
         jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
-          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/serviceProvider/".concat(id)),
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/admin/".concat(id)),
           method: "delete",
           headers: {
             "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
@@ -28257,11 +28249,11 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!********************************************************************!*\
-  !*** ./resources/js/individual/serviceProviderManagement/index.ts ***!
-  \********************************************************************/
+/*!**************************************************************!*\
+  !*** ./resources/js/individual/individualManagment/index.ts ***!
+  \**************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dataTable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dataTable */ "./resources/js/individual/serviceProviderManagement/dataTable.ts");
+/* harmony import */ var _dataTable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dataTable */ "./resources/js/individual/individualManagment/dataTable.ts");
 /* harmony import */ var animate_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! animate.css */ "./node_modules/animate.css/animate.css");
 
 

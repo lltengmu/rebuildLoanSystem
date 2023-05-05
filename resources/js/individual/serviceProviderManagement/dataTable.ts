@@ -12,7 +12,6 @@ export default class DataTables {
         this.registerOpration();
     }
     private registerDataTable() {
-        console.log(url("/serviceProvider"));
         this.tableInstance = $("#serviceProviderTable").DataTable({
             autoWidth: true,
             order: [0, "desc"],
@@ -23,7 +22,7 @@ export default class DataTables {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                 },
                 dataSrc: (myJson) => {
-                    console.log(myJson);
+                    //console.log(myJson);
                     return myJson;
                 },
             },
@@ -78,7 +77,6 @@ export default class DataTables {
                         return `
                             <div class="opration">
                                 <button type="button" class="btn btn-outline-info" onclick="_view('${id}')">查看</button>
-                                <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".drawer">查看</button>
                                 <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target=".delete-modal" onclick="_del('${id}')">删除</button>
                             </div>
                         `
@@ -110,18 +108,34 @@ export default class DataTables {
         return {
             //查看详情
             _view: (id: string) => {
-                // loading.open();
-                const els = [...Array.from(document.querySelectorAll(`#spdetails input`)),...Array.from(document.querySelectorAll(`#spdetails select`))]
-                // console.log(els);
-                const handleSuccess = (res) =>{}
+                loading.open();
+                //获取数据之后的事件处理函数
+                const handleSuccess = (res) => {
+                    console.log(res);
+                    const response = res as { company_id?: string, contact?: number, email?: string, first_name?: string, last_name?: string, mobile?: number }
+                    Object.entries(response).forEach(([key, value]) => {
+                        const dom = document.querySelector(`#${key}`)
+                        console.log(dom);
+                        if (dom?.tagName == "SELECT") {
+                            const el = dom as HTMLSelectElement;
+                            el.selectedIndex = Number(value);
+                        } else {
+                            const el = dom as HTMLInputElement;
+                            el.value = value as string;
+                        }
+                    })
+                    loading.close()
+                    console.log(document.querySelector(`.opration button[id="open"]`));
+                    $(`button[id="open"]`).click();
+                }
                 $.ajax({
-                    url:url(`/individual/serviceProviderManagement/details/${id}`),
-                    method:"get",
-                    headers:{
+                    url: url(`/individual/serviceProviderManagement/details/${id}`),
+                    method: "get",
+                    headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                     },
-                    success:(res) =>handleSuccess(res),
-                    error:(error) =>{}
+                    success: (res) => handleSuccess(res),
+                    error: (error) => { }
                 })
             },
             //删除功能
@@ -132,7 +146,7 @@ export default class DataTables {
             //"导出所有"事件处理函数
             _handleExportAll: () => window.location.href = url(`/individual/clientsManagment/exportAll`),
             //修改状态事件处理函数
-            _handleCaseStatus: async (id:string) => {
+            _handleCaseStatus: async (id: string) => {
                 //开启加载动画
                 loading.open();
                 //获取数据
@@ -140,7 +154,7 @@ export default class DataTables {
                 //发送请求
                 await new Promise((resolve, reject) => {
                     $.ajax({
-                        url: url(`/clients/${id}`),
+                        url: url(`/serviceProvider/${id}`),
                         method: "PUT",
                         headers: {
                             "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
@@ -155,7 +169,7 @@ export default class DataTables {
                     (value) => {
                         loading.close();
                         this.tableInstance.ajax.reload();
-                        const res = value as unknown as { success?:string,error?:string }
+                        const res = value as unknown as { success?: string, error?: string }
                         const message = res.success as string
                         notification(message)
                     },

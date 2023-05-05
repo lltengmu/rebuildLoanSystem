@@ -15,10 +15,11 @@ class Individual extends Migration
     {
         Schema::create('individuals',function(Blueprint $table){
             $table->increments('id')->comment('主键');
+            $table->string('sys_id')->nullable()->comment('加密id');
             $table->string('first_name',100)->nullable()->comment('名字');
             $table->string('last_name',100)->nullable()->comment('姓氏');
-            $table->string('mobile',100)->nullable()->comment('手机号');
-            $table->string('contact',100)->nullable()->comment('联系方式');
+            $table->bigInteger('mobile')->nullable()->comment('手机号');
+            $table->bigInteger('contact')->nullable()->comment('联系方式');
             $table->string('email',100)->unique()->nullable()->comment('邮箱');
             $table->string('password',100)->nullable()->comment('密码');
             $table->dateTime('create_datetime',$precision = 0)->nullable()->comment('创建时间');

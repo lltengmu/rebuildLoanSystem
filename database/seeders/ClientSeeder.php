@@ -18,6 +18,7 @@ class ClientSeeder extends Seeder
         $all = Client::factory(20)->create();
         $client = Client::first();
         $client->email = 'client@qq.com';
+        $client->status = 1;
         $client->save();
         foreach($all as $item){
             $item->sys_id = Crypt::encrypt($item->id);
