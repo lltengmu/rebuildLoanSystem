@@ -1,8 +1,6 @@
 import $ from "jquery";
 import { loading, url } from "../../utils";
-import notification from "../../plugins/notification";
 import 'datatables.net';
-import "bootstrap";
 
 
 export default class LoanApplicationDataTable {
