@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
 <!-- Material color picker -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
 <!-- Pick date -->
 <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
 <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
@@ -10,10 +10,6 @@
     hr {
         margin-top: 0.5rem !important;
         margin-bottom: 0.5rem !important;
-    }
-
-    .content-body {
-        min-height: auto !important;
     }
 </style>
 @endsection

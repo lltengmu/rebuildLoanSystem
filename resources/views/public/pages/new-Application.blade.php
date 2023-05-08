@@ -9,6 +9,11 @@
     <title>Focus - Bootstrap Admin Dashboard </title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/focus-premium/focus/images/favicon.png') }}">
+    <!-- Material color picker -->
+    <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
+    <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
     <link rel="stylesheet" href="{{ asset('/focus-premium/focus/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/global.css') }}">
     <style>
@@ -31,28 +36,41 @@
         <div class="col-xl-9">
             <section>
                 <form class="p-4 bg-wihte" id="register">
+                    @csrf
                     <div>
                         <h3 class="pt-4 text-32">WELCOME TO LOANSYSTEM!</h3>
-                        <p>Create your account to start managing your wealth.</p>
+                        <p>Create your account to start managing your loan application.</p>
                     </div>
                     <h5 class="text-primary">基本信息</h5>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="email">登陸郵箱:</label>
+                            <label for="email">
+                                <span>登陸郵箱:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="email" name="email" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="last_name">姓氏:</label>
+                            <label for="last_name">
+                                <span>姓氏:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="last_name" name="last_name" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="first_name">名字:</label>
+                            <label for="first_name">
+                                <span>名字:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="first_name" name="first_name" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-3">
-                            <label for="appellations">稱謂:</label>
+                            <label for="appellations">
+                                <span>稱謂:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <select id="appellations" name="appellations" class="form-control">
                                 <option value="0">請選擇</option>
                                 @foreach($appellations as $key => $item)
@@ -61,48 +79,75 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="mobile">電話號碼:</label>
+                            <label for="mobile">
+                                <span>電話號碼:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="mobile" name="mobile" class="form-control">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="nationality">國籍:</label>
+                            <label for="nationality">
+                                <span>國籍:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="nationality" name="nationality" class="form-control">
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="date_of_birth">出生日期:</label>
+                            <label for="date_of_birth">
+                                <span>出生日期:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="date_of_birth" name="date_of_birth" class="form-control">
                         </div>
                     </div>
                     <h5 class="text-primary">住宅地址</h5>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="addressOne">地址第一行:</label>
+                            <label for="addressOne">
+                                <span>地址第一行:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="addressOne" name="addressOne" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="addressTwo">地址第二行:</label>
+                            <label for="addressTwo">
+                                <span>地址第二行:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="addressTwo" name="addressTwo" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="unit">單位:</label>
+                            <label for="unit">
+                                <span>單位:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="unit" name="unit" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="floor">樓層:</label>
+                            <label for="floor">
+                                <span>樓層:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="floor" name="floor" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="building">座數:</label>
+                            <label for="building">
+                                <span>座數:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="building" name="building" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="area">地區:</label>
+                            <label for="area">
+                                <span>地區:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <select id="area" name="area" class="form-control">
                                 <option value="0">請選擇</option>
                                 @foreach($area as $key => $item)
@@ -111,14 +156,20 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="HKID">身分證明:</label>
+                            <label for="HKID">
+                                <span>身分證明:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="HKID" name="HKID" class="form-control">
                         </div>
                     </div>
                     <h5 class="text-primary">就業資料</h5>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="job_status">職業:</label>
+                            <label for="job_status">
+                                <span>職業:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <select type="text" id="job_status" name="job_status" class="form-control">
                                 <option value="0">請選擇</option>
                                 @foreach($job as $key => $item)
@@ -127,17 +178,26 @@
                             </select>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="company_name">公司名稱:</label>
+                            <label for="company_name">
+                                <span>公司名稱:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="company_name" name="company_name" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="company_contact">公司電話:</label>
+                            <label for="company_contact">
+                                <span>公司電話:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="company_contact" name="company_contact" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="company_addres">公司地址:</label>
+                            <label for="company_addres">
+                                <span>公司地址:</span>
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" id="company_addres" name="company_addres" class="form-control">
                         </div>
                     </div>
@@ -157,6 +217,18 @@
     <script src="{{ asset('focus-premium/focus/vendor/global/global.min.js') }}"></script>
     <script src="{{ asset('focus-premium/focus/js/quixnav-init.js') }}"></script>
     <script src="{{ asset('focus-premium/focus/js/custom.min.js') }}"></script>
+
+    <!-- momment js is must -->
+    <script src="{{ asset('/focus-premium/focus/vendor/moment/moment.min.js') }}"></script>
+    <!-- Material color picker -->
+    <script src="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+    <!-- pickdate -->
+    <script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.js') }}"></script>
+    <script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.time.js') }}"></script>
+    <script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
+    <!-- Material color picker init -->
+    <script src="{{ asset('/js/datepicker.js') }}"></script>
+    <!-- customer js -->
     <script src="{{ asset('/js/common/form/index.js') }}"></script>
 </body>
 

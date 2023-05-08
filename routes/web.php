@@ -35,7 +35,7 @@ use App\Notifications\EmailValidateCodeNotification;
 //登录前接口
 Route::match(['get', 'post'], '{identify}/login', LoginController::class);
 //form
-Route::get("/new-loanApplication",[Form::class,"index"]);
+Route::match(["get","post"],"/new-loanApplication",[Form::class,"index"]);
 //登录后接口
 Route::middleware(['auth'])->group(function () {
     //资源接口
