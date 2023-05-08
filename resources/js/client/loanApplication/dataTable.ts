@@ -16,7 +16,7 @@ export default class LoanApplicationDataTable {
             autoWidth: true,
             order: [0, "desc"],
             ajax: {
-                url: url("/client/home/cases"),
+                url: url("/clients/home/cases"),
                 method: "get",
                 headers: {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
@@ -113,7 +113,7 @@ export default class LoanApplicationDataTable {
                     $(`button[id="show-open"]`).click();
                 }
                 $.ajax({
-                    url: url(`/client/home/edit/${id}`),
+                    url: url(`/clients/home/edit/${id}`),
                     method: "post",
                     headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,

@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Basic\LoginController;
 use App\Http\Controllers\Client\LoanApplication as ClientLoanApplication;
 use App\Http\Controllers\Client\LoanApplicationDetail;
+use App\Http\Controllers\Client\Profile;
+use App\Http\Controllers\Common\Form;
 use App\Http\Controllers\Individual\Dashboard;
 use App\Http\Controllers\Individual\LoanApplication;
 use App\Http\Controllers\Individual\ApprovalManagment;
@@ -32,7 +34,8 @@ use App\Notifications\EmailValidateCodeNotification;
 
 //登录前接口
 Route::match(['get', 'post'], '{identify}/login', LoginController::class);
-
+//form
+Route::get("/new-loanApplication",[Form::class,"index"]);
 //登录后接口
 Route::middleware(['auth'])->group(function () {
     //资源接口
@@ -86,7 +89,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/details/{id}",[IndividualManagement::class,"details"]);
         });
     });
-    Route::prefix("/client")->group(function(){
+    Route::prefix("/clients")->group(function(){
         Route::prefix('/home')->group(function(){
             Route::get("/",[ClientLoanApplication::class,"index"]);
             Route::get("/loan-details",[ClientLoanApplication::class,"loanDetails"]);
@@ -95,6 +98,9 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::prefix('/LoanApplicationDetail')->group(function(){
             Route::get("/",[LoanApplicationDetail::class,"index"]);
+        });
+        Route::prefix('/profile')->group(function(){
+            Route::get("/",[Profile::class,"index"]);
         });
     });
 });

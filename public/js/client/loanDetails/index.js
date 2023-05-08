@@ -28,7 +28,7 @@ var LoanApplicationDataTable = /** @class */function () {
       autoWidth: true,
       order: [0, "desc"],
       ajax: {
-        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/client/home/cases"),
+        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/home/cases"),
         method: "get",
         headers: {
           "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
