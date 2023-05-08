@@ -54,6 +54,9 @@ input[disabled],select[disable]{
     float: right;
     height: 100vh;
 }
+.animate__fadeInRight{
+    animation-duration: .5s !important;
+}
 /*
  hidden elements
 */

@@ -22,7 +22,7 @@ class UtilsService
             return LboAppellations::where("label_tc",$value)->orWhere("label_en",$value)->first()->id;
         }
         //否则返回字符串
-        return LboAppellations::where("id",$value)->first()->label_tc;
+        return LboAppellations::where("id",$value)->first()->label_tc; 
     }
     /**
      * @return case_status id
