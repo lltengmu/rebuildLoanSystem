@@ -20,6 +20,7 @@ class Form extends Controller
     public function index(LoanFormRequest $request)
     {
         if ($request->isMethod('post')) {
+            //获取表单数据
             $data = $request->all();
             //新增client 并且添加一条贷款记录
             $client = Client::create([
