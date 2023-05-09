@@ -47,9 +47,13 @@ class LoanFormRequest extends FormRequest
             "area" => [new SelectRequired()],
             "HKID" => "required|unique:clients",
             "job_status" => [new SelectRequired()],
+            "salary" => "required",
             "company_name" => "required",
             "company_contact" => "required",
-            "company_addres" => "required"
+            "company_addres" => "required",
+            "loan_amount" => "required|integer",
+            "repayment_period" => "required|integer",
+            "purpose" => [new SelectRequired()],
         ];
         return request()->isMethod('get') ? [] : $validateArray;
     }
@@ -78,10 +82,15 @@ class LoanFormRequest extends FormRequest
             "floor.required" =>"请输入",
             "building.required" =>"请输入",
             "HKID.required" =>"请输入",
+            "required.required" => "请输入",
             "HKID.unique" =>"此HKID已被注册",
             "company_name.required" =>"请输入",
             "company_contact.required" =>"请输入",
             "company_addres.required" =>"请输入",
+            "loan_amount.required" =>"请输入",
+            "loan_amount.integer" =>"无效的貸款額，请输入整数",
+            "repayment_period.required" =>"请输入",
+            "repayment_period.integer" =>"无效的還款期，请输入整数",
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Client;
 use App\Models\Config;
+use App\Observers\ClientsObserver;
 use App\Service\CaptchaService;
 use App\Service\CodeService;
 use App\Service\SmsService;
@@ -36,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //注册观察者
+        Client::observe(ClientsObserver::class);
         //$config = Config::firstOrNew();
         //config(['hd' => $config->toArray()]);
     }

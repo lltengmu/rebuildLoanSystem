@@ -18,16 +18,19 @@ class Cases extends Model
 
     //数据导入时可被填充的字段
     protected $fillable = [
+        "sys_id",
         "loan_amount",
         "payment_amount",
         "disbursement_date",
         "payment_method",
         "co_signer_first_name",
         "co_signer_last_name",
+        "create_datetime",
         "case_status",
         "company_id",
         "purpose",
-        "repayment_period"
+        "repayment_period",
+        "purpose"
     ];
     /**
      * 关联client table

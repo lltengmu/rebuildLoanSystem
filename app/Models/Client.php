@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Listeners\SendNotificationSubscriber;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -39,7 +40,11 @@ class Client extends Model
         "company_name",
         "company_contact",
         "company_addres",
-        "date_of_birth"
+        "date_of_birth",
+        "create_datetime",
+        "ip",
+        "browser",
+        "sys_id"
     ];
     /**
      * 关联cases table

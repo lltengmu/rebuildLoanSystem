@@ -8,4 +8,22 @@ const notification = new Notyf({
     }
 });
 
+export const customAlert = new Notyf({
+    duration:2000,
+    position:{
+        x:"center",
+        y:"top"
+    },
+    types:[
+        {
+            type:"warning",
+            background:"#FFAA16"
+        },
+        {
+            type:"error",
+            background:"#FF1616"
+        }
+    ]
+});
+
 export default (message) => notification.success(message);

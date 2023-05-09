@@ -20,6 +20,15 @@
         .new-loanApplication {
             height: 100vh;
         }
+        .banner{
+            max-height: 100vh !important;
+            height: 100%;
+            background-image: url("");
+        }
+        img{
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 
@@ -28,14 +37,14 @@
     @include('public.loading.index')
 
     <div class="row new-loanApplication">
-        <div class="col-xl-3">
-            <section>
-
+        <div class="col-sm-3">
+            <section class="banner">
+                <img src="{{ asset('/images/banner-2.jpg') }}" alt="banner">
             </section>
         </div>
-        <div class="col-xl-9">
-            <section>
-                <form class="p-4 bg-wihte" id="register">
+        <div class="col-sm-9">
+            <section style="max-height: 100vh !important;overflow-y: scroll;">
+                <form class="p-4 m-2 bg-wihte" id="register">
                     @csrf
                     <div>
                         <h3 class="pt-4 text-32">WELCOME TO LOANSYSTEM!</h3>
@@ -71,7 +80,7 @@
                                 <span>稱謂:</span>
                                 <span class="text-danger">*</span>
                             </label>
-                            <select id="appellations" name="appellations" class="form-control">
+                            <select id="appellation" name="appellation" class="form-control">
                                 <option value="0">請選擇</option>
                                 @foreach($appellations as $key => $item)
                                 <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
@@ -185,20 +194,56 @@
                             <input type="text" id="company_name" name="company_name" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
+                            <label for="salary">
+                                <span>HK$每月收入:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" id="salary" name="salary" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                    <div class="form-group col-md-6">
                             <label for="company_contact">
                                 <span>公司電話:</span>
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" id="company_contact" name="company_contact" class="form-control">
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="company_addres">
                                 <span>公司地址:</span>
                                 <span class="text-danger">*</span>
                             </label>
                             <input type="text" id="company_addres" name="company_addres" class="form-control">
+                        </div>
+                    </div>
+                    <h5 class="text-primary">貸款資料</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="job_status">
+                                <span>欲申請之貸款額:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" id="loan_amount" name="loan_amount" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="company_name">
+                                <span>還款期:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" id="repayment_period" name="repayment_period" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="purpose">
+                                <span>貸款用途:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select type="text" id="purpose" name="purpose" class="form-control">
+                                <option value="0">請選擇</option>
+                                @foreach($purpose as $key => $item)
+                                <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-check">
@@ -207,7 +252,7 @@
                             同意xxxxxx
                         </label>
                     </div>
-                    <button class="btn btn-primary" style="float: right;" type="submit">提交</button>
+                    <button class="btn btn-primary my-3" type="submit">提交</button>
                 </form>
             </section>
         </div>

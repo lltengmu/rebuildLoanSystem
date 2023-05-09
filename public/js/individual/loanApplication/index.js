@@ -615,6 +615,7 @@ var LoanApplicationDataTable = /** @class */function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "customAlert": () => (/* binding */ customAlert),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var notyf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! notyf */ "./node_modules/notyf/notyf.es.js");
@@ -627,6 +628,20 @@ var notification = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
     x: "right",
     y: "top"
   }
+});
+var customAlert = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
+  duration: 2000,
+  position: {
+    x: "center",
+    y: "top"
+  },
+  types: [{
+    type: "warning",
+    background: "#FFAA16"
+  }, {
+    type: "error",
+    background: "#FF1616"
+  }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (message) {
   return notification.success(message);
