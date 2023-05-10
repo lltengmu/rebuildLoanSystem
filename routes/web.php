@@ -5,6 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Notification;
 use App\Http\Controllers\Basic\LoginController;
+use App\Http\Controllers\Basic\Verification;
 use App\Http\Controllers\Client\LoanApplication as ClientLoanApplication;
 use App\Http\Controllers\Client\LoanApplicationDetail;
 use App\Http\Controllers\Client\Profile;
@@ -19,7 +20,8 @@ use App\Http\Controllers\Resources\CasesController;
 use App\Http\Controllers\Resources\ClientsController;
 use App\Http\Controllers\Resources\IndividualController;
 use App\Http\Controllers\Resources\ServiceProvide;
-use App\Notifications\EmailValidateCodeNotification;
+use App\Models\Client;
+use App\Notifications\EmailNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,10 @@ use App\Notifications\EmailValidateCodeNotification;
 Route::match(['get', 'post'], '{identify}/login', LoginController::class);
 //form
 Route::match(["get","post"],"/new-loanApplication",[Form::class,"index"]);
+//客户设置密码
+Route::get("/verification/{id}",Verification::class);
+Route::post("/setUpPassword",[Verification::class,"setUpPassword"]);
+
 //登录后接口
 Route::middleware(['auth'])->group(function () {
     //资源接口
@@ -46,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('admin',IndividualController::class);
     //公共路由
     Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
+    Route::get("/logout",[LoginController::class,"logout"]);
     //定义individual 路由前缀
     Route::prefix('/individual')->group(function () {
         //定义首页路由及api接口
@@ -94,7 +101,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/",[ClientLoanApplication::class,"index"]);
             Route::get("/loan-details",[ClientLoanApplication::class,"loanDetails"]);
             Route::get("/cases",[ClientLoanApplication::class,"cases"]);
-            Route::post("/edit/{id}",[ClientLoanApplication::class,"edit"]);
+            Route::post("/details/{id}",[ClientLoanApplication::class,"details"]);
+            Route::post("/add",[ClientLoanApplication::class,"add"]);
         });
         Route::prefix('/LoanApplicationDetail')->group(function(){
             Route::get("/",[LoanApplicationDetail::class,"index"]);

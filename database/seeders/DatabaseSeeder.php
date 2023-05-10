@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             LboEmploymentSeeder::class,
             LboLoanPurposeSeeder::class,
             IndividualSeeder::class,
+            NotificationTemplatesSeeder::class
         ]);
     }
 }

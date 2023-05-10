@@ -48,7 +48,7 @@ class Form extends Controller
                 "browser"         => app("utils")->browser($request->header("User-Agent"))
             ]);
             //触发事件
-            event(new ClientCreated($client,"agreed_loan"));
+            event(new ClientCreated($client,"client_create"));
             $insertCase = new Cases([
                 "loan_amount" => $data["loan_amount"],
                 "repayment_period" => $data["repayment_period"],

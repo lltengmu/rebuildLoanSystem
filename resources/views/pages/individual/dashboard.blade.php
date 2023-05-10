@@ -23,7 +23,8 @@
         display: flex;
         align-items: center;
     }
-    .submitButton{
+
+    .submitButton {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -34,9 +35,9 @@
 
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"儀表板"])
     <!-- 数据筛选 -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"儀表板"])
         <form class="row page-titles mx-0" id="cards">
             @csrf
             <div class="col-sm-4 p-md-0">
@@ -53,7 +54,7 @@
                         <label class="m-0" for="multi-value-select">請選擇機構:</label>
                         <select class="w-100" name="companies" id="multi-value-select" multiple="multiple">
                             @foreach($companies as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Listeners\SendNotificationSubscriber;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,7 +17,7 @@ class Client extends Model
     //软删除
     use SoftDeletes;
     //HasApitoken 使用这个类，client类就具有生成token的方法
-    use HasFactory,HasApiTokens;
+    use HasFactory,HasApiTokens ,Notifiable;
 
     public $timestamps = FALSE;
 

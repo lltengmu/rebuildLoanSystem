@@ -129,7 +129,7 @@ class Dashboard extends Controller
 
         foreach ($serviceProviderList as $key => $item) :
             $data[config("captcha.charts")[$key]] = count(array_filter($objectList, function ($value) use ($item) {
-                return $value["service_provider"]["id"] == $item->id;
+                return !is_null($value["service_provider"]) && $value["service_provider"]["id"] == $item->id;
             }));
             $ykeys[$key] = config("captcha.charts")[$key];
             $labels[$key] = $item->first_name . $item->last_name;

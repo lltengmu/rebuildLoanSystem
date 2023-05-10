@@ -2,7 +2,7 @@
 
 @section('styles')
 <style>
-    .mask{
+    .mask {
         position: absolute;
         border-radius: 50%;
         width: 100%;
@@ -13,26 +13,29 @@
         justify-content: center;
         align-items: center;
     }
-    .mask i{
+
+    .mask i {
         color: white;
         font-size: 50px;
         opacity: 0;
         transition: 1s ease;
     }
-    .mask:hover{
-        border: 20px solid rgba(0,0,0,.1);
-        background-color: rgba(255,255,255,0);
+
+    .mask:hover {
+        border: 20px solid rgba(0, 0, 0, .1);
+        background-color: rgba(255, 255, 255, 0);
     }
-    .mask:hover i{
+
+    .mask:hover i {
         opacity: 1;
     }
 </style>
 @endsection
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"客户管理","currentPage" =>"客户详情"])
     <!-- row -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"客户管理","currentPage" =>"客户详情"])
         <!-- row -->
         <div class="row">
             <div class="col-lg-12">

@@ -81,7 +81,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             @switch(session('_user_info.identify'))
-                                @case("client")
+                                @case("clients")
                                 @include('public.header.clients')
                                 @break
                                 @default:

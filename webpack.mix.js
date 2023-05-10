@@ -22,6 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
     .ts('resources/js/client/loanApplication/index.ts','public/js/client/loanApplication')
     .ts('resources/js/client/loanDetails/index.ts','public/js/client/loanDetails')
     .ts('resources/js/common/Form/index.ts','public/js/common/Form')
+    .ts('resources/js/common/verification/index.ts','public/js/common/verification')
     .postCss('resources/css/global.css','public/css')
     .postCss('resources/css/app.css', 'public/css', [
         //

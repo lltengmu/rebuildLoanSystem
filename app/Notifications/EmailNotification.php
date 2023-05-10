@@ -12,15 +12,19 @@ class EmailNotification extends Notification
 {
     use Queueable;
 
-    protected $code;
+    protected $url;
+    protected $title;
+    protected $content;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(int $code)
+    public function __construct(string $title,string $content,string $url)
     {
-        $this->code = $code;
+        $this->title = $title;
+        $this->content = $content;
+        $this->url = $url;
     }
 
     /**
@@ -43,8 +47,10 @@ class EmailNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line("您的验证码是：".$this->code)
-                    ->action('访问网站', url('/'))
+                    ->greeting($this->title)
+                    ->subject($this->title)
+                    ->line($this->content)
+                    ->action('前往设置', $this->url)
                     ->line('感谢使用我们的应用！');
     }
 

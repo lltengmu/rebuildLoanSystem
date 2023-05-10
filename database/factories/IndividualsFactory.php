@@ -20,7 +20,6 @@ class IndividualsFactory extends Factory
             'email'      => $this->faker->email(),
             'contact'    =>$this->faker->phoneNumber(),
             'status'     => mt_rand(0,1),
-            'create_datetime' => date("Y-m-d H:m:s"),
             'password'   => sha1('123456')
         ];
     }

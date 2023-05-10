@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Events\ClientCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddLoanRequest;
 use App\Models\Cases;
 use App\Models\Client;
 use App\Models\Company;
@@ -43,7 +45,7 @@ class LoanApplication extends Controller
                 "first_name" => $data["first_name"],
                 "last_name" => $data["last_name"],
                 "loan_amount" => $item["loan_amount"],
-                "company" => app("utils")->company($item["company_id"]),
+                "company" => $item["company_id"] ? app("utils")->company($item["company_id"]) : "",
                 "repayment_period" => $item["repayment_period"],
                 "disbursement_date" => $item["disbursement_date"],
                 "case_status" => app("utils")->caseStatus($item["case_status"]),
@@ -53,8 +55,23 @@ class LoanApplication extends Controller
     /**
      * edit
      */
-    public function edit($id)
+    public function details($id)
     {
         return Cases::where("id",$this->decryptID($id))->select(["loan_amount","repayment_period","purpose"])->first();
+    }
+    /**
+     * add new loan by client
+     */
+    public function add(AddLoanRequest $request)
+    {
+        $client = Client::where("email",session("email"))->first();
+        $data = [
+            "loan_amount" => $request["loan_amount"],
+            "repayment_period" => $request["repayment_period"],
+            "purpose" => $request["purpose"]
+        ];
+        $result = $client->cases()->sava($data);
+        event(new ClientCreated(session("email"),"client_create"));
+        return !is_null($result) ? ["success" => "add success"]: ["error" => "add failed"];
     }
 }

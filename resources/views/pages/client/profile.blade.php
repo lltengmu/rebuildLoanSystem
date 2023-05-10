@@ -33,9 +33,9 @@
 @endsection
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"简介"])
     <!-- row -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"简介"])
         <!-- row -->
         <div class="row">
             <div class="col-lg-12">

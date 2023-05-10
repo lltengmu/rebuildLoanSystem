@@ -2,15 +2,22 @@
 
 namespace App\Providers;
 
+use App\Models\Cases;
 use App\Models\Client;
 use App\Models\Config;
+use App\Models\Individuals;
+use App\Models\ServiceProvider as ModelsServiceProvider;
+use App\Observers\CaseObserver;
 use App\Observers\ClientsObserver;
+use App\Observers\IndividualObserver;
+use App\Observers\ServiceProviderObserver;
 use App\Service\CaptchaService;
-use App\Service\CodeService;
+use App\Service\EmailService;
 use App\Service\SmsService;
 use App\Service\UploadService;
 use App\Service\UtilsService;
 use Illuminate\Support\ServiceProvider;
+use Individual;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //注册验证码服务
-        $this->app->instance('code',new CodeService());
+        $this->app->instance('email',new EmailService);
         //注册短信服务
         $this->app->instance('sms',new SmsService);
         //注册文件上传服务
@@ -40,7 +47,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //注册观察者
         Client::observe(ClientsObserver::class);
-        //$config = Config::firstOrNew();
-        //config(['hd' => $config->toArray()]);
+        Cases::observe(CaseObserver::class);
+        ModelsServiceProvider::observe(ServiceProviderObserver::class);
+        Individuals::observe(IndividualObserver::class);
     }
 }

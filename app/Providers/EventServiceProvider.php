@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-
+use App\Events\Logout;
+use App\Listeners\LogoutListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Event;
 use App\Listeners\SendNotificationSubscriber;
@@ -21,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        Logout::class => [
+            LogoutListener::class
+        ]
     ];
     /**
      * register subscriber

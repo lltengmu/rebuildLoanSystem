@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Individuals;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Crypt;
 
 class IndividualSeeder extends Seeder
 {
@@ -19,10 +18,5 @@ class IndividualSeeder extends Seeder
         $client = Individuals::first();
         $client->email = 'individual@qq.com';
         $client->save();
-        //数据填充时生成加密id
-        foreach($all as $item){
-            $item->sys_id = Crypt::encrypt($item->id);
-            $item->save();
-        }
     }
 }

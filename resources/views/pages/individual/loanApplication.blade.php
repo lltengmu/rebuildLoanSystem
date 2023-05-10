@@ -20,9 +20,9 @@
 @endsection
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"貸款申請"])
     <!-- row -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"貸款申請"])
         <div class="row">
             <div class="col-12">
                 <div class="card">

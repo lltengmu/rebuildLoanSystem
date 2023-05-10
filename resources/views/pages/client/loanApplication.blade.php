@@ -20,9 +20,9 @@
 @endsection
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"貸款申請"])
     <!-- row -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"貸款申請"])
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -62,8 +62,9 @@
                 <h5 class="modal-title">編輯</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
-            <div class="modal-body">
-                <form action="">
+            <form id="add-loan-1" class="add-loan">
+                <div class="modal-body">
+
                     <h5 class="text-primary">貸款資料</h5>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -95,12 +96,13 @@
                             </select>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">保存</button>
-            </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -113,7 +115,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form action="">
+                <form class="add-loan">
                     <h5 class="text-primary">貸款資料</h5>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -149,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button type="submit" class="btn btn-primary">保存</button>
             </div>
         </div>
     </div>

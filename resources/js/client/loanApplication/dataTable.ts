@@ -2,7 +2,7 @@ import $ from "jquery";
 import { loading, url } from "../../utils";
 import notification from "../../plugins/notification";
 import 'datatables.net';
-import "bootstrap";
+import "jquery-validation";
 
 
 export default class LoanApplicationDataTable {
@@ -10,6 +10,7 @@ export default class LoanApplicationDataTable {
     constructor() {
         this.registerDataTable();
         this.registerOpration();
+        this.registerFormSubmit()
     }
     private registerDataTable() {
         this.tableInstance = $("#caseTable").DataTable({
@@ -113,7 +114,7 @@ export default class LoanApplicationDataTable {
                     $(`button[id="show-open"]`).click();
                 }
                 $.ajax({
-                    url: url(`/clients/home/edit/${id}`),
+                    url: url(`/clients/home/details/${id}`),
                     method: "post",
                     headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
@@ -124,5 +125,39 @@ export default class LoanApplicationDataTable {
             },
             _viewFile: (id: string) => console.log(`文件查看:id->${id}`),
         }
+    }
+    private registerFormSubmit(){
+        $.validator.setDefaults({ errorClass: "validateErrors" })
+        $.validator.addMethod("selectRequired",function(value,element){
+            return value != "0" ? true : false;
+        });
+        $(`.add-loan`).validate({
+            rules:{
+                "loan_amount" :{
+                    required:true
+                },
+                "repayment_period":{
+                    required:true
+                },
+                "purpose":{
+                    selectRequired:true
+                }
+            },
+            messages:{
+                "loan_amount" :{
+                    required:`请输入`
+                },
+                "repayment_period":{
+                    required:`请输入`
+                },
+                "purpose":{
+                    selectRequired:`请选择`
+                }
+            },
+            submitHandler:(form,event:JQueryEventObject) =>{
+                event.preventDefault()
+                console.log(111);
+            }
+        })
     }
 }

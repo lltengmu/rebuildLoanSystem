@@ -29,9 +29,12 @@ class SendNotificationSubscriber
      */
     public function handleCreatedClient(ClientCreated $event)
     {
-        //可以拿到当前client对象,和场景类别
-        \dump($event->client);
-        \dump($event->category);
+        //得到当前新增client模型
+        $client = $event->client;
+        //得到场景分类
+        $category = $event->category;
+        //根据配置项决定是否发送邮件
+        env("ENABLE_EMAIL_SERVICE") && app("email")->send($client->email,$category);
     }
     /**
      * handle after create loan case

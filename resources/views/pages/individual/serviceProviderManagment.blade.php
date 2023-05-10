@@ -19,9 +19,9 @@
 @endsection
 @section('content')
 <div class="content-body">
-    @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"客户管理"])
     <!-- row -->
     <div class="container-fluid">
+        @include('public.components.crumbs',["title"=>"主菜单","currentPage" =>"客户管理"])
         <div class="row">
             <div class="col-12">
                 <div class="card">

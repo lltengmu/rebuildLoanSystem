@@ -21,7 +21,6 @@ class ServiceProviderFactory extends Factory
             'mobile'     => $this->faker->phoneNumber(),
             "contact"    => $this->faker->phoneNumber(),
             'company_id' => mt_rand(1,2),
-            "create_datetime" =>date("Y-m-d H:m:s"),
             "status" => mt_rand(0,1)
         ];
     }

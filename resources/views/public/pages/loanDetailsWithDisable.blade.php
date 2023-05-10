@@ -462,7 +462,7 @@
                                                     </div>
                                                     <div class="form-group row">
                                                         <label class="col-lg-2 col-form-label text-right px-0" for="case_remark">
-                                                            還款期
+                                                            備注
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">

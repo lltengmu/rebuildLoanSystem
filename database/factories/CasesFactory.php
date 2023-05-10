@@ -32,7 +32,6 @@ class CasesFactory extends Factory
             'disbursement_date' => date('Y-m-d h:i:s'),
             'repayment_period' => mt_rand(1,24),
             'status' => mt_rand(1,5),
-            'create_datetime' => date('Y-m-d h:m:s'),
             'co_signer_first_name' => $this->faker->firstName(),
             'co_signer_last_name' => $this->faker->lastName(),
         ];

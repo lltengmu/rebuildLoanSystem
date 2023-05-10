@@ -1,12 +1,12 @@
 @component('mail::message')
 {{-- Greeting --}}
 @if (! empty($greeting))
-# {{ $greeting }}
+# {{ $greeting }}:
 @else
 @if ($level === 'error')
 # @lang('Whoops!')
 @else
-# @lang('Hello!')
+# @lang('Dear ')
 @endif
 @endif
 
@@ -47,16 +47,4 @@
 {{ config('app.name') }}
 @endif
 
-{{-- Subcopy --}}
-@isset($actionText)
-@slot('subcopy')
-@lang(
-    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:",
-    [
-        'actionText' => $actionText,
-    ]
-) 
-<span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
-@endslot
-@endisset
 @endcomponent

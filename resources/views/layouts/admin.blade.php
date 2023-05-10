@@ -36,7 +36,7 @@
             @case("individual")
                 @include('public.navigation.index')
                 @break
-            @case("client")
+            @case("clients")
                 @include('public.navigation.client')
                 @break
         @endswitch

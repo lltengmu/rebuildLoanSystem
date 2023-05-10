@@ -36,7 +36,7 @@ export default class LoanForm {
                 if(res.errorsObject && !res.success){
                     $("#register").validate().showErrors(res.errorsObject)
                 }
-                //else window.location.href = `/clients/login`
+                else window.location.href = `/clients/login`
             }
         })
     }
