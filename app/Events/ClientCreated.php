@@ -24,6 +24,7 @@ class ClientCreated
      */
     public function __construct(Client $client,string $category)
     {
+        //将参数挂载到事件对象上，以便在订阅者类中可以访问
         $this->client = $client;
         $this->category = $category;
     }
