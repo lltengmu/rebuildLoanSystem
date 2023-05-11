@@ -1,6 +1,11 @@
 @extends("layouts.admin")
 
 @section('styles')
+<!-- Material color picker -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
+<!-- Pick date -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
 <style>
     .mask {
         position: absolute;
@@ -112,12 +117,15 @@
                                     <li class="nav-item">
                                         <a href="#profile-settings" data-toggle="tab" class="nav-link">账户设置</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a href="#password-settings" data-toggle="tab" class="nav-link">密码设置</a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="profile-settings" class="tab-pane fade active show">
                                         <div class="pt-3">
                                             <div class="settings-form">
-                                                <form>
+                                                <form id="editprofile">
                                                     <h5 class="text-primary">基本信息</h5>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
@@ -135,11 +143,11 @@
                                                     </div>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-3">
-                                                            <label for="appellations">稱謂:</label>
-                                                            <select id="appellations" name="appellations" class="form-control">
+                                                            <label for="appellation">稱謂:</label>
+                                                            <select id="appellation" name="appellation" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($appellations as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{$item->id}}" {{ $item->label_tc == $data["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -184,18 +192,14 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-12">
                                                             <label for="area">地區:</label>
                                                             <select id="area" name="area" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($area as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="HKID">身分證明:</label>
-                                                            <input type="text" id="HKID" name="HKID" class="form-control" value="{{ $data['HKID'] }}">
                                                         </div>
                                                     </div>
                                                     <h5 class="text-primary">就業資料</h5>
@@ -205,7 +209,7 @@
                                                             <select type="text" id="job_status" name="job_status" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($job as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -219,9 +223,37 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-12">
+                                                        <div class="form-group col-md-6">
                                                             <label for="company_addres">公司地址:</label>
                                                             <input type="text" id="company_addres" name="company_addres" class="form-control" value="{{ $data['company_addres'] }}">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="salary">薪水:</label>
+                                                            <input type="text" id="salary" name="salary" class="form-control" value="{{ $data['salary'] }}">
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-primary" type="submit">提交</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="password-settings" class="tab-pane fade active show">
+                                        <div class="pt-3">
+                                            <div class="settings-form">
+                                                <form id="settingpassword">
+                                                    <h5 class="text-primary">修改密码:</h5>
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for="old-password">原密码:</label>
+                                                            <input type="text" id="old-password" name="old-password" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="password">新密码:</label>
+                                                            <input type="text" id="new-password" name="new-password" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="password_confirmation">确认新密码:</label>
+                                                            <input type="text" id="password_confirmation" name="password_confirmation" class="form-control">
                                                         </div>
                                                     </div>
                                                     <button class="btn btn-primary" type="submit">提交</button>
@@ -238,4 +270,19 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+<!-- momment js is must -->
+<script src="{{ asset('/focus-premium/focus/vendor/moment/moment.min.js') }}"></script>
+<!-- Material color picker -->
+<script src="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<!-- pickdate -->
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.time.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
+<!-- Material color picker init -->
+<script src="{{ asset('/js/datepicker.js') }}"></script>
+<!-- 业务逻辑文件 -->
+<script src="{{ asset('/js/client/profile/index.js') }}"></script>
 @endsection

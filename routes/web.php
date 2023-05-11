@@ -107,6 +107,7 @@ Route::middleware(['auth'])->group(function () {
         });
         Route::prefix('/profile')->group(function(){
             Route::get("/",[Profile::class,"index"]);
+            Route::post("/edit",[Profile::class,"edit"]);
         });
     });
 });

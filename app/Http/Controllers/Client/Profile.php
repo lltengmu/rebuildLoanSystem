@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClientEditProfileRequest;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\LboAppellations;
@@ -38,5 +39,26 @@ class Profile extends Controller
             "purpose" => $purpose,
             "company" => $company
         ]);
+    }
+    public function edit(ClientEditProfileRequest $request)
+    {
+        $client = Client::where("email",session("email"))->first();
+        $client->appellation = $request["appellation"];
+        $client->mobile = $request["mobile"];
+        $client->nationality = $request["nationality"];
+        $client->date_of_birth = $request["date_of_birth"];
+        $client->addressOne = $request["addressOne"];
+        $client->addressTwo = $request["addressTwo"];
+        $client->unit = $request["unit"];
+        $client->floor = $request["floor"];
+        $client->building = $request["building"];
+        $client->area = $request["area"];
+        $client->job_status = $request["job_status"];
+        $client->salary = $request["salary"];
+        $client->company_name = $request["company_name"];
+        $client->company_contact = $request["company_contact"];
+        $client->company_addres = $request["company_addres"];
+        $client->save();
+        return $client->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
 }
