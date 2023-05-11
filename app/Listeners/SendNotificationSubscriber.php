@@ -33,8 +33,8 @@ class SendNotificationSubscriber
         $client = $event->client;
         //得到场景分类
         $category = $event->category;
-        //根据配置项决定是否发送邮件
-        env("ENABLE_EMAIL_SERVICE") && app("email")->send($client->email,$category);
+        //发送邮件
+        app("email")->send($client->email,$category);
     }
     /**
      * handle after create loan case

@@ -28,7 +28,7 @@ class EmailService
         //处理url
         $url = url("/verification/{$user->sys_id}");
         //向用户发送邮件
-        Notification::send($user,new EmailNotification($title,$content,$url));
+        env("ENABLE_EMAIL_SERVICE") && Notification::send($user,new EmailNotification($title,$content,$url));
     }
     /**
      * get title

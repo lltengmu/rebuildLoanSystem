@@ -34,7 +34,7 @@ class LoginController extends Controller
             //定义session数组
             $user_array = [
                 'user_id' => $user->id,
-                'full_name' => $user->first_name . $user->last_name,
+                'full_name' => $user->last_name . $user->first_name,
                 'identify' => 'individual',
             ];
             //存储session
@@ -56,7 +56,7 @@ class LoginController extends Controller
             //定义session数组
             $user_array = [
                 'user_id' => $user->id,
-                'full_name' => $user->first_name . $user->last_name,
+                'full_name' => $user->last_name . $user->first_name,
                 'identify' => 'clients',
             ];
             //存储session

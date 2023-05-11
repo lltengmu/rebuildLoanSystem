@@ -218,6 +218,7 @@ var LoanApplicationDataTable = /** @class */function () {
    * Define button click event handling functions
    */
   LoanApplicationDataTable.prototype.opration = function () {
+    var _this = this;
     return {
       _edit: function _edit(id) {
         _utils__WEBPACK_IMPORTED_MODULE_1__.loading.open();
@@ -250,7 +251,41 @@ var LoanApplicationDataTable = /** @class */function () {
           },
           error: function error(_error) {}
         });
+        //处理弹窗事件 提交或取消
+        var confirm = document.querySelector("#update button[id=\"save\"]");
+        confirm.onclick = function (e) {
+          return __awaiter(_this, void 0, void 0, function () {
+            var res;
+            return __generator(this, function (_a) {
+              switch (_a.label) {
+                case 0:
+                  e.preventDefault();
+                  return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_1__.ajax)({
+                    url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/home/edit/".concat(id)),
+                    method: "post",
+                    headers: {
+                      "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+                    },
+                    data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#update").serializeArray()
+                  })];
+                case 1:
+                  res = _a.sent();
+                  if (res.errorsObject) {
+                    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#update").validate().showErrors(res.errorsObject);
+                    return [2 /*return*/];
+                  }
+
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()("#update button[id=\"cancel\"]").click();
+                  this.tableInstance.ajax.reload();
+                  if (res.success) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
+                  if (res.failed) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__.notificationError)(res.failed);
+                  return [2 /*return*/];
+              }
+            });
+          });
+        };
       },
+
       _viewFile: function _viewFile(id) {
         return console.log("\u6587\u4EF6\u67E5\u770B:id->".concat(id));
       }
@@ -289,8 +324,11 @@ var LoanApplicationDataTable = /** @class */function () {
                   jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").validate().showErrors(res.errorsObject);
                 }
                 ;
-                if (res.success) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
-                jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add-cancel").click();
+                if (res.success) {
+                  (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add-cancel").click();
+                  this.tableInstance.ajax.reload();
+                }
                 return [2 /*return*/];
             }
           });
@@ -315,7 +353,8 @@ var LoanApplicationDataTable = /** @class */function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "customAlert": () => (/* binding */ customAlert),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "notificationError": () => (/* binding */ notificationError)
 /* harmony export */ });
 /* harmony import */ var notyf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! notyf */ "./node_modules/notyf/notyf.es.js");
 /* harmony import */ var notyf_notyf_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! notyf/notyf.min.css */ "./node_modules/notyf/notyf.min.css");
@@ -342,6 +381,9 @@ var customAlert = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
     background: "#FF1616"
   }]
 });
+var notificationError = function notificationError(message) {
+  return notification.error(message);
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (message) {
   return notification.success(message);
 });

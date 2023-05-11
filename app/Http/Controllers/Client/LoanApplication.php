@@ -37,7 +37,7 @@ class LoanApplication extends Controller
     public function cases()
     {
         $data = Client::where("email", session("email"))->with("cases")->select(["id", "sys_id", "first_name", "last_name"])->get()->toArray()[0];
-        //dd($data);
+        
         return array_map(function ($key, $item) use ($data) {
             return [
                 "num" => $key + 1,
@@ -71,7 +71,18 @@ class LoanApplication extends Controller
             "purpose" => $request["purpose"]
         ]);
         $result = $client->cases()->save($data);
-        // event(new ClientCreated(session("email"), "client_create"));
         return !is_null($result) ? ["success" => "add success"] : ["error" => "add failed"];
+    }
+    /**
+     * edit loan case
+     */
+    public function edit(AddLoanRequest $request,$id)
+    {
+        $case = Cases::find($this->decryptID($id));
+        $case->loan_amount = $request["loan_amount"];
+        $case->repayment_period = $request["repayment_period"];
+        $case->purpose = $request["purpose"];
+        $case->save();
+        return $case->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
 }

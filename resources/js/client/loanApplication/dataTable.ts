@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { ajax, loading, url } from "../../utils";
-import notification from "../../plugins/notification";
+import notification, { notificationError } from "../../plugins/notification";
 import 'datatables.net';
 import "jquery-validation";
 
@@ -122,6 +122,27 @@ export default class LoanApplicationDataTable {
                     success: (res) => handleSuccess(res),
                     error: (error) => { }
                 })
+                //处理弹窗事件 提交或取消
+                const confirm = document.querySelector(`#update button[id="save"]`) as HTMLButtonElement;
+                confirm.onclick = async (e) => {
+                    e.preventDefault();
+                    const res = await ajax({
+                        url: url(`/clients/home/edit/${id}`),
+                        method: "post",
+                        headers: {
+                            "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                        },
+                        data: $(`#update`).serializeArray()
+                    }) as { success: string, failed: string, type?: string, errorsObject?: { [key: string]: string } };
+                    if (res.errorsObject) {
+                        $(`#update`).validate().showErrors(res.errorsObject)
+                        return;
+                    }
+                    $(`#update button[id="cancel"]`).click();
+                    this.tableInstance.ajax.reload();
+                    if (res.success) notification(res.success)
+                    if (res.failed) notificationError(res.failed)
+                }
             },
             _viewFile: (id: string) => console.log(`文件查看:id->${id}`),
         }
@@ -148,8 +169,11 @@ export default class LoanApplicationDataTable {
                 if (res.errorsObject && !res.success) {
                     $(`#add`).validate().showErrors(res.errorsObject)
                 };
-                if(res.success)notification(res.success)
-                $(`#add-cancel`).click();
+                if (res.success) {
+                    notification(res.success)
+                    $(`#add-cancel`).click();
+                    this.tableInstance.ajax.reload();
+                }
             }
         })
     }

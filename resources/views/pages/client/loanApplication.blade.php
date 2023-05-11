@@ -149,8 +149,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="submit" class="btn btn-primary">保存</button>
+                    <button id="cancel" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button id="save" type="submit" class="btn btn-primary">保存</button>
                 </div>
             </form>
         </div>

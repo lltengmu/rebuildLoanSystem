@@ -26,4 +26,6 @@ export const customAlert = new Notyf({
     ]
 });
 
+export const notificationError = (message) => notification.error(message);
+
 export default (message) => notification.success(message);

@@ -202,7 +202,8 @@ var LoanForm = /** @class */function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "customAlert": () => (/* binding */ customAlert),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "notificationError": () => (/* binding */ notificationError)
 /* harmony export */ });
 /* harmony import */ var notyf__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! notyf */ "./node_modules/notyf/notyf.es.js");
 /* harmony import */ var notyf_notyf_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! notyf/notyf.min.css */ "./node_modules/notyf/notyf.min.css");
@@ -229,6 +230,9 @@ var customAlert = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
     background: "#FF1616"
   }]
 });
+var notificationError = function notificationError(message) {
+  return notification.error(message);
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (message) {
   return notification.success(message);
 });
