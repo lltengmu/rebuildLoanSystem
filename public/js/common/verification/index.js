@@ -13101,16 +13101,16 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 //定义业务逻辑类
-var IndividualLogin = /** @class */function () {
-  function IndividualLogin(form) {
+var SetupPassword = /** @class */function () {
+  function SetupPassword(form) {
     this.form = document.querySelector(form);
     this.init();
     console.log();
   }
-  IndividualLogin.prototype.init = function () {
+  SetupPassword.prototype.init = function () {
     this.formValidate();
   };
-  IndividualLogin.prototype.formValidate = function () {
+  SetupPassword.prototype.formValidate = function () {
     var _this = this;
     jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
       errorClass: "validateErrors"
@@ -13145,7 +13145,6 @@ var IndividualLogin = /** @class */function () {
                   name: "id",
                   value: window.location.href.split('/').reverse()[0]
                 });
-                console.log(data);
                 return [4 /*yield*/, (0,_utils_index__WEBPACK_IMPORTED_MODULE_1__.ajax)({
                   url: (0,_utils_index__WEBPACK_IMPORTED_MODULE_1__.url)("/setUpPassword"),
                   method: "post",
@@ -13168,9 +13167,9 @@ var IndividualLogin = /** @class */function () {
     });
   };
 
-  return IndividualLogin;
+  return SetupPassword;
 }();
-new IndividualLogin('#setUpPassword');
+new SetupPassword('#setUpPassword');
 })();
 
 /******/ })()

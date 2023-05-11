@@ -36,9 +36,9 @@ class LoanApplication extends Controller
      */
     public function cases()
     {
-        $data = Client::where("email",session("email"))->with("cases")->select(["id","sys_id","first_name","last_name"])->get()->toArray()[0];
+        $data = Client::where("email", session("email"))->with("cases")->select(["id", "sys_id", "first_name", "last_name"])->get()->toArray()[0];
         //dd($data);
-        return array_map(function($key,$item) use ($data){
+        return array_map(function ($key, $item) use ($data) {
             return [
                 "num" => $key + 1,
                 "case_id" => $item["sys_id"],
@@ -50,28 +50,28 @@ class LoanApplication extends Controller
                 "disbursement_date" => $item["disbursement_date"],
                 "case_status" => app("utils")->caseStatus($item["case_status"]),
             ];
-        },array_keys($data["cases"]),array_values($data["cases"]));
+        }, array_keys($data["cases"]), array_values($data["cases"]));
     }
     /**
      * edit
      */
     public function details($id)
     {
-        return Cases::where("id",$this->decryptID($id))->select(["loan_amount","repayment_period","purpose"])->first();
+        return Cases::where("id", $this->decryptID($id))->select(["loan_amount", "repayment_period", "purpose"])->first();
     }
     /**
      * add new loan by client
      */
     public function add(AddLoanRequest $request)
     {
-        $client = Client::where("email",session("email"))->first();
-        $data = [
+        $client = Client::where("email", session("email"))->first();
+        $data = new Cases([
             "loan_amount" => $request["loan_amount"],
             "repayment_period" => $request["repayment_period"],
             "purpose" => $request["purpose"]
-        ];
-        $result = $client->cases()->sava($data);
-        event(new ClientCreated(session("email"),"client_create"));
-        return !is_null($result) ? ["success" => "add success"]: ["error" => "add failed"];
+        ]);
+        $result = $client->cases()->save($data);
+        // event(new ClientCreated(session("email"), "client_create"));
+        return !is_null($result) ? ["success" => "add success"] : ["error" => "add failed"];
     }
 }

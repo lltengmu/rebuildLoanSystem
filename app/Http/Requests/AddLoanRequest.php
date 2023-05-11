@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\SelectRequired;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddLoanRequest extends FormRequest

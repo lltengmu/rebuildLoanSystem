@@ -5,7 +5,7 @@ import "jquery-validation";
 
 
 //定义业务逻辑类
-class IndividualLogin {
+class SetupPassword {
     private form: HTMLFormElement;
     constructor(form: string) {
         this.form = document.querySelector(form)!;
@@ -40,7 +40,6 @@ class IndividualLogin {
                 //获取表单字段
                 const data = $('#setUpPassword').serializeArray()
                 data.push({ name:"id",value:window.location.href.split('/').reverse()[0] })
-                console.log(data);
                 //发送登录请求
                 const res = await ajax({
                     url:url(`/setUpPassword`),
@@ -59,4 +58,4 @@ class IndividualLogin {
         })
     }
 }
-new IndividualLogin('#setUpPassword')
+new SetupPassword('#setUpPassword')

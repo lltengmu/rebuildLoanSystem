@@ -62,9 +62,59 @@
                 <h5 class="modal-title">編輯</h5>
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
-            <form id="add-loan-1" class="add-loan">
+            <form class="add-loan" id="add">
                 <div class="modal-body">
+                    <h5 class="text-primary">貸款資料</h5>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="loan_amount">
+                                <span>欲申請之貸款額:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" id="loan_amount" name="loan_amount" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="repayment_period">
+                                <span>還款期:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" id="repayment_period" name="repayment_period" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="purpose">
+                                <span>貸款用途:</span>
+                                <span class="text-danger">*</span>
+                            </label>
+                            <select id="purpose" name="purpose" class="form-control">
+                                <option value="0">請選擇</option>
+                                @foreach($purpose as $key=> $item)
+                                <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
+                </div>
+                <div class="modal-footer">
+                    <button id="add-cancel" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- model show detail -->
+<div class="modal fade new-loan" id="showdetails" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">編輯</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <form class="add-loan" id="update">
+                <div class="modal-body">
                     <h5 class="text-primary">貸款資料</h5>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -103,56 +153,6 @@
                     <button type="submit" class="btn btn-primary">保存</button>
                 </div>
             </form>
-        </div>
-    </div>
-</div>
-<!-- model show detail -->
-<div class="modal fade new-loan" id="showdetails" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">編輯</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <form class="add-loan">
-                    <h5 class="text-primary">貸款資料</h5>
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="loan_amount">
-                                <span>欲申請之貸款額:</span>
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" id="loan_amount" name="loan_amount" class="form-control">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="repayment_period">
-                                <span>還款期:</span>
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input type="text" id="repayment_period" name="repayment_period" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-12">
-                            <label for="purpose">
-                                <span>貸款用途:</span>
-                                <span class="text-danger">*</span>
-                            </label>
-                            <select id="purpose" name="purpose" class="form-control">
-                                <option value="0">請選擇</option>
-                                @foreach($purpose as $key=> $item)
-                                <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                <button type="submit" class="btn btn-primary">保存</button>
-            </div>
         </div>
     </div>
 </div>

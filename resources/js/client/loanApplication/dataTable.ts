@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { loading, url } from "../../utils";
+import { ajax, loading, url } from "../../utils";
 import notification from "../../plugins/notification";
 import 'datatables.net';
 import "jquery-validation";
@@ -126,37 +126,30 @@ export default class LoanApplicationDataTable {
             _viewFile: (id: string) => console.log(`文件查看:id->${id}`),
         }
     }
-    private registerFormSubmit(){
+    private registerFormSubmit() {
+        //设置默认配置
         $.validator.setDefaults({ errorClass: "validateErrors" })
-        $.validator.addMethod("selectRequired",function(value,element){
+        //自定义验证规则,这里用不上
+        $.validator.addMethod("selectRequired", function (value, element) {
             return value != "0" ? true : false;
         });
-        $(`.add-loan`).validate({
-            rules:{
-                "loan_amount" :{
-                    required:true
-                },
-                "repayment_period":{
-                    required:true
-                },
-                "purpose":{
-                    selectRequired:true
-                }
-            },
-            messages:{
-                "loan_amount" :{
-                    required:`请输入`
-                },
-                "repayment_period":{
-                    required:`请输入`
-                },
-                "purpose":{
-                    selectRequired:`请选择`
-                }
-            },
-            submitHandler:(form,event:JQueryEventObject) =>{
+        //初始化表单验证
+        $(`#add`).validate({
+            submitHandler: async (form, event: JQueryEventObject) => {
                 event.preventDefault()
-                console.log(111);
+                const res = await ajax({
+                    url: url(`/clients/home/add`),
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    method: "post",
+                    data: $(`#add`).serializeArray()
+                }) as response;
+                if (res.errorsObject && !res.success) {
+                    $(`#add`).validate().showErrors(res.errorsObject)
+                };
+                if(res.success)notification(res.success)
+                $(`#add-cancel`).click();
             }
         })
     }

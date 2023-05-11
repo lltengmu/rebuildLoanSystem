@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Notification;
@@ -20,8 +19,6 @@ use App\Http\Controllers\Resources\CasesController;
 use App\Http\Controllers\Resources\ClientsController;
 use App\Http\Controllers\Resources\IndividualController;
 use App\Http\Controllers\Resources\ServiceProvide;
-use App\Models\Client;
-use App\Notifications\EmailNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
     Route::get("/logout",[LoginController::class,"logout"]);
     //定义individual 路由前缀
-    Route::prefix('/individual')->group(function () {
+    Route::middleware('individual')->prefix('/individual')->group(function () {
         //定义首页路由及api接口
         Route::prefix("/home")->group(function(){
             Route::get('/',[Dashboard::class,'index']);
@@ -96,13 +93,14 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/details/{id}",[IndividualManagement::class,"details"]);
         });
     });
-    Route::prefix("/clients")->group(function(){
+    Route::middleware('client')->prefix("/clients")->group(function(){
         Route::prefix('/home')->group(function(){
             Route::get("/",[ClientLoanApplication::class,"index"]);
             Route::get("/loan-details",[ClientLoanApplication::class,"loanDetails"]);
             Route::get("/cases",[ClientLoanApplication::class,"cases"]);
             Route::post("/details/{id}",[ClientLoanApplication::class,"details"]);
             Route::post("/add",[ClientLoanApplication::class,"add"]);
+            Route::post("/edit/{id}",[ClientLoanApplication::class,"edit"]);
         });
         Route::prefix('/LoanApplicationDetail')->group(function(){
             Route::get("/",[LoanApplicationDetail::class,"index"]);
