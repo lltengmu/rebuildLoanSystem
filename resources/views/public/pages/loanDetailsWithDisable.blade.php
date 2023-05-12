@@ -1,12 +1,6 @@
 @extends('layouts.admin')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
-<!-- Material color picker -->
-<!-- <link href="./vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet"> -->
-<!-- Pick date -->
-<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
-<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
 <style>
     hr {
         margin-top: 0.5rem !important;
@@ -206,22 +200,22 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="setting" role="tabpanel">
-                                <form>
+                                <form id="editCase">
                                     <div class="pt-4 row grid">
                                         <div class="col-xl-6">
                                             <div class="col-lg-12 p-0">
                                                 <h5 class="text-left text-primary">基本个人信息:</h5>
                                                 <section class="alert-light text-left p-2">
                                                     <div class="form-group row">
-                                                        <label class="col-lg-2 col-form-label text-right px-0" for="appellations">
+                                                        <label class="col-lg-2 col-form-label text-right px-0" for="appellation">
                                                             稱謂
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <select class="form-control" id="appellations" name="appellations">
+                                                            <select class="form-control" id="appellation" name="appellation">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($appellations as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["client"]["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["client"]["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -386,6 +380,20 @@
                                                 <h5 class="text-left text-primary">就業資料:</h5>
                                                 <section class="alert-light text-left p-2">
                                                     <div class="form-group row">
+                                                        <label class="col-lg-2 col-form-label text-right px-0" for="job_status">
+                                                            職業
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-control" id="job_status" name="job_status">
+                                                                <option value="0">請選擇</option>
+                                                                @foreach($job as $key=>$item)
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["client"]["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
                                                         <label class="col-lg-2 col-form-label text-right px-0" for="salary">
                                                             每月收入
                                                             <span class="text-danger">*</span>
@@ -488,14 +496,5 @@
 @endsection
 
 @section('javascript')
-<!-- momment js is must -->
-<script src="{{ asset('/focus-premium/focus/vendor/moment/moment.min.js') }}"></script>
-<!-- Material color picker -->
-<script src="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
-<!-- pickdate -->
-<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.js') }}"></script>
-<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.time.js') }}"></script>
-<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
-<!-- Material color picker init -->
-<script src="{{ asset('/js/datepicker.js') }}"></script>
+<script src="{{ asset('/js/individual/approvalDetails/index.js') }}"></script>
 @endsection

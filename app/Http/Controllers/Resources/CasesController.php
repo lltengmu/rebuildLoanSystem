@@ -14,6 +14,7 @@ use App\Models\LboEmployment;
 use App\Models\LboLoanPurpose;
 use Illuminate\Http\Request;
 use App\Exports\Export;
+use App\Http\Requests\IndividualEditCaseRequest;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 
@@ -115,9 +116,15 @@ class CasesController extends Controller
      * @param  \App\Models\Cases  $cases
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cases $cases)
+    public function edit(IndividualEditCaseRequest $request, $id)
     {
-        //
+        $data = $request->all();
+        $case = Cases::where("id",$this->decryptID($id))->first();
+        foreach($data as $key=>$item){
+            $case->$key = $item;
+        }
+        $case->save();
+        return $case->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
 
     /**

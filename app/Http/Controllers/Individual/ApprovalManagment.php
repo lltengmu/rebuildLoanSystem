@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Individual;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\IndividualApprovalEdit;
 use App\Models\Cases;
+use App\Models\Client;
 use App\Models\Company;
 use App\Models\LboAppellations;
 use App\Models\LboDistrict;
@@ -94,5 +96,21 @@ class ApprovalManagment extends Controller
             "purpose" => $purpose,
             "company" => $company
         ]);
+    }
+    /**
+     * approval page edit case 
+     */
+    public function edit(IndividualApprovalEdit $request,$id)
+    {
+        $case = Cases::find($this->decryptID($id));
+        $client = Client::find($case->client_id);
+        $client->appellation = $request["appellation"];
+        $client->area = $request["area"];
+        $client->job_status = $request["job_status"];
+        $client->save();
+        $case->purpose = $request["purpose"];
+        $case->case_remark = $request["case_remark"];
+        $case->save();
+        return $client->wasChanged() || $case->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
 }

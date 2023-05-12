@@ -17,6 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils */ "./resources/js/utils/index.ts");
+/* harmony import */ var _plugins_notification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../plugins/notification */ "./resources/js/plugins/notification/index.ts");
 var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
   function adopt(value) {
     return value instanceof P ? value : new P(function (resolve) {
@@ -135,15 +136,18 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
+
 var AddLoanApplication = /** @class */function () {
-  function AddLoanApplication() {
-    this.registerQueryListener();
-  }
-  AddLoanApplication.prototype.registerQueryListener = function () {
-    var _this = this;
+  function AddLoanApplication(table) {
+    this.table = table;
     jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
       errorClass: "validateErrors"
     });
+    this.registerQueryListener();
+    this.registerFormSubmit();
+  }
+  AddLoanApplication.prototype.registerQueryListener = function () {
+    var _this = this;
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("#query").validate({
       rules: {
         "HKID": {
@@ -209,7 +213,42 @@ var AddLoanApplication = /** @class */function () {
   /**
    *  add loan application form submit function
    */
-  AddLoanApplication.prototype.registerFormSubmit = function () {};
+  AddLoanApplication.prototype.registerFormSubmit = function () {
+    var _this = this;
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#addLoanApplication").validate({
+      submitHandler: function submitHandler(form, event) {
+        return __awaiter(_this, void 0, void 0, function () {
+          var res;
+          return __generator(this, function (_a) {
+            switch (_a.label) {
+              case 0:
+                event.preventDefault();
+                return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_2__.ajax)({
+                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_2__.url)("/individual/loanApplication/add"),
+                  method: "post",
+                  headers: {
+                    "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+                  },
+                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#addLoanApplication").serializeArray()
+                })];
+              case 1:
+                res = _a.sent();
+                if (res.errorsObject && !res.success) jquery__WEBPACK_IMPORTED_MODULE_0___default()("#addLoanApplication").validate().showErrors(res.errorsObject);
+                if (res.success) {
+                  jquery__WEBPACK_IMPORTED_MODULE_0___default()("#queryModalCenter button[id=\"cancel\"]").click();
+                  this.table.tableInstance.ajax.reload();
+                  (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_3__["default"])(res.success);
+                }
+                ;
+                if (res.failed) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_3__.notificationError)(res.failed);
+                return [2 /*return*/];
+            }
+          });
+        });
+      }
+    });
+  };
+
   return AddLoanApplication;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddLoanApplication);
@@ -401,7 +440,8 @@ var LoanApplicationDataTable = /** @class */function () {
             return "\n                                <div class=\"bootstrap-badge center\">\n                                    <span class=\"badge badge-danger\">\u7533\u8ACB\u5931\u6557\uFF0C\u8ACB\u91CD\u65B0\u9078\u64C7\u670D\u52D9\u63D0\u4F9B\u5546</span>\n                                </div>\n                            ";
           }
           var id = row.id;
-          return "\n                            <div class=\"form-group\" style=\"margin-top:0.65rem;\">\n                                <select class=\"form-control form-control-sm\" id=\"select-case-status-".concat(id, "\" onchange=\"_handleCaseStatus('").concat(id, "')\">\n                                    <option value=\"1\" ").concat(row.case_status == 1 ? "selected" : "", ">\u63D0\u4EA4</option>\n                                    <option value=\"2\" ").concat(row.case_status == 2 ? "selected" : "", ">\u8F49\u4EA4\u5230\u670D\u52D9\u63D0\u4F9B\u8005</option>\n                                    <option value=\"5\" ").concat(row.case_status == 5 ? "selected" : "", ">\u7533\u8ACB\u5931\u8D25</option>\n                                </select>\n                            </div>\n                        ");
+          var company = row.company;
+          return "\n                            <div class=\"form-group\" style=\"margin-top:0.65rem;\">\n                                <select class=\"form-control form-control-sm\" id=\"select-case-status-".concat(id, "\" onchange=\"_handleCaseStatus('").concat(id, "','").concat(company, "')\">\n                                    <option value=\"1\" ").concat(row.case_status == 1 ? "selected" : "", ">\u63D0\u4EA4</option>\n                                    <option value=\"2\" ").concat(row.case_status == 2 ? "selected" : "", ">\u8F49\u4EA4\u5230\u670D\u52D9\u63D0\u4F9B\u8005</option>\n                                    <option value=\"5\" ").concat(row.case_status == 5 ? "selected" : "", ">\u7533\u8ACB\u5931\u8D25</option>\n                                </select>\n                            </div>\n                        ");
         }
       }, {
         targets: [8],
@@ -446,7 +486,7 @@ var LoanApplicationDataTable = /** @class */function () {
         return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/loanApplication/export/".concat(id));
       },
       _view: function _view(id) {
-        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/details/".concat(id));
+        return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/loanApplication/details/".concat(id));
       },
       _viewFile: function _viewFile(id) {
         return console.log("\u6587\u4EF6\u67E5\u770B:id->".concat(id));
@@ -462,18 +502,25 @@ var LoanApplicationDataTable = /** @class */function () {
         return window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/loanApplication/exportAll");
       },
       //改变case状态
-      _handleCaseStatus: function _handleCaseStatus(id) {
+      _handleCaseStatus: function _handleCaseStatus(id, company) {
         return __awaiter(_this, void 0, void 0, function () {
           var value, _token;
           var _this = this;
           return __generator(this, function (_a) {
             switch (_a.label) {
               case 0:
-                //开启加载动画
-                _utils__WEBPACK_IMPORTED_MODULE_1__.loading.open();
                 value = document.querySelector("#select-case-status-".concat(id)).value;
                 _token = document.querySelector("meta[name=\"csrf-token\"]").content;
-                console.log(value);
+                if (value == "2" && company == "null") {
+                  _plugins_notification__WEBPACK_IMPORTED_MODULE_2__.customAlert.open({
+                    type: "warning",
+                    message: "请先选择服务提供商"
+                  });
+                  this.tableInstance.ajax.reload();
+                  return [2 /*return*/];
+                }
+                //开启加载动画
+                _utils__WEBPACK_IMPORTED_MODULE_1__.loading.open();
                 //发送请求
                 return [4 /*yield*/, new Promise(function (resolve, reject) {
                   jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
@@ -30154,8 +30201,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.onload = function () {
-  new _dataTable__WEBPACK_IMPORTED_MODULE_0__["default"]();
-  new _addLoanApplication__WEBPACK_IMPORTED_MODULE_1__["default"]();
+  var dataTable = new _dataTable__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  new _addLoanApplication__WEBPACK_IMPORTED_MODULE_1__["default"](dataTable);
 };
 })();
 

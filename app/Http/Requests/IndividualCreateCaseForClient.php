@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\SelectRequired;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoanFormRequest extends FormRequest
+class IndividualCreateCaseForClient extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,14 +24,7 @@ class LoanFormRequest extends FormRequest
      */
     public function rules()
     {
-        return $this->decideRequestMethod();
-    }
-    /**
-     * return rules depend on request method if post validate id else ignore
-     */
-    public function decideRequestMethod():array
-    {
-        $validateArray = [
+        return [
             "email" => ["required","email","unique:clients","unique:individuals","unique:service_providers"],
             "last_name" => "required",
             "first_name" =>"required",
@@ -44,6 +37,7 @@ class LoanFormRequest extends FormRequest
             "unit"  => "required",
             "floor" => "required",
             "building" =>"required",
+            "company_id" => [new SelectRequired()],
             "area" => [new SelectRequired()],
             "HKID" => "required|unique:clients",
             "job_status" => [new SelectRequired()],
@@ -55,11 +49,7 @@ class LoanFormRequest extends FormRequest
             "repayment_period" => "required|integer",
             "purpose" => [new SelectRequired()],
         ];
-        return request()->isMethod('get') ? [] : $validateArray;
     }
-    /**
-     * error massage
-     */
     public function messages()
     {
         return [

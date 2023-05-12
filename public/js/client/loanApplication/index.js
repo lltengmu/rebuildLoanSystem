@@ -183,7 +183,6 @@ var LoanApplicationDataTable = /** @class */function () {
         "width": "5%"
       }, {
         targets: [8],
-        width: "25%",
         render: function render(data, type, row, meta) {
           var id = row.case_id;
           return "\n                            <div class=\"opration\">\n                                <button type=\"button\" class=\"btn btn-outline-info\" onclick=\"_edit('".concat(id, "')\">\u7F16\u8F91</button>\n                                <button type=\"button\" class=\"btn btn-outline-secondary\" onclick=\"_viewFile('").concat(id, "')\">\u6587\u4EF6\u67E5\u770B</button>\n                            </div>\n                        ");

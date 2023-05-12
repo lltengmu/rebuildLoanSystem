@@ -205,22 +205,22 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="setting" role="tabpanel">
-                                <form>
+                                <form id="edit">
                                     <div class="pt-4 row grid">
                                         <div class="col-xl-6">
                                             <div class="col-lg-12 p-0">
                                                 <h5 class="text-left text-primary">基本个人信息:</h5>
                                                 <section class="alert-light text-left p-2">
                                                     <div class="form-group row">
-                                                        <label class="col-lg-2 col-form-label text-right px-0" for="appellations">
+                                                        <label class="col-lg-2 col-form-label text-right px-0" for="appellation">
                                                             稱謂
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <select class="form-control" id="appellations" name="appellations">
+                                                            <select class="form-control" disabled id="appellation" name="appellation">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($appellations as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["client"]["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["client"]["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -232,7 +232,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ $data['client']['last_name'] }}">
+                                                            <input type="text" disabled class="form-control" id="last_name" name="last_name" value="{{ $data['client']['last_name'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -241,7 +241,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ $data['client']['first_name'] }}">
+                                                            <input type="text" disabled class="form-control" id="first_name" name="first_name" value="{{ $data['client']['first_name'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -250,7 +250,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="mobile" name="mobile" value="{{ $data['client']['mobile'] }}">
+                                                            <input type="text" disabled class="form-control" id="mobile" name="mobile" value="{{ $data['client']['mobile'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -259,7 +259,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="email" name="email" value="{{ $data['client']['email'] }}">
+                                                            <input type="text" disabled class="form-control" id="email" name="email" value="{{ $data['client']['email'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -268,7 +268,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="nationality" name="nationality" value="{{ $data['client']['nationality'] }}">
+                                                            <input type="text" disabled class="form-control" id="nationality" name="nationality" value="{{ $data['client']['nationality'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -277,7 +277,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ $data['client']['date_of_birth'] }}">
+                                                            <input type="text" disabled class="form-control" id="date_of_birth" name="date_of_birth" value="{{ $data['client']['date_of_birth'] }}">
                                                         </div>
                                                     </div>
                                                 </section>
@@ -293,7 +293,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="unit" name="unit" value="{{ $data['client']['unit'] }}">
+                                                            <input type="text" disabled class="form-control" id="unit" name="unit" value="{{ $data['client']['unit'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -302,7 +302,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="floor" name="floor" value="{{ $data['client']['floor'] }}">
+                                                            <input type="text" disabled class="form-control" id="floor" name="floor" value="{{ $data['client']['floor'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -311,7 +311,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="building" name="building" value="{{ $data['client']['building'] }}">
+                                                            <input type="text" disabled class="form-control" id="building" name="building" value="{{ $data['client']['building'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -320,7 +320,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="addressOne" name="addressOne" value="{{ $data['client']['addressOne'] }}">
+                                                            <input type="text" disabled class="form-control" id="addressOne" name="addressOne" value="{{ $data['client']['addressOne'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -329,7 +329,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="addressTwo" name="addressTwo" value="{{ $data['client']['addressTwo'] }}">
+                                                            <input type="text" disabled class="form-control" id="addressTwo" name="addressTwo" value="{{ $data['client']['addressTwo'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -338,7 +338,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <select class="form-control" id="area" name="area">
+                                                            <select class="form-control" disabled id="area" name="area">
                                                                 <option value="">請選擇</option>
                                                                 @foreach($area as $key=>$item)
                                                                 <option value="{{ $item->id }}" {{ $item->label_tc == $data['client']['area'] ? 'selected' : '' }}>{{ $item->label_tc }}</option>
@@ -352,7 +352,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="HKID" name="HKID" value="{{ $data['client']['HKID'] }}">
+                                                            <input type="text" disabled class="form-control" id="HKID" name="HKID" value="{{ $data['client']['HKID'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -385,12 +385,26 @@
                                                 <h5 class="text-left text-primary">就業資料:</h5>
                                                 <section class="alert-light text-left p-2">
                                                     <div class="form-group row">
+                                                        <label class="col-lg-2 col-form-label text-right px-0" for="job_status">
+                                                            職業
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-lg-10">
+                                                            <select class="form-control" id="job_status" disabled name="job_status">
+                                                                <option value="0">請選擇</option>
+                                                                @foreach($job as $key=>$item)
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["client"]["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
                                                         <label class="col-lg-2 col-form-label text-right px-0" for="salary">
                                                             每月收入
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="salary" name="salary" value="{{ $data['client']['salary'] }}">
+                                                            <input type="text" disabled class="form-control" id="salary" name="salary" value="{{ $data['client']['salary'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -399,7 +413,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="company_name" name="company_name" value="{{ $data['client']['company_name'] }}">
+                                                            <input type="text" disabled class="form-control" id="company_name" name="company_name" value="{{ $data['client']['company_name'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -408,7 +422,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="company_contact" name="company_contact" value="{{ $data['client']['company_contact'] }}">
+                                                            <input type="text" disabled class="form-control" id="company_contact" name="company_contact" value="{{ $data['client']['company_contact'] }}">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -417,7 +431,7 @@
                                                             <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-lg-10">
-                                                            <input type="text" class="form-control" id="company_addres" name="company_addres" value="{{ $data['client']['company_addres'] }}">
+                                                            <input type="text" disabled class="form-control" id="company_addres" name="company_addres" value="{{ $data['client']['company_addres'] }}">
                                                         </div>
                                                     </div>
                                                 </section>
@@ -459,6 +473,15 @@
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group row">
+                                                        <label class="col-lg-2 col-form-label text-right px-0" for="purpose">
+                                                            備注
+                                                            <span class="text-danger">*</span>
+                                                        </label>
+                                                        <div class="col-lg-10">
+                                                            <textarea class="form-control" name="case_remark" id="case_remark" rows="4">{{ $data["case_remark"] }}</textarea>
+                                                        </div>
+                                                    </div>
 
                                                 </section>
                                             </div>
@@ -489,4 +512,5 @@
 <script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
 <!-- Material color picker init -->
 <script src="{{ asset('/js/datepicker.js') }}"></script>
+<script src="{{ asset('/js/individual/loandetails/index.js') }}"></script>
 @endsection

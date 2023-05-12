@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use Illuminate\Http\Request;
 use App\Exports\Export;
+use App\Http\Requests\IndividualCreateCaseForClient;
+use App\Http\Requests\LoanFormRequest;
+use App\Models\Cases;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClientsController extends Controller
@@ -30,9 +33,37 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(IndividualCreateCaseForClient $request)
     {
-        //
+        $client = Client::create([
+            "appellation" => $request["appellation"],
+            "first_name" => $request["first_name"],
+            "last_name" => $request["last_name"],
+            "mobile" => $request["mobile"],
+            "email" => $request["email"],
+            "nationality" => $request["nationality"],
+            "date_of_birth" => $request["date_of_birth"],
+            "unit" => $request["unit"],
+            "floor" => $request["floor"],
+            "building" => $request["building"],
+            "addressOne" => $request["addressOne"],
+            "addressTwo" => $request["addressTwo"],
+            "area" => $request["area"],
+            "HKID" => $request["HKID"],
+            "job_status" => $request["job_status"],
+            "salary" => $request["salary"],
+            "company_name" => $request["company_name"],
+            "company_contact" => $request["company_contact"],
+            "company_addres" => $request["company_addres"],
+        ]);
+        $case = new Cases([
+            "loan_amount" => $request["loan_amount"],
+            "repayment_period" => $request["repayment_period"],
+            "purpose" => $request["purpose"],
+            "company_id" => $request["company_id"]
+        ]);
+        $client->cases()->save($case);
+        return ["success" => "add success"];
     }
 
     /**

@@ -49,6 +49,7 @@ class UtilsService
      */
     public function jobStatus($value)
     {
+        
         if (!is_int($value)) {
             return LboEmployment::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
         }

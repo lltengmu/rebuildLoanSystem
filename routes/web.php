@@ -48,7 +48,6 @@ Route::middleware(['auth'])->group(function () {
     //这里不能使用individual，与下面路由冲突，所以使用admin
     Route::resource('admin',IndividualController::class);
     //公共路由
-    Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
     Route::get("/logout",[LoginController::class,"logout"]);
     //定义individual 路由前缀
     Route::middleware('individual')->prefix('/individual')->group(function () {
@@ -68,12 +67,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get("/exportAll",[CasesController::class,"exportAll"]);
             Route::post("/exits",[LoanApplication::class,"clientExits"]);
             Route::post("/uploadExcel",[LoanApplication::class,"uploadExcel"]);
+            Route::get("/details/{id}",[CasesController::class,"loanApplicationDetail"]);
+            Route::post("/edit/{id}",[CasesController::class,"edit"]);
+            Route::post("/add",[ClientsController::class,"create"]);
         });
         //定义贷款申请页面路由
         Route::prefix('/approvalManagment')->group(function(){
             Route::get("/",[ApprovalManagment::class,"index"]);
             Route::post("/cases",[ApprovalManagment::class,"cases"]);
             Route::get("/details/{id}",[ApprovalManagment::class,"details"]);
+            Route::post("/edit/{id}",[ApprovalManagment::class,"edit"]);
         });
         //定义客户管理页面路由
         Route::prefix('/clientsManagment')->group(function(){
@@ -108,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/profile')->group(function(){
             Route::get("/",[Profile::class,"index"]);
             Route::post("/edit",[Profile::class,"edit"]);
+            Route::post("/change-password",[Profile::class,"ChangePassword"]);
         });
     });
 });

@@ -27,7 +27,7 @@ label.validateErrors{
 /*
  * disable form element css
 */
-input[disabled],select[disable]{
+input[disabled],select[disabled]{
     background-color: #ecf0f1 !important;
 }
 .pointer{

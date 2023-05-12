@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ChangePassword;
 use App\Http\Requests\ClientEditProfileRequest;
 use App\Models\Client;
 use App\Models\Company;
@@ -60,5 +61,12 @@ class Profile extends Controller
         $client->company_addres = $request["company_addres"];
         $client->save();
         return $client->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
+    }
+    public function ChangePassword(ChangePassword $request)
+    {
+         $client = Client::where("email",session("email"))->first();
+         $client->password = sha1($request["password"]);
+         $client->save();
+         return $client->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
 }

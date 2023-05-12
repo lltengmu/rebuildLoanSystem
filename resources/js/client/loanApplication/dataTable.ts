@@ -60,7 +60,6 @@ export default class LoanApplicationDataTable {
                 },
                 {
                     targets: [8],
-                    width: "25%",
                     render: (data, type, row, meta) => {
                         const id = row.case_id;
                         return `

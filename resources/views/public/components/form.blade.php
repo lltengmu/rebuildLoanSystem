@@ -8,7 +8,7 @@
                         <span class="text-danger">*</span>
                     </label>
                     <div class="col-lg-8">
-                        <select class="form-control" id="job_status" name="job_status">
+                        <select class="form-control" id="appellation" name="appellation">
                             <option value="0">請選擇</option>
                             @foreach($appellations as $key=>$item)
                             <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
@@ -216,12 +216,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-lg-4 col-form-label" for="job_status">
+                <label class="col-lg-4 col-form-label" for="purpose">
                     貸款用途
                     <span class="text-danger">*</span>
                 </label>
                 <div class="col-lg-8">
-                    <select class="form-control" id="job_status" name="job_status">
+                    <select class="form-control" id="purpose" name="purpose">
                         <option value="0">請選擇</option>
                         @foreach($purpose as $key=>$item)
                         <option value="{{ $item->id }}">{{ $item->label_tc }}</option>

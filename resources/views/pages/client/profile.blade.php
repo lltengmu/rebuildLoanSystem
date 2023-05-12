@@ -237,7 +237,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="password-settings" class="tab-pane fade active show">
+                                    <div id="password-settings" class="tab-pane fade">
                                         <div class="pt-3">
                                             <div class="settings-form">
                                                 <form id="settingpassword">
@@ -245,15 +245,15 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-12">
                                                             <label for="old-password">原密码:</label>
-                                                            <input type="text" id="old-password" name="old-password" class="form-control">
+                                                            <input type="password" id="old-password" name="old-password" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label for="password">新密码:</label>
-                                                            <input type="text" id="new-password" name="new-password" class="form-control">
+                                                            <input type="password" id="password" name="password" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <label for="password_confirmation">确认新密码:</label>
-                                                            <input type="text" id="password_confirmation" name="password_confirmation" class="form-control">
+                                                            <input type="password" id="password_confirmation" name="password_confirmation" class="form-control">
                                                         </div>
                                                     </div>
                                                     <button class="btn btn-primary" type="submit">提交</button>

@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { loading, url } from "../../utils";
-import notification from "../../plugins/notification";
+import notification, { customAlert } from "../../plugins/notification";
 import 'datatables.net';
 
 
@@ -69,9 +69,10 @@ export default class LoanApplicationDataTable {
                             `
                         }
                         const id = row.id
+                        const company = row.company
                         return `
                             <div class="form-group" style="margin-top:0.65rem;">
-                                <select class="form-control form-control-sm" id="select-case-status-${id}" onchange="_handleCaseStatus('${id}')">
+                                <select class="form-control form-control-sm" id="select-case-status-${id}" onchange="_handleCaseStatus('${id}','${company}')">
                                     <option value="1" ${row.case_status == 1 ? "selected" : ""}>提交</option>
                                     <option value="2" ${row.case_status == 2 ? "selected" : ""}>轉交到服務提供者</option>
                                     <option value="5" ${row.case_status == 5 ? "selected" : ""}>申請失败</option>
@@ -120,7 +121,7 @@ export default class LoanApplicationDataTable {
     private opration(): { [key: string]: Function } {
         return {
             _export: (id: string) => window.location.href = url(`/individual/loanApplication/export/${id}`),
-            _view: (id: string) => window.location.href = url(`/details/${id}`),
+            _view: (id: string) => window.location.href = url(`/individual/loanApplication/details/${id}`),
             _viewFile: (id: string) => console.log(`文件查看:id->${id}`),
             _del: (id: string) => {
                 const confirmButton = document.querySelector(".modal .confirm") as HTMLButtonElement
@@ -129,13 +130,18 @@ export default class LoanApplicationDataTable {
             //"导出所有"事件处理函数
             _handleExportAll: () => window.location.href = url(`/individual/loanApplication/exportAll`),
             //改变case状态
-            _handleCaseStatus: async (id:string) => {
-                //开启加载动画
-                loading.open();
+            _handleCaseStatus: async (id: string, company: string) => {
+                
                 //获取数据
                 const value = (document.querySelector(`#select-case-status-${id}`)! as HTMLSelectElement).value;
                 const _token = (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content;
-                console.log(value);
+                if (value == "2" && company == "null") {
+                    customAlert.open({ type: "warning", message: "请先选择服务提供商" })
+                    this.tableInstance.ajax.reload();
+                    return;
+                }
+                //开启加载动画
+                loading.open();
                 //发送请求
                 await new Promise((resolve, reject) => {
                     $.ajax({

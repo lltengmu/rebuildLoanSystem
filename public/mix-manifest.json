@@ -7,6 +7,8 @@
     "/js/individual/clientsManagment/index.js": "/js/individual/clientsManagment/index.js",
     "/js/individual/serviceProviderManagement/index.js": "/js/individual/serviceProviderManagement/index.js",
     "/js/individual/individualManagment/index.js": "/js/individual/individualManagment/index.js",
+    "/js/individual/loandetails/index.js": "/js/individual/loandetails/index.js",
+    "/js/individual/approvalDetails/index.js": "/js/individual/approvalDetails/index.js",
     "/js/client/loanApplication/index.js": "/js/client/loanApplication/index.js",
     "/js/client/loanDetails/index.js": "/js/client/loanDetails/index.js",
     "/js/common/Form/index.js": "/js/common/Form/index.js",

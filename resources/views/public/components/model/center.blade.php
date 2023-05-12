@@ -35,6 +35,10 @@
                         @include('public.components.form')
                     </div>
                 </div>
+                <div class="modal-footer hidden">
+                    <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确认</button>
+                </div>
             </div>
         </div>
     </div>
