@@ -1,6 +1,11 @@
 @extends("layouts.admin")
 
 @section('styles')
+<!-- Material color picker -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
+<!-- Pick date -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
 <style>
     .mask {
         position: absolute;
@@ -117,15 +122,15 @@
                                     <div id="profile-settings" class="tab-pane fade active show">
                                         <div class="pt-3">
                                             <div class="settings-form">
-                                                <form>
+                                                <form id="editClientInfomation">
                                                     <h5 class="text-primary">基本信息</h5>
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
-                                                            <label for="appellations">稱謂:</label>
-                                                            <select id="appellations" name="appellations" class="form-control">
+                                                            <label for="appellation">稱謂:</label>
+                                                            <select id="appellation" name="appellation" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($appellations as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["appellation"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -189,7 +194,7 @@
                                                             <select id="area" name="area" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($area as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["area"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -205,7 +210,7 @@
                                                             <select type="text" id="job_status" name="job_status" class="form-control">
                                                                 <option value="0">請選擇</option>
                                                                 @foreach($job as $key => $item)
-                                                                <option value="0" {{ $item->label_tc == $data["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
+                                                                <option value="{{ $item->id }}" {{ $item->label_tc == $data["job_status"] ? "selected" : "" }}>{{ $item->label_tc }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -238,4 +243,18 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+<!-- momment js is must -->
+<script src="{{ asset('/focus-premium/focus/vendor/moment/moment.min.js') }}"></script>
+<!-- Material color picker -->
+<script src="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<!-- pickdate -->
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.time.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
+<!-- Material color picker init -->
+<script src="{{ asset('/js/datepicker.js') }}"></script>
+<script src="{{ asset('/js/individual/EditClientInfomation/index.js') }}"></script>
 @endsection

@@ -303,7 +303,7 @@ var customAlert = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
   },
   types: [{
     type: "warning",
-    background: "#FFAA16"
+    className: "alert alert-warning"
   }, {
     type: "error",
     background: "#FF1616"

@@ -1,75 +1,75 @@
 <form class="form-valide" id="addLoanApplication">
     <div class="row">
         <div class="col-xl-3">
-            <h5>基本个人资料:</h1>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-4">
-                        稱謂
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <select class="form-control" id="appellation" name="appellation">
-                            <option value="0">請選擇</option>
-                            @foreach($appellations as $key=>$item)
-                            <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+            <h5>基本个人资料:</h5>
+            <div class="form-group row">
+                <label class="col-form-label col-lg-4">
+                    稱謂
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <select class="form-control" id="appellation" name="appellation">
+                        <option value="0">請選擇</option>
+                        @foreach($appellations as $key=>$item)
+                        <option value="{{ $item->id }}">{{ $item->label_tc }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="last_name">
-                        姓氏
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="last_name" name="last_name">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="last_name">
+                    姓氏
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="last_name" name="last_name">
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="first_name">
-                        名字
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="first_name" name="first_name">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="first_name">
+                    名字
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="first_name" name="first_name">
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="mobile">
-                        電話號碼
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="mobile" name="mobile">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="mobile">
+                    電話號碼
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="mobile" name="mobile">
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="email">
-                        電郵地址
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="email" name="email">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="email">
+                    電郵地址
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="email" name="email">
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="nationality">
-                        國籍
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="nationality" name="nationality">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="nationality">
+                    國籍
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="nationality" name="nationality">
                 </div>
-                <div class="form-group row">
-                    <label class="col-lg-4 col-form-label" for="date_of_birth">
-                        出生日期
-                        <span class="text-danger">*</span>
-                    </label>
-                    <div class="col-lg-8">
-                        <input type="text" class="form-control" id="date_of_birth" name="date_of_birth">
-                    </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-lg-4 col-form-label" for="date_of_birth">
+                    出生日期
+                    <span class="text-danger">*</span>
+                </label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="date_of_birth" name="date_of_birth">
                 </div>
+            </div>
         </div>
         <div class="col-xl-3">
             <h5>住宅地址:</h5>

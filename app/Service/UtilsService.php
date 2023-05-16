@@ -12,17 +12,36 @@ use Exception;
 
 class UtilsService
 {
+    protected $appellationArr;
+    protected $caseStatusArr;
+    protected $companyArr;
+    protected $jobStatusArr;
+    /**
+     * init labels data
+     */
+    public function init()
+    {
+        $this->appellationArr = LboAppellations::all()->toArray();
+        $this->caseStatusArr = LboCaseStatus::all()->toArray();
+        $this->companyArr = Company::all()->toArray();
+        $this->jobStatusArr = Company::all()->toArray();
+    }
     /**
      * @return appellation id or label_tc
      */
     public function appellation($value)
     {
-        //如果传递的不是数字，则默认是需要获取id
         if (!is_int($value)) {
-            return LboAppellations::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->appellationArr as $key => $item) {
+                if ($item["label_tc"] || $item["label_en"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是label
+            foreach ($this->appellationArr as $key => $item) {
+                if ($item["id"] == $value) return $item["label_tc"];
+            }
         }
-        //否则返回字符串
-        return LboAppellations::where("id", $value)->first()->label_tc;
     }
     /**
      * @return case_status id
@@ -49,7 +68,7 @@ class UtilsService
      */
     public function jobStatus($value)
     {
-        
+
         if (!is_int($value)) {
             return LboEmployment::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
         }

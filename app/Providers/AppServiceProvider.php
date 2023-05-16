@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         //注册文件上传服务
         $this->app->instance('upload', new UploadService);
         //注册工具助手服务
-        $this->app->instance("utils",new UtilsService);
+        $this->app->instance("utils",new UtilsService());
     }
 
     /**
@@ -45,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        app("utils")->init();
         //注册观察者
         Client::observe(ClientsObserver::class);
         Cases::observe(CaseObserver::class);

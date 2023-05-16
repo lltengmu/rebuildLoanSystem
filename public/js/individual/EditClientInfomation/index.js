@@ -1,10 +1,10 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./resources/js/client/profile/formSubmit.ts":
-/*!***************************************************!*\
-  !*** ./resources/js/client/profile/formSubmit.ts ***!
-  \***************************************************/
+/***/ "./resources/js/individual/EditClientInfomation/formSubmit.ts":
+/*!********************************************************************!*\
+  !*** ./resources/js/individual/EditClientInfomation/formSubmit.ts ***!
+  \********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -137,48 +137,18 @@ var __generator = undefined && undefined.__generator || function (thisArg, body)
 
 
 
-var FormSubmit = /** @class */function () {
-  function FormSubmit() {
+var IndividualEditClientInfo = /** @class */function () {
+  function IndividualEditClientInfo() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
       errorClass: "validateErrors"
     });
-    this.registerEditForm();
-    this.registerChangePassword();
+    this.registerForm();
   }
-  FormSubmit.prototype.registerEditForm = function () {
+  IndividualEditClientInfo.prototype.registerForm = function () {
     var _this = this;
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editprofile").validate({
-      submitHandler: function submitHandler(form, e) {
-        return __awaiter(_this, void 0, void 0, function () {
-          var res;
-          return __generator(this, function (_a) {
-            switch (_a.label) {
-              case 0:
-                e.preventDefault();
-                return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_1__.ajax)({
-                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/profile/edit"),
-                  method: "post",
-                  headers: {
-                    "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
-                  },
-                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editprofile").serializeArray()
-                })];
-              case 1:
-                res = _a.sent();
-                if (res.errorsObject && !res.success) jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editprofile").validate().showErrors(res.errorsObject);
-                if (res.success) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
-                if (res.failed) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__.notificationError)(res.failed);
-                return [2 /*return*/];
-            }
-          });
-        });
-      }
-    });
-  };
-
-  FormSubmit.prototype.registerChangePassword = function () {
-    var _this = this;
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#settingpassword").validate({
+    var id = window.location.href.split("/").reverse()[0];
+    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editClientInfomation").serializeArray());
+    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editClientInfomation").validate({
       submitHandler: function submitHandler(form, event) {
         return __awaiter(_this, void 0, void 0, function () {
           var res;
@@ -187,16 +157,16 @@ var FormSubmit = /** @class */function () {
               case 0:
                 event.preventDefault();
                 return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_1__.ajax)({
-                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/profile/change-password"),
+                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/clientsManagment/edit/".concat(id)),
                   method: "post",
                   headers: {
                     "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
                   },
-                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#settingpassword").serializeArray()
+                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editClientInfomation").serializeArray()
                 })];
               case 1:
                 res = _a.sent();
-                if (res.errorsObject && !res.success) jquery__WEBPACK_IMPORTED_MODULE_0___default()("#settingpassword").validate().showErrors(res.errorsObject);
+                if (res.errorsObject && !res.success) jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editClientInfomation").validate().showErrors(res.errorsObject);
                 if (res.success) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
                 if (res.failed) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__.notificationError)(res.failed);
                 return [2 /*return*/];
@@ -207,9 +177,9 @@ var FormSubmit = /** @class */function () {
     });
   };
 
-  return FormSubmit;
+  return IndividualEditClientInfo;
 }();
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormSubmit);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IndividualEditClientInfo);
 
 /***/ }),
 
@@ -14108,14 +14078,14 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
 "use strict";
-/*!**********************************************!*\
-  !*** ./resources/js/client/profile/index.ts ***!
-  \**********************************************/
+/*!***************************************************************!*\
+  !*** ./resources/js/individual/EditClientInfomation/index.ts ***!
+  \***************************************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _formSubmit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formSubmit */ "./resources/js/client/profile/formSubmit.ts");
+/* harmony import */ var _formSubmit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./formSubmit */ "./resources/js/individual/EditClientInfomation/formSubmit.ts");
 
 window.onload = function () {
-  return new _formSubmit__WEBPACK_IMPORTED_MODULE_0__["default"]();
+  new _formSubmit__WEBPACK_IMPORTED_MODULE_0__["default"]();
 };
 })();
 

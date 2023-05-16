@@ -82,6 +82,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/clientsManagment')->group(function(){
             Route::get("/",[ClientManagment::class,"index"]);
             Route::get("/details/{id}",[ClientManagment::class,"details"]);
+            Route::post("/edit/{id}",[ClientManagment::class,"editClientInfo"]);
             Route::get("/exportAll",[ClientsController::class,"exportAll"]);
             Route::get("/export/{id}",[ClientsController::class,"exportClientInformation"]);
         });

@@ -17,7 +17,7 @@ export const customAlert = new Notyf({
     types:[
         {
             type:"warning",
-            background:"#FFAA16"
+            className:"alert alert-warning"
         },
         {
             type:"error",

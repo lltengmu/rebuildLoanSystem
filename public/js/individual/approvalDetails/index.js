@@ -147,8 +147,6 @@ var IndividualApprolvalDetails = /** @class */function () {
   IndividualApprolvalDetails.prototype.registerForm = function () {
     var _this = this;
     var id = window.location.href.split("/").reverse()[0];
-    console.log(id);
-    console.log(jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editCase").serializeArray());
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("#editCase").validate({
       submitHandler: function submitHandler(form, event) {
         return __awaiter(_this, void 0, void 0, function () {
@@ -216,7 +214,7 @@ var customAlert = new notyf__WEBPACK_IMPORTED_MODULE_0__.Notyf({
   },
   types: [{
     type: "warning",
-    background: "#FFAA16"
+    className: "alert alert-warning"
   }, {
     type: "error",
     background: "#FF1616"

@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Resources;
 use App\Models\Cases;
 use App\Models\Client;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreCasesRequest;
-use App\Http\Requests\UpdateCasesRequest;
 use App\Models\Company;
 use App\Models\LboAppellations;
 use App\Models\LboDistrict;
@@ -84,17 +82,6 @@ class CasesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreCasesRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreCasesRequest $request)
     {
         //
     }
