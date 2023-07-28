@@ -37,7 +37,6 @@ class ClientFactory extends Factory
             'company_name' => $this->faker->company(),
             'company_contact' => $this->faker->phoneNumber(),
             'company_addres' => $this->faker->address(),
-            'update_datetime' => date('Y-m-d h:i:s'),
             'status'   => mt_rand(0,1)
         ];
     }

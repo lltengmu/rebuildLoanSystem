@@ -17,7 +17,6 @@ class ClientsObserver
     {
         $data = $client->toArray();
         $client->sys_id = Crypt::encrypt($data["id"]);
-        $client->create_datetime = date("Y-m-d H:m:s");
         $client->save();
     }
 }

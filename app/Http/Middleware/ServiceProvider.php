@@ -17,7 +17,7 @@ class ServiceProvider
     public function handle(Request $request, Closure $next)
     {
         $identify = session("_user_info.identify"); 
-        if ($identify == "serviceProvider") {
+        if ($identify == "sp") {
             return $next($request);
         }
         return redirect("/{$identify}/home");

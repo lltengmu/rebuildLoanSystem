@@ -49,7 +49,7 @@ class LoanApplication extends Controller
             'disbursement_date',
             'repayment_period',
             'status',
-            'create_datetime'
+            'created_at'
         ])->get()->toArray();
 
         //数据处理
@@ -63,7 +63,7 @@ class LoanApplication extends Controller
                 "company" => !empty($item["company"]) ? $item["company"]["name"] : null,
                 "disbursement_date" => $item["disbursement_date"],
                 "repayment_period" => $item["repayment_period"],
-                "create_datetime" => $item["create_datetime"],
+                "created_at" => $item["created_at"],
                 "case_status"     => $item["case_status"],
             ];
         }, array_keys($caseTable), array_values($caseTable));
@@ -71,11 +71,12 @@ class LoanApplication extends Controller
     }
     /**
      * query client is exits
+     * @return json
      */
     public function clientExits(ClientExitsRequest $request)
     {
         //已经过表单验证
-        return ['success' => "沒有此用戶，請爲新用戶創建貸款"];
+        return $this->success(message:"沒有此用戶，請爲新用戶創建貸款",data:null);
     }
     /**
      * import excel

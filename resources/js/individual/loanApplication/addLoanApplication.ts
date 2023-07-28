@@ -1,6 +1,6 @@
 import $, { error } from 'jquery';
 import "jquery-validation";
-import { loading, url, ajax } from "../../utils";
+import { loading, url, ajax, showErrors, parse } from "../../utils";
 import notification, { notificationError } from "../../plugins/notification";
 export default class AddLoanApplication {
     private HKID;
@@ -24,20 +24,31 @@ export default class AddLoanApplication {
                 const el = $("#query")
                 error.appendTo(el)
             },
-            submitHandler: async (form, event: JQueryEventObject) => {
+            submitHandler: (form, event: JQueryEventObject) => {
                 event.preventDefault();
                 //把HKID 存储起来
                 $(`#query`).serializeArray().forEach((item) => {
                     if (item.name == "HKID") this.HKID = item.value
                 })
-                //发起请求
-                const res = await ajax({
-                    url: url("/individual/loanApplication/exits"),
+                $.ajax({
+                    url: url(`/individual/loanApplication/exits`),
                     method: "post",
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
                     data: $(`#query`).serializeArray(),
-                }) as response
-                if (res.errorsObject && !res.success) $("#query").validate().showErrors(res.errorsObject)
-                else this.toStepTwo();
+                    success: (res) => {
+                        if (res.status == "success") this.toStepTwo()
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#query`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
             }
         });
     }
@@ -61,24 +72,31 @@ export default class AddLoanApplication {
      */
     private registerFormSubmit() {
         $(`#addLoanApplication`).validate({
-            submitHandler: async (form, event: JQueryEventObject) => {
+            submitHandler: (form, event: JQueryEventObject) => {
                 event.preventDefault();
-                const res = await ajax({
+                $.ajax({
                     url: url(`/individual/loanApplication/add`),
                     method: "post",
                     headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                     },
-                    data: $(`#addLoanApplication`).serializeArray()
-                }) as { success?: string, failed: string, type: string, errorsObject: { [key: string]: string } }
-
-                if (res.errorsObject && !res.success) $(`#addLoanApplication`).validate().showErrors(res.errorsObject);
-                if (res.success) {
-                    $(`#queryModalCenter button[id="cancel"]`).click();
-                    this.table.tableInstance.ajax.reload();
-                    notification(res.success)
-                };
-                if (res.failed) notificationError(res.failed);
+                    data: $(`#addLoanApplication`).serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#queryModalCenter button[id="cancel"]`).click();
+                            this.table.tableInstance.ajax.reload();
+                            notification(res.message)
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#addLoanApplication`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
             }
         })
     }

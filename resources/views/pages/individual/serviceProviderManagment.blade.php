@@ -30,7 +30,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row mb-2 btns">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id">創建賬號</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-sp">創建賬號</button>
                         </div>
                         <table id="serviceProviderTable" class="display" style="min-width: 845px">
                             <thead>
@@ -60,6 +60,74 @@
                 <button type="button" class="btn btn-secondary confirm">是的，删除</button>
                 <button type="button" class="btn btn-primary" id="cancel" data-dismiss="modal">再想想</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- create sp modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="create-sp">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="individual-create-sp">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">電郵 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">密碼 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="password" name="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">名字 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="first_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">姓名 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="last_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">電話 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="mobile" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">常聯係人 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="contact" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2" for="company_id">服務提供商<span style="color: red;">*</span>:</label>
+                        <div class="col-sm-10">
+                            <select name="company_id" class="form-control">
+                                <option value="0">請選擇</option>
+                                @foreach($company as $key=>$item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel-modal">取消</button>
+                        <button type="submit" class="btn btn-primary">確認</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>

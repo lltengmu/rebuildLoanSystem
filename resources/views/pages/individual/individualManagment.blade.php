@@ -26,11 +26,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">ServiceProvide Managment</h4>
+                        <h4 class="card-title">用戶管理</h4>
                     </div>
                     <div class="card-body">
                         <div class="row mb-2 btns">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#id">創建賬號</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-admin">創建賬號</button>
                         </div>
                         <table id="individualTable" class="display" style="min-width: 845px">
                             <thead>
@@ -66,6 +66,63 @@
 </div>
 <!-- drawer -->
 @include('public.components.model.drawer-2')
+
+<!-- create admin modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="create-admin">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新增管理员</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <form id="individual-create-admin">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">電郵 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="email" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">密碼 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="password" name="password" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">名字 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="first_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">姓名 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="last_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">電話 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="mobile" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">常聯係人 <span style="color: red;">*</span></label>
+                        <div class="col-sm-10">
+                            <input type="text" name="contact" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancel-modal">取消</button>
+                        <button type="submit" class="btn btn-primary">確認</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('javascript')

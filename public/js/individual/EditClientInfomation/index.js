@@ -379,10 +379,7 @@ var handleError = function handleError(error, callback) {
       var message = item;
       errorsObject_1[key] = message[0];
     });
-    callback({
-      type: "表单验证错误",
-      errorsObject: errorsObject_1
-    });
+    callback(__assign({}, errorsObject_1));
   } else if (error.status == 500) {
     throw new ReferenceError("后端服务器错误!");
   }
@@ -407,6 +404,53 @@ var ajax = function ajax(options) {
 
 /***/ }),
 
+/***/ "./resources/js/utils/formValidate.ts":
+/*!********************************************!*\
+  !*** ./resources/js/utils/formValidate.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "registerFormValidation": () => (/* binding */ registerFormValidation),
+/* harmony export */   "showErrors": () => (/* binding */ showErrors)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * 配置表单验证的默认配置项
+ */
+jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
+  errorClass: "validateErrors"
+});
+/**
+ *
+ * @param queryElement 查询DOM的字符串
+ * @param handleSubmit 自定义数据提交的回调函数
+ */
+var registerFormValidation = function registerFormValidation(queryElement, handleSubmit) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate({
+    submitHandler: function submitHandler(form, event) {
+      return handleSubmit(form, event);
+    }
+  });
+};
+/**
+ *
+ * @param queryElement
+ * @param errorMessage
+ */
+var showErrors = function showErrors(queryElement, errorMessage) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate().showErrors(errorMessage);
+};
+
+/***/ }),
+
 /***/ "./resources/js/utils/index.ts":
 /*!*************************************!*\
   !*** ./resources/js/utils/index.ts ***!
@@ -418,11 +462,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ajax": () => (/* reexport safe */ _ajax__WEBPACK_IMPORTED_MODULE_0__["default"]),
 /* harmony export */   "loading": () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "registerFormValidation": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.registerFormValidation),
+/* harmony export */   "registerFunction": () => (/* reexport safe */ _registerFunction__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "showErrors": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.showErrors),
 /* harmony export */   "url": () => (/* reexport safe */ _url__WEBPACK_IMPORTED_MODULE_1__["default"])
 /* harmony export */ });
 /* harmony import */ var _ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajax */ "./resources/js/utils/ajax.ts");
 /* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/js/utils/url.ts");
 /* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading */ "./resources/js/utils/loading.ts");
+/* harmony import */ var _formValidate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./formValidate */ "./resources/js/utils/formValidate.ts");
+/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parse */ "./resources/js/utils/parse.ts");
+/* harmony import */ var _registerFunction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registerFunction */ "./resources/js/utils/registerFunction.ts");
+
+
+
 
 
 
@@ -463,6 +517,60 @@ var Loading = /** @class */function () {
   return Loading;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new Loading());
+
+/***/ }),
+
+/***/ "./resources/js/utils/parse.ts":
+/*!*************************************!*\
+  !*** ./resources/js/utils/parse.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (responseErrors) {
+  var errors = {};
+  Object.entries(responseErrors).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    errors[key] = value[0];
+  });
+  return errors;
+});
+
+/***/ }),
+
+/***/ "./resources/js/utils/registerFunction.ts":
+/*!************************************************!*\
+  !*** ./resources/js/utils/registerFunction.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (options) {
+  var exits = false;
+  //检查window对象 是否与点击事件函数命名冲突
+  Object.entries(window).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    if (Object.keys(options).includes(key)) exits = true;
+  });
+  //冲突则抛出异常
+  if (exits) throw new ReferenceError("自定义函数与window对象内置函数或属性冲突");
+  //否则注册函数
+  else Object.entries(options).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    return globalThis[key] = value;
+  });
+});
 
 /***/ }),
 

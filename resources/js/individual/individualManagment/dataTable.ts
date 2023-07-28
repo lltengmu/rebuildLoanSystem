@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { loading, url } from "../../utils";
+import { loading, parse, registerFormValidation, showErrors, url } from "../../utils";
 import notification from "../../plugins/notification";
 import 'datatables.net';
 
@@ -10,6 +10,7 @@ export default class DataTables {
     constructor() {
         this.registerDataTable();
         this.registerOpration();
+        this.registerFormValidate()
     }
     private registerDataTable() {
         this.tableInstance = $("#individualTable").DataTable({
@@ -21,36 +22,17 @@ export default class DataTables {
                 headers: {
                     "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                 },
-                dataSrc: (myJson) => {
-                    console.log(myJson);
-                    return myJson;
-                },
+                dataSrc: (myJson) => myJson,
             },
             columns: [
-                {
-                    "data": "num"
-                },
-                {
-                    "data": "first_name"
-                },
-                {
-                    "data": "last_name"
-                },
-                {
-                    "data": "email"
-                },
-                {
-                    "data":"mobile"
-                },
-                {
-                    "data":"contact"
-                },
-                {
-                    "data": "status"
-                },
-                {
-                    "data": "operate"
-                }
+                { "data": "num" },
+                { "data": "first_name" },
+                { "data": "last_name" },
+                { "data": "email" },
+                { "data": "mobile" },
+                { "data": "contact" },
+                { "data": "status" },
+                { "data": "operate" }
             ],
             columnDefs: [
                 {
@@ -70,7 +52,6 @@ export default class DataTables {
                 },
                 {
                     targets: [7],
-                    width: "25%",
                     render: (data, type, row, meta) => {
                         const id = row.id;
                         return `
@@ -107,30 +88,29 @@ export default class DataTables {
         return {
             //查看详情
             _view: (id: string) => {
+                globalThis["admin_id"] = id;
                 loading.open();
-                //获取数据之后的事件处理函数
-                const handleSuccess = (res) => {
-                    const response = res as { company_id?: string, contact?: number, email?: string, first_name?: string, last_name?: string, mobile?: number }
-                    Object.entries(response).forEach(([key, value]) => {
-                        const dom = document.querySelector(`#${key}`)
-                        if (dom?.tagName == "SELECT") {
-                            const el = dom as HTMLSelectElement;
-                            el.selectedIndex = Number(value);
-                        } else {
-                            const el = dom as HTMLInputElement;
-                            el.value = value as string;
-                        }
-                    })
-                    loading.close()
-                    $(`button[id="open"]`).click();
-                }
                 $.ajax({
                     url: url(`/individual/individualManagement/details/${id}`),
                     method: "get",
                     headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                     },
-                    success: (res) => handleSuccess(res),
+                    success: (res) => {
+                        const response = res as { company_id?: string, contact?: number, email?: string, first_name?: string, last_name?: string, mobile?: number }
+                        Object.entries(response).forEach(([key, value]) => {
+                            const dom = document.querySelector(`#${key}`)
+                            if (dom?.tagName == "SELECT") {
+                                const el = dom as HTMLSelectElement;
+                                el.selectedIndex = Number(value);
+                            } else {
+                                const el = dom as HTMLInputElement;
+                                el.value = value as string;
+                            }
+                        })
+                        loading.close()
+                        $(`button[id="open"]`).click();
+                    },
                     error: (error) => { }
                 })
             },
@@ -195,5 +175,67 @@ export default class DataTables {
                 }
             }
         });
+    }
+    private registerFormValidate() {
+        registerFormValidation(
+            `#individual-create-admin`,
+            (form, event) => {
+
+                event.preventDefault();
+                $.ajax({
+                    url: url(`/individual/individualManagement/add-admin`),
+                    method: "post",
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    data: $(`#individual-create-admin`).serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#create-admin #cancel-modal`).click()
+                            $(`#individual-create-admin`).find("input").val("")
+                            this.tableInstance.ajax.reload()
+                            notification(res.message)
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#individual-create-admin`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
+            }
+        )
+        registerFormValidation(
+            `#admin-details`,
+            (form, event) => {
+                event.preventDefault();
+                $.ajax({
+                    url: url(`/individual/individualManagement/edit-admin/${globalThis["admin_id"]}`),
+                    method: "post",
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    data: $(`#admin-details`).serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#drawer #cancel`).click()
+                            this.tableInstance.ajax.reload()
+                            notification(res.message)
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#admin-details`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
+            }
+        )
     }
 }

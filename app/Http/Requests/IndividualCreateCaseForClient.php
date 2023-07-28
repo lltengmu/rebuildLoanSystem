@@ -14,7 +14,7 @@ class IndividualCreateCaseForClient extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return (Boolean) session("email");
     }
 
     /**
@@ -41,9 +41,9 @@ class IndividualCreateCaseForClient extends FormRequest
             "area" => [new SelectRequired()],
             "HKID" => "required|unique:clients",
             "job_status" => [new SelectRequired()],
-            "salary" => "required",
+            "salary" => ["required","integer"],
             "company_name" => "required",
-            "company_contact" => "required",
+            "company_contact" => ["required","integer"],
             "company_addres" => "required",
             "loan_amount" => "required|integer",
             "repayment_period" => "required|integer",
@@ -81,6 +81,8 @@ class IndividualCreateCaseForClient extends FormRequest
             "loan_amount.integer" =>"无效的貸款額，请输入整数",
             "repayment_period.required" =>"请输入",
             "repayment_period.integer" =>"无效的還款期，请输入整数",
+            "salary.integer" => "无效的输入，请输入数字",
+            "company_contact.integer" =>"无效的联系方式,请输入如：手机号" 
         ];
     }
 }

@@ -19,7 +19,7 @@
                     <h4 class="text-center mb-4">serviceProvider login</h4>
                     <form id="login-form">
                         @csrf
-                        <input type="hidden" name="_identify" value="serviceProvider">
+                        <input type="hidden" name="_identify" value="sp">
                         <div class="form-group">
                             <label><strong>电邮</strong></label>
                             <input type="text" id="email" name="email" class="form-control" placeholder="请输入电子邮箱">
@@ -53,7 +53,7 @@
                         </div>
                     </form>
                     <div class="new-account mt-3">
-                        <p>Don't have an account? <a class="text-primary" href="./page-register.html">Sign up</a></p>
+                        <p>Don't have an account? <a class="text-primary" href="#">Sign up</a></p>
                     </div>
                 </div>
             </div>

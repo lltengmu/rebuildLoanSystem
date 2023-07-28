@@ -18,121 +18,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_notification__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../plugins/notification */ "./resources/js/plugins/notification/index.ts");
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
 /* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_3__);
-var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-  function adopt(value) {
-    return value instanceof P ? value : new P(function (resolve) {
-      resolve(value);
-    });
-  }
-  return new (P || (P = Promise))(function (resolve, reject) {
-    function fulfilled(value) {
-      try {
-        step(generator.next(value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function rejected(value) {
-      try {
-        step(generator["throw"](value));
-      } catch (e) {
-        reject(e);
-      }
-    }
-    function step(result) {
-      result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-    }
-    step((generator = generator.apply(thisArg, _arguments || [])).next());
-  });
-};
-var __generator = undefined && undefined.__generator || function (thisArg, body) {
-  var _ = {
-      label: 0,
-      sent: function sent() {
-        if (t[0] & 1) throw t[1];
-        return t[1];
-      },
-      trys: [],
-      ops: []
-    },
-    f,
-    y,
-    t,
-    g;
-  return g = {
-    next: verb(0),
-    "throw": verb(1),
-    "return": verb(2)
-  }, typeof Symbol === "function" && (g[Symbol.iterator] = function () {
-    return this;
-  }), g;
-  function verb(n) {
-    return function (v) {
-      return step([n, v]);
-    };
-  }
-  function step(op) {
-    if (f) throw new TypeError("Generator is already executing.");
-    while (g && (g = 0, op[0] && (_ = 0)), _) try {
-      if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-      if (y = 0, t) op = [op[0] & 2, t.value];
-      switch (op[0]) {
-        case 0:
-        case 1:
-          t = op;
-          break;
-        case 4:
-          _.label++;
-          return {
-            value: op[1],
-            done: false
-          };
-        case 5:
-          _.label++;
-          y = op[1];
-          op = [0];
-          continue;
-        case 7:
-          op = _.ops.pop();
-          _.trys.pop();
-          continue;
-        default:
-          if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-            _ = 0;
-            continue;
-          }
-          if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-            _.label = op[1];
-            break;
-          }
-          if (op[0] === 6 && _.label < t[1]) {
-            _.label = t[1];
-            t = op;
-            break;
-          }
-          if (t && _.label < t[2]) {
-            _.label = t[2];
-            _.ops.push(op);
-            break;
-          }
-          if (t[2]) _.ops.pop();
-          _.trys.pop();
-          continue;
-      }
-      op = body.call(thisArg, _);
-    } catch (e) {
-      op = [6, e];
-      y = 0;
-    } finally {
-      f = t = 0;
-    }
-    if (op[0] & 5) throw op[1];
-    return {
-      value: op[0] ? op[1] : void 0,
-      done: true
-    };
-  }
-};
 
 
 
@@ -145,37 +30,32 @@ var IndividualViewLoanDetails = /** @class */function () {
     this.registerForm();
   }
   IndividualViewLoanDetails.prototype.registerForm = function () {
-    var _this = this;
     var id = window.location.href.split("/").reverse()[0];
     jquery__WEBPACK_IMPORTED_MODULE_0___default()("#edit").validate({
       submitHandler: function submitHandler(form, event) {
-        return __awaiter(_this, void 0, void 0, function () {
-          var res;
-          return __generator(this, function (_a) {
-            switch (_a.label) {
-              case 0:
-                event.preventDefault();
-                return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_1__.ajax)({
-                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/loanApplication/edit/".concat(id)),
-                  method: "post",
-                  headers: {
-                    "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
-                  },
-                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#edit").serializeArray()
-                })];
-              case 1:
-                res = _a.sent();
-                if (res.errorsObject && !res.success) jquery__WEBPACK_IMPORTED_MODULE_0___default()("#edit").validate().showErrors(res.errorsObject);
-                if (res.success) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
-                if (res.failed) (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__.notificationError)(res.failed);
-                return [2 /*return*/];
+        event.preventDefault();
+        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/individual/loanApplication/edit/".concat(id)),
+          method: "post",
+          headers: {
+            "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+          },
+          data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#edit").serializeArray(),
+          success: function success(res) {
+            console.log(res);
+            if (res.status == "success") {
+              (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.message);
             }
-          });
+          },
+          error: function error(_error) {
+            if (_error.status == 422) {
+              (0,_utils__WEBPACK_IMPORTED_MODULE_1__.showErrors)("#edit", (0,_utils__WEBPACK_IMPORTED_MODULE_1__.parse)(_error.responseJSON.errors));
+            }
+          }
         });
       }
     });
   };
-
   return IndividualViewLoanDetails;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IndividualViewLoanDetails);
@@ -378,10 +258,7 @@ var handleError = function handleError(error, callback) {
       var message = item;
       errorsObject_1[key] = message[0];
     });
-    callback({
-      type: "表单验证错误",
-      errorsObject: errorsObject_1
-    });
+    callback(__assign({}, errorsObject_1));
   } else if (error.status == 500) {
     throw new ReferenceError("后端服务器错误!");
   }
@@ -406,6 +283,53 @@ var ajax = function ajax(options) {
 
 /***/ }),
 
+/***/ "./resources/js/utils/formValidate.ts":
+/*!********************************************!*\
+  !*** ./resources/js/utils/formValidate.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "registerFormValidation": () => (/* binding */ registerFormValidation),
+/* harmony export */   "showErrors": () => (/* binding */ showErrors)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * 配置表单验证的默认配置项
+ */
+jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
+  errorClass: "validateErrors"
+});
+/**
+ *
+ * @param queryElement 查询DOM的字符串
+ * @param handleSubmit 自定义数据提交的回调函数
+ */
+var registerFormValidation = function registerFormValidation(queryElement, handleSubmit) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate({
+    submitHandler: function submitHandler(form, event) {
+      return handleSubmit(form, event);
+    }
+  });
+};
+/**
+ *
+ * @param queryElement
+ * @param errorMessage
+ */
+var showErrors = function showErrors(queryElement, errorMessage) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate().showErrors(errorMessage);
+};
+
+/***/ }),
+
 /***/ "./resources/js/utils/index.ts":
 /*!*************************************!*\
   !*** ./resources/js/utils/index.ts ***!
@@ -417,11 +341,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ajax": () => (/* reexport safe */ _ajax__WEBPACK_IMPORTED_MODULE_0__["default"]),
 /* harmony export */   "loading": () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "registerFormValidation": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.registerFormValidation),
+/* harmony export */   "registerFunction": () => (/* reexport safe */ _registerFunction__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "showErrors": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.showErrors),
 /* harmony export */   "url": () => (/* reexport safe */ _url__WEBPACK_IMPORTED_MODULE_1__["default"])
 /* harmony export */ });
 /* harmony import */ var _ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajax */ "./resources/js/utils/ajax.ts");
 /* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/js/utils/url.ts");
 /* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading */ "./resources/js/utils/loading.ts");
+/* harmony import */ var _formValidate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./formValidate */ "./resources/js/utils/formValidate.ts");
+/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parse */ "./resources/js/utils/parse.ts");
+/* harmony import */ var _registerFunction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registerFunction */ "./resources/js/utils/registerFunction.ts");
+
+
+
 
 
 
@@ -462,6 +396,60 @@ var Loading = /** @class */function () {
   return Loading;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new Loading());
+
+/***/ }),
+
+/***/ "./resources/js/utils/parse.ts":
+/*!*************************************!*\
+  !*** ./resources/js/utils/parse.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (responseErrors) {
+  var errors = {};
+  Object.entries(responseErrors).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    errors[key] = value[0];
+  });
+  return errors;
+});
+
+/***/ }),
+
+/***/ "./resources/js/utils/registerFunction.ts":
+/*!************************************************!*\
+  !*** ./resources/js/utils/registerFunction.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (options) {
+  var exits = false;
+  //检查window对象 是否与点击事件函数命名冲突
+  Object.entries(window).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    if (Object.keys(options).includes(key)) exits = true;
+  });
+  //冲突则抛出异常
+  if (exits) throw new ReferenceError("自定义函数与window对象内置函数或属性冲突");
+  //否则注册函数
+  else Object.entries(options).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    return globalThis[key] = value;
+  });
+});
 
 /***/ }),
 

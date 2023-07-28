@@ -16,6 +16,28 @@
     ::-webkit-input-placeholder {
         color: #bdc3c7;
     }
+
+    .upload-block {
+        transition: .2s ease-in;
+    }
+
+    .upload-block:hover {
+        background-color: #ddd;
+        cursor: pointer;
+        color: white;
+    }
+
+    .attachment-title {
+        display: inline-block;
+        width: 200px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .single-attachment:hover{
+        cursor: pointer;
+        background: white !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -157,6 +179,31 @@
     </div>
 </div>
 <button type="button" class="btn btn-primary hidden" id="show-open" data-toggle="modal" data-target="#showdetails">創建貸款</button>
+
+<!-- upload attachment model button-->
+<button type="hidden" class="btn btn-primary" id="upload-modal" data-toggle="modal" data-target="#upload-attachment">refuse</button>
+<!-- upload attachment model-->
+<div class="modal fade delete-modal" tabindex="-1" role="dialog" aria-hidden="true" id="upload-attachment">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="card m-0">
+                <div class="card-header">
+                    <h5 class="card-title">文件列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row grid m-0" id="render"></div>
+                </div>
+                <div class="card-footer text-center upload-block" id="upload-block">
+                    <i class="fa fa-folder" style="font-size: 24px;"></i>
+                    <p class="m-0">upload file</p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary hidden" id="cancel" data-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary hidden" id="check">確認</button>
+        </div>
+    </div>
+</div>
+
 @include('public.components.uploadFile')
 @endsection
 

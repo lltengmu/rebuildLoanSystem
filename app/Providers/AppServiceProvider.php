@@ -8,6 +8,7 @@ use App\Models\Config;
 use App\Models\Individuals;
 use App\Models\ServiceProvider as ModelsServiceProvider;
 use App\Observers\CaseObserver;
+use App\Observers\CasesObserver;
 use App\Observers\ClientsObserver;
 use App\Observers\IndividualObserver;
 use App\Observers\ServiceProviderObserver;
@@ -46,10 +47,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         app("utils")->init();
-        //注册观察者
+        Cases::observe(CasesObserver::class);
         Client::observe(ClientsObserver::class);
-        Cases::observe(CaseObserver::class);
-        ModelsServiceProvider::observe(ServiceProviderObserver::class);
         Individuals::observe(IndividualObserver::class);
+        ModelsServiceProvider::observe(ServiceProviderObserver::class);
     }
 }

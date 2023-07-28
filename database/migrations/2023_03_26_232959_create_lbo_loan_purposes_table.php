@@ -18,6 +18,7 @@ class CreateLboLoanPurposesTable extends Migration
             $table->string('label_tc')->comment("中文名称");
             $table->string('label_en')->comment("英文名称");
             $table->boolean('status')->default(1);
+            $table->timestamps();
         });
     }
 

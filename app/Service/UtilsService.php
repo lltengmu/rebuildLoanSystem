@@ -16,6 +16,10 @@ class UtilsService
     protected $caseStatusArr;
     protected $companyArr;
     protected $jobStatusArr;
+    protected $LboEmployment;
+    protected $LboLoanPurpose;
+    protected $LboDistrict;
+    protected $LboCaseStatus;
     /**
      * init labels data
      */
@@ -24,7 +28,10 @@ class UtilsService
         $this->appellationArr = LboAppellations::all()->toArray();
         $this->caseStatusArr = LboCaseStatus::all()->toArray();
         $this->companyArr = Company::all()->toArray();
-        $this->jobStatusArr = Company::all()->toArray();
+        $this->LboEmployment = LboEmployment::all()->toArray();
+        $this->LboLoanPurpose = LboLoanPurpose::all()->toArray();
+        $this->LboDistrict = LboDistrict::all()->toArray();
+        $this->LboCaseStatus = LboCaseStatus::all()->toArray();
     }
     /**
      * @return appellation id or label_tc
@@ -48,10 +55,21 @@ class UtilsService
      */
     public function caseStatus($value)
     {
+        // if (!is_int($value)) {
+        //     return LboCaseStatus::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+        // }
+        // return LboCaseStatus::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
-            return LboCaseStatus::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->LboCaseStatus as $key => $item) {
+                if ($item["label_tc"] || $item["label_en"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是label
+            foreach ($this->LboCaseStatus as $key => $item) {
+                if ($item["id"] == $value) return $item["label_tc"];
+            }
         }
-        return LboCaseStatus::where("id", $value)->first()->label_tc;
     }
     /**
      * @return company id
@@ -59,9 +77,16 @@ class UtilsService
     public function company($value)
     {
         if (!is_int($value)) {
-            return Company::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->companyArr as $key => $item) {
+                if ($item["name"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是name
+            foreach ($this->companyArr as $key => $item) {
+                if ($item["id"] == $value) return $item["name"];
+            }
         }
-        return Company::where("id", $value)->first()->name;
     }
     /**
      * @return job_status id or label_tc
@@ -69,30 +94,63 @@ class UtilsService
     public function jobStatus($value)
     {
 
+        // if (!is_int($value)) {
+        //     return LboEmployment::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+        // }
+        // return LboEmployment::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
-            return LboEmployment::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->LboEmployment as $key => $item) {
+                if ($item["label_tc"] || $item["label_en"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是label
+            foreach ($this->LboEmployment as $key => $item) {
+                if ($item["id"] == $value) return $item["label_tc"];
+            }
         }
-        return LboEmployment::where("id", $value)->first()->label_tc;
     }
     /**
      * @return purpose id or label_tc
      */
     public function purpose($value)
     {
+        // if (!is_int($value)) {
+        //     return LboLoanPurpose::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+        // }
+        // return LboLoanPurpose::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
-            return LboLoanPurpose::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->LboLoanPurpose as $key => $item) {
+                if ($item["label_tc"] || $item["label_en"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是label
+            foreach ($this->LboLoanPurpose as $key => $item) {
+                if ($item["id"] == $value) return $item["label_tc"];
+            }
         }
-        return LboLoanPurpose::where("id", $value)->first()->label_tc;
     }
     /**
      * @return area id or label_tc
      */
     public function area($value)
     {
+        // if (!is_int($value)) {
+        //     return LboDistrict::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+        // }
+        // return LboDistrict::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
-            return LboDistrict::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
+            //如果传递的不是数字，则默认是需要获取id
+            foreach ($this->LboDistrict as $key => $item) {
+                if ($item["label_tc"] || $item["label_en"] == $value) return $item["id"];
+            }
+        } else {
+            //如果传递的是id，则需要获取的是label
+            foreach ($this->LboDistrict as $key => $item) {
+                if ($item["id"] == $value) return $item["label_tc"];
+            }
         }
-        return LboDistrict::where("id", $value)->first()->label_tc;
     }
     /**
      * get breweo name

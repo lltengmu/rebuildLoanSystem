@@ -1,2 +1,6 @@
 import DataTableManagement  from "./dataTable";
-window.onload = () =>new DataTableManagement();
+import FormSubmit from "./formSubmit";
+window.onload = () =>{
+    const dataTableMana = new DataTableManagement()
+    new FormSubmit(dataTableMana.tableInstance);
+};

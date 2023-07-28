@@ -11,6 +11,7 @@ export default class LoanApplicationDataTable {
         this.registerDataTable();
         this.registerOpration();
         this.registerFormSubmit()
+        this.registeUpload()
     }
     private registerDataTable() {
         this.tableInstance = $("#caseTable").DataTable({
@@ -25,33 +26,15 @@ export default class LoanApplicationDataTable {
                 dataSrc: (myJson) => myJson,
             },
             columns: [
-                {
-                    "data": "num"
-                },
-                {
-                    "data": "first_name"
-                },
-                {
-                    "data": "last_name"
-                },
-                {
-                    "data": "loan_amount"
-                },
-                {
-                    "data": "company"
-                },
-                {
-                    "data": "repayment_period"
-                },
-                {
-                    "data": "disbursement_date"
-                },
-                {
-                    "data": "case_status"
-                },
-                {
-                    "data": "operate"
-                }
+                { "data": "num" },
+                { "data": "first_name" },
+                { "data": "last_name" },
+                { "data": "loan_amount" },
+                { "data": "company" },
+                { "data": "repayment_period" },
+                { "data": "disbursement_date" },
+                { "data": "case_status" },
+                { "data": "operate" }
             ],
             columnDefs: [
                 {
@@ -143,7 +126,30 @@ export default class LoanApplicationDataTable {
                     if (res.failed) notificationError(res.failed)
                 }
             },
-            _viewFile: (id: string) => console.log(`文件查看:id->${id}`),
+            _viewFile: (id: string) => {
+                const pendingView = new Promise<Record<string,any>>((resolve, reject) => {
+                    $.ajax({
+                        url: url(`/case-attachments/${id}`),
+                        method: "get",
+                        success: (res) => {
+                            resolve(res)
+                        },
+                        error: (error) => console.log(error)
+                    })
+                })
+                pendingView.then(
+                    (res) => {
+                        $(`#render`).html((key,old) => res.data)
+                        $(`#upload-modal`).click()
+                        const el = document.querySelector(`#upload-block`) as HTMLDivElement;
+                        el.onclick = () => {
+                            globalThis["case_id"] = id;
+                            $(`input[id="uploadFile"]`).click();
+                        }
+                    },
+                    () => { }
+                )
+            },
         }
     }
     private registerFormSubmit() {
@@ -174,6 +180,38 @@ export default class LoanApplicationDataTable {
                     this.tableInstance.ajax.reload();
                 }
             }
+        })
+    }
+    private registeUpload() {
+        //注册事件
+        const uploadField = document.querySelector(`#uploadFile`) as HTMLInputElement;
+        uploadField.addEventListener("change", (event: Event) => {
+            let target = event.target as HTMLInputElement;
+            //获取文件类型
+            const type = target.value.match(/\..*/ig)![0]
+            //获取文件对象
+            const file = target.files![0]
+            let formData = new FormData();
+            formData.append("file", file);
+            //发送请求
+            $.ajax({
+                url: url(`/upload-attachment/${globalThis["case_id"]}`),
+                method: "post",
+                data: formData,
+                headers: {
+                    "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                },
+                processData: false,
+                contentType: false,
+                success: (res) => {
+                    if (res.status == "success") {
+                        $(`#render`).html((key, old) => {
+                            return res.data
+                        })
+                    }
+                },
+                error: (error) => console.log(error)
+            })
         })
     }
 }

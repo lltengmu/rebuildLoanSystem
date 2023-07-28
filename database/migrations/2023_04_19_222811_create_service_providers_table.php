@@ -24,8 +24,6 @@ class CreateServiceProvidersTable extends Migration
             $table->bigInteger('contact')->nullable()->comment('常联系人');
             $table->integer('role')->nullable()->comment('规则');
             $table->integer('company_id')->comment('所属机构id');
-            $table->dateTime('create_datetime',$precision = 0)->nullable()->comment('创建时间');
-            $table->dateTime('update_datetime',$precision = 0)->nullable()->comment('更新时间');
             $table->dateTime('last_login_datetime',$precision = 0)->nullable()->comment('上次登录时间');
             $table->string('ip')->nullable()->comment('访问ip');
             $table->boolean('status')->default(1)->comment('状态 0=禁用,1=启用');
@@ -36,6 +34,7 @@ class CreateServiceProvidersTable extends Migration
             $table->integer('permission3')->nullable();
             $table->integer('permission4')->nullable();
             $table->integer('update_by')->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

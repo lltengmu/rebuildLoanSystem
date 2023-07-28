@@ -2,28 +2,31 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Client;
+use App\Models\Individuals;
+use App\Models\ServiceProvider;
 use Illuminate\Foundation\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * 根据请求方式决定是否对请求进行验证
-     *
+     * 定义验证规则
      * @return array
      */
     public function rules()
     {
-        return $this->decideRequestMethod();
+        return request()->isMethod('get') ? [] : [
+            'email' => [
+                'required',
+                'email',
+                $this->userIdentify(request()->_identify),
+            ],
+            'password' => [
+                "required",
+                "min:5",
+            ],
+            'captcha' => "required|captcha",
+        ];
     }
     /**
      * 自定义验证错误信息
@@ -39,29 +42,15 @@ class LoginRequest extends FormRequest
             'captcha.captcha' => '驗證碼错误',
         ];
     }
-    /**
-     * 根据请求方式决定是否返回验证规则
-     */
-    public function decideRequestMethod():array
+    private function userIdentify($identify)
     {
-        $validateArray = [
-            'email' => ['required','email',$this->userIdentify(request()->_identify)],
-            'password' => 'required|min:5',
-            'captcha' => "required|captcha",
-        ];
-        return request()->isMethod('get') ? [] : $validateArray;
-    }
-    private function userIdentify($identify){
-        switch($identify){
+        switch ($identify) {
             case "individual":
                 return "exists:individuals";
-                break;
             case "clients":
                 return "exists:clients";
-                break;
             case "serviceProvider":
                 return "exists:service_providers";
-                break;
         }
     }
 }

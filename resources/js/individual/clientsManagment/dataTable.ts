@@ -5,7 +5,7 @@ import 'datatables.net';
 
 
 export default class ClientsManagmentDataTable {
-    private tableInstance;
+    public tableInstance;
     constructor() {
         this.registerDataTable();
         this.registerOpration();
@@ -23,36 +23,16 @@ export default class ClientsManagmentDataTable {
                 dataSrc: (myJson) => myJson,
             },
             columns: [
-                {
-                    "data": "num"
-                },
-                {
-                    "data": "first_name"
-                },
-                {
-                    "data": "last_name"
-                },
-                {
-                    "data": "email"
-                },
-                {
-                    "data": "mobile"
-                },
-                {
-                    "data": "nationality"
-                },
-                {
-                    "data": "status"
-                },
-                {
-                    "data": "operate"
-                }
+                { "data": "num" },
+                { "data": "first_name" },
+                { "data": "last_name" },
+                { "data": "email" },
+                { "data": "mobile" },
+                { "data": "nationality" },
+                { "data": "status" },
+                { "data": "operate" }
             ],
             columnDefs: [
-                {
-                    "targets": [0],
-                    "width": "5%"
-                },
                 {
                     targets: [6],
                     width: "200px",
@@ -118,7 +98,7 @@ export default class ClientsManagmentDataTable {
             //"导出所有"事件处理函数
             _handleExportAll: () => window.location.href = url(`/individual/clientsManagment/exportAll`),
             //修改状态事件处理函数
-            _handleCaseStatus: async (id:string) => {
+            _handleCaseStatus: async (id: string) => {
                 //开启加载动画
                 loading.open();
                 //获取数据
@@ -141,7 +121,7 @@ export default class ClientsManagmentDataTable {
                     (value) => {
                         loading.close();
                         this.tableInstance.ajax.reload();
-                        const res = value as unknown as { success?:string,error?:string }
+                        const res = value as unknown as { success?: string, error?: string }
                         const message = res.success as string
                         notification(message)
                     },

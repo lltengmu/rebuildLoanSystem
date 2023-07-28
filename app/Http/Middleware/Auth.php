@@ -19,16 +19,12 @@ class Auth
      */
     public function handle(Request $request, Closure $next)
     {
-        //读取session 因为登录后具有以下 session 中的一种
-        $individual = Individuals::where('email', session()->get('email'))->first();
-        $client = Client::where('email', session()->get('email'))->first();
-        $serviceProvider = ServiceProvider::where('email', session()->get('email'))->first();
+        //判断用户使用具有登录后的session
+        $authenticate = session("email") && session("_user_info");
         
         //读取请求的地址，return cliens || inidvidual || serviceProvider
         $identify = explode('/',$request->path())[0];
-        //是否存在
-        $exits = $serviceProvider || $individual || $client;
-        //如果存在，则接受请求，不存在则重定向到登录页面
-        return $exits ? $next($request) : redirect("{$identify}/login");
+
+        return $authenticate ? $next($request) : redirect("{$identify}/login");
     }
 }

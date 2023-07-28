@@ -13,9 +13,6 @@ class Cases extends Model
     //软删除
     use SoftDeletes;
 
-    //忽略create_at 和update_at 字段
-    public $timestamps = FALSE;
-
     //数据导入时可被填充的字段
     protected $fillable = [
         "sys_id",
@@ -25,12 +22,14 @@ class Cases extends Model
         "payment_method",
         "co_signer_first_name",
         "co_signer_last_name",
-        "create_datetime",
         "case_status",
         "company_id",
         "purpose",
         "repayment_period",
-        "purpose"
+        "date_of_pay",
+        "purpose",
+        "case_remark",
+        "update_by"
     ];
     /**
      * 关联client table
@@ -52,5 +51,9 @@ class Cases extends Model
     }
     public function ServiceProvider(){
         return $this->belongsTo(ServiceProvider::class);
+    }
+    public function attachment()
+    {
+        return $this->hasMany(Attachment::class);
     }
 }

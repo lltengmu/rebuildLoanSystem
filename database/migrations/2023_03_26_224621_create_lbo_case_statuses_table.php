@@ -20,6 +20,7 @@ class CreateLboCaseStatusesTable extends Migration
             $table->string('label_en')->nullable();
             $table->boolean('status')->default(1);
             $table->string('remark')->nullable();
+            $table->timestamps();
         });
     }
 

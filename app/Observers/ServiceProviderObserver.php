@@ -17,7 +17,6 @@ class ServiceProviderObserver
     {
         $data = $serviceProvider->toArray();
         $serviceProvider->sys_id = Crypt::encrypt($data["id"]);
-        $serviceProvider->create_datetime = date("Y-m-d h:m:s");
         $serviceProvider->save();
     }
 

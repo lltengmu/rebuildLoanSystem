@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li>
-                <a href="javascript:void()" aria-expanded="false">
+                <a href="{{ url('/individual/templateManagment') }}" aria-expanded="false">
                     <i class="icon icon-layout-25"></i>
                     <span class="nav-text">贷款模板管理</span>
                 </a>

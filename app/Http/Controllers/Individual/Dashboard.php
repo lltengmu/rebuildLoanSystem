@@ -53,11 +53,11 @@ class Dashboard extends Controller
          * Process business logic. In the first scenario, only select time without selecting companies
          */
         if ($request["daterange"] && !$request["companies"]) {
-            $cases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->get()->count();
-            $clients = Client::whereBetween("create_datetime", [$startDate, $endDate])->get()->count();
-            $serviceProvider = ServiceProvider::whereBetween("create_datetime", [$startDate, $endDate])->get()->count();
-            $successCases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->where("status", 4)->get()->count();
-            $rejectCases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->where("status", 5)->get()->count();
+            $cases = Cases::whereBetween("created_at", [$startDate, $endDate])->get()->count();
+            $clients = Client::whereBetween("created_at", [$startDate, $endDate])->get()->count();
+            $serviceProvider = ServiceProvider::whereBetween("created_at", [$startDate, $endDate])->get()->count();
+            $successCases = Cases::whereBetween("created_at", [$startDate, $endDate])->where("status", 4)->get()->count();
+            $rejectCases = Cases::whereBetween("created_at", [$startDate, $endDate])->where("status", 5)->get()->count();
             return [
                 "cases"           => $cases,
                 "clients"         => $clients,
@@ -71,11 +71,11 @@ class Dashboard extends Controller
          * In the second case, there is a designated time and organization
          */
         if ($request["daterange"] && $request["companies"]) {
-            $cases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->get()->count();
-            $clients = Client::whereBetween("create_datetime", [$startDate, $endDate])->get()->count();
-            $serviceProvider = ServiceProvider::whereBetween("create_datetime", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->get()->count();
-            $successCases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->where("status", 4)->get()->count();
-            $rejectCases = Cases::whereBetween("create_datetime", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->where("status", 5)->get()->count();
+            $cases = Cases::whereBetween("created_at", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->get()->count();
+            $clients = Client::whereBetween("created_at", [$startDate, $endDate])->get()->count();
+            $serviceProvider = ServiceProvider::whereBetween("created_at", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->get()->count();
+            $successCases = Cases::whereBetween("created_at", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->where("status", 4)->get()->count();
+            $rejectCases = Cases::whereBetween("created_at", [$startDate, $endDate])->whereIn("company_id", $request["companies"])->where("status", 5)->get()->count();
             return [
                 "cases"           => $cases,
                 "clients"         => $clients,
@@ -112,7 +112,7 @@ class Dashboard extends Controller
         }
         //根据月份,获取每个月，每个 service provider的 case 数量,并返回渲染树状图所需数据
         return array_map(function ($item) {
-            $cases = Cases::whereBetween("create_datetime", [$item["start"], $item["end"]])->with("ServiceProvider:id,first_name,last_name")->get()->toArray();
+            $cases = Cases::whereBetween("created_at", [$item["start"], $item["end"]])->with("ServiceProvider:id,first_name,last_name")->get()->toArray();
             return [
                 "data" => ["y" => $item["month"]] + $this->handleEveryServiceProviderCount($cases)["data"],
                 "ykeys" => $this->handleEveryServiceProviderCount($cases)["ykeys"],

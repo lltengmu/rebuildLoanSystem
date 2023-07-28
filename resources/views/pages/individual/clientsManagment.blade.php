@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('styles')
+<!-- Material color picker -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css') }}">
+<!-- Pick date -->
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.css') }}">
+<link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/pickadate/themes/default.date.css') }}">
 <link rel="stylesheet" href="{{ asset('/focus-premium/focus/vendor/datatables/css/jquery.dataTables.min.css') }}">
 <style>
     .btns {
@@ -70,5 +75,15 @@
 @endsection
 
 @section('javascript')
+<!-- momment js is must -->
+<script src="{{ asset('/focus-premium/focus/vendor/moment/moment.min.js') }}"></script>
+<!-- Material color picker -->
+<script src="{{ asset('/focus-premium/focus/vendor/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
+<!-- pickdate -->
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.time.js') }}"></script>
+<script src="{{ asset('/focus-premium/focus/vendor/pickadate/picker.date.js') }}"></script>
+<!-- Material color picker init -->
+<script src="{{ asset('/js/datepicker.js') }}"></script>
 <script src="{{ asset('/js/individual/clientsManagment/index.js') }}"></script>
 @endsection

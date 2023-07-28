@@ -8,7 +8,30 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceProvider extends Model
 {
     use HasFactory;
-    public $timestamps = FALSE;
+
+
+    //定义数据导入时可被填充的字段
+    protected $fillable = [
+        "email",
+        "first_name",
+        "last_name",
+        "password",
+        "mobile",
+        "contact",
+        "role",
+        "ip",
+        "company_id",
+        "browser",
+        "token",
+        "permission1",
+        "permission2",
+        "permission3",
+        "permission4",
+        "update_by",
+        "last_login_datetime",
+        "sys_id"
+    ];
+
     /**
      * 关联cases table
      */

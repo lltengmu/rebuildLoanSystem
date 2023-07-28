@@ -62,7 +62,7 @@ class Profile extends Controller
         $client->save();
         return $client->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
     }
-    public function ChangePassword(ChangePassword $request)
+    public function changePassword(ChangePassword $request)
     {
          $client = Client::where("email",session("email"))->first();
          $client->password = sha1($request["password"]);

@@ -19,13 +19,12 @@ class CreateCompaniesTable extends Migration
             $table->string('email')->unique()->nullable()->commmet('名字');
             $table->string('password')->nulllable();
             $table->string('contact')->nulllable();
-            $table->dateTime('create_datetime')->nullable();
-            $table->dateTime('update_datetime')->nullable();
             $table->dateTime('last_login_datetime')->nullable();
             $table->dateTime('ip')->nullable();
             $table->boolean('status')->nullable();
             $table->string('token')->nullable();
             $table->string('borswer_info')->nullable();
+            $table->timestamps();
         });
     }
 

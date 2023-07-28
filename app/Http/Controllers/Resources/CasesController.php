@@ -50,8 +50,8 @@ class CasesController extends Controller
                 "salary",
                 "company_name",
                 "company_addres",
-                "create_datetime",
-                "update_datetime",
+                "created_at",
+                "updated_at",
                 "last_login_datetime",
                 "status"
             ]);
@@ -71,7 +71,7 @@ class CasesController extends Controller
                 'disbursement_date',
                 'repayment_period',
                 'status',
-                'create_datetime'
+                'created_at'
             ])
             ->get();
     }
@@ -105,13 +105,11 @@ class CasesController extends Controller
      */
     public function edit(IndividualEditCaseRequest $request, $id)
     {
-        $data = $request->all();
-        $case = Cases::where("id",$this->decryptID($id))->first();
-        foreach($data as $key=>$item){
-            $case->$key = $item;
-        }
-        $case->save();
-        return $case->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
+
+        Cases::find($this->decryptID($id))->update(
+            $request->input()
+        );
+        return $this->success(message:"更新成功",data:null);
     }
 
     /**
@@ -123,11 +121,10 @@ class CasesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //模拟延迟
-        sleep(1);
-        //前端需要提供一个update数组,数组中只有一个对象 对象中记录需要更新哪些字段. 实现动态更新数据 
-        $resoult = Cases::where('id', $this->decryptID($id))->update(...$request->update);
-        return $resoult ? ["success" => "updated success"] : ["error" => "no case updated"];
+
+        Cases::find($this->decryptID($id))->update($request->input());
+
+        return $this->success(message: "操作成功", data: null);
     }
 
     /**
@@ -218,7 +215,7 @@ class CasesController extends Controller
                 $item["lbo_case_status"]["label_tc"] ?? "",
             ];
         }, $case);
-        return Excel::download(new Export($data,$header), $fileName);
+        return Excel::download(new Export($data, $header), $fileName);
     }
     /**
      * export all case as excel

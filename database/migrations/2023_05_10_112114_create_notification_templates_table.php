@@ -18,7 +18,7 @@ class CreateNotificationTemplatesTable extends Migration
             $table->string("category")->nullable()->comment("类型");
             $table->string("title")->nullable()->comment("邮件标题");
             $table->string("content")->nullable()->comment("邮件内容");
-            $table->dateTime("createtime")->nullable()->comment("创建时间");
+            $table->timestamps();
         });
     }
 

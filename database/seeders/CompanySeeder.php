@@ -19,16 +19,12 @@ class CompanySeeder extends Seeder
                 'email' => 'bamk@gmail.com',
                 'password' => sha1(123123),
                 'contact' => '1234567',
-                'create_datetime' => date('Y-m-d h:m:s'),
-                'update_datetime' => date('Y-m-d h:m:s'),
             ],
             [
                 'name' => 'HK bank',
                 'email' => 'hkbamk@gmail.com',
                 'password' => sha1(123123),
                 'contact' => '1234567',
-                'create_datetime' => date('Y-m-d h:i:s'),
-                'update_datetime' => date('Y-m-d h:m:s'),
             ],
         ];
         foreach($data as $item):

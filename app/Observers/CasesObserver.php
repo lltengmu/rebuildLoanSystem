@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Models\Cases;
 use Illuminate\Support\Facades\Crypt;
 
-class CaseObserver
+class CasesObserver
 {
     /**
      * Handle the Cases "created" event.
@@ -17,7 +17,6 @@ class CaseObserver
     {
         $data = $cases->toArray();
         $cases->sys_id = Crypt::encrypt($data["id"]);
-        $cases->create_datetime = date("Y-m-d h:m:s");
         $cases->save();
     }
 

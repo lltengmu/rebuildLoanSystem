@@ -21,6 +21,17 @@
     ::-webkit-input-placeholder {
         color: #bdc3c7;
     }
+    .attachment-title {
+        display: inline-block;
+        width: 200px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .single-attachment:hover{
+        cursor: pointer;
+        background: white !important;
+    }
 </style>
 @endsection
 @section('content')
@@ -73,6 +84,28 @@
         </div>
     </div>
 </div>
+
+<!-- upload attachment model button-->
+<button type="hidden" class="btn btn-primary" id="attachment-list" data-toggle="modal" data-target="#attachment-list-modal"></button>
+<!-- upload attachment model-->
+<div class="modal fade delete-modal" tabindex="-1" role="dialog" aria-hidden="true" id="attachment-list-modal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="card m-0">
+                <div class="card-header">
+                    <h5 class="card-title">文件列表</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row grid m-0" id="render"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">關閉</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @include('public.components.model.center')
 @include('public.components.uploadFile')
 @endsection

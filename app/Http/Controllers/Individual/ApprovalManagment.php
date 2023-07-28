@@ -46,7 +46,6 @@ class ApprovalManagment extends Controller
             'disbursement_date',
             'repayment_period',
             'status',
-            'create_datetime'
         ])->get()->toArray();
 
         //数据处理
@@ -60,7 +59,6 @@ class ApprovalManagment extends Controller
                 "company" => !empty($item["company"]) ? $item["company"]["name"] : null,
                 "disbursement_date" => $item["disbursement_date"],
                 "repayment_period" => $item["repayment_period"],
-                "create_datetime" => $item["create_datetime"],
                 "case_status"     => app("utils")->caseStatus($item["case_status"]),
             ];
         }, array_keys($caseTable),array_values($caseTable));

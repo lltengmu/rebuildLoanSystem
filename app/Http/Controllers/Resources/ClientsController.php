@@ -62,8 +62,9 @@ class ClientsController extends Controller
             "purpose" => $request["purpose"],
             "company_id" => $request["company_id"]
         ]);
+        //建立关联关系
         $client->cases()->save($case);
-        return ["success" => "add success"];
+        return $this->success(message:"新增成功",data:null);
     }
 
     /**

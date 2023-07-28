@@ -14,10 +14,9 @@ class ImportExcel implements ToCollection
      */
     public function collection(Collection $rows)
     {
-        foreach ($rows as $key => $item) {
-            if ($key == 0) continue;
-            //将excel每一行数据转换成数组
-            $row = $item->toArray();
+        $rows = $rows->toArray();
+        foreach ($rows as $key => $row) {
+            if ($key == 0 || $row[1] == "") continue;
             //提取存储到clients表的数据
             $clientData = [
                 "appellation" => app("utils")->appellation($row[0]),

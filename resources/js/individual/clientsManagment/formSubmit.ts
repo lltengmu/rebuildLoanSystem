@@ -1,26 +1,41 @@
 import $ from "jquery";
-import { loading, url ,ajax } from "../../utils";
-import notification,{ notificationError } from "../../plugins/notification";
+import { loading, url, ajax, registerFormValidation, showErrors, parse } from "../../utils";
+import notification, { notificationError } from "../../plugins/notification";
 
 export default class FormSubmit {
-    constructor(public dataTable){}
-    private registerFormSubmit(){
-        $(`#IndividualCreateClient`).validate({
-            submitHandler:async (form,event:JQueryEventObject) =>{
+    constructor(public dataTableInstance) {
+        this.registerFormSubmit()
+    }
+    private registerFormSubmit() {
+        registerFormValidation(
+            `#IndividualCreateClient`,
+            (form, event) => {
                 event.preventDefault();
-                const res = await ajax({
-                    url:url(`/individual/clientsManagment/edit/`),
-                    method:"post",
-                    headers:{
+                console.log($(`#IndividualCreateClient`).serializeArray());
+                $.ajax({
+                    url: url(`/individual/clientsManagment/add-client`),
+                    method: "post",
+                    headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                     },
-                    data:$(`#editClientInfomation`).serializeArray()
-                }) as { success?:string ,failed:string ,type:string,errorsObject:{ [key:string]:string }}
-                
-                if(res.errorsObject && !res.success)$(`#editClientInfomation`).validate().showErrors(res.errorsObject);
-                if(res.success)notification(res.success);
-                if(res.failed)notificationError(res.failed);
+                    data: $(`#IndividualCreateClient`).serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#IndividualCreatedClient #cancel`).click();
+                            this.dataTableInstance.ajax.reload();
+                            notification(res.message);
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#IndividualCreateClient`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
             }
-        })
+        )
     }
 }

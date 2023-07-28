@@ -17,6 +17,7 @@ class CreateLboDevicesTable extends Migration
             $table->increments('id');
             $table->string('shortt_code')->nullable();
             $table->boolean('status')->default(1);
+            $table->timestamps();
         });
     }
 

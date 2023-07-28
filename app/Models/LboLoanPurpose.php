@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class LboLoanPurpose extends Model
 {
     use HasFactory;
-    public $timestamps = FALSE;
 }

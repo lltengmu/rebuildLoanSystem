@@ -38,8 +38,6 @@ class Clients extends Migration
             $table->text('company_name')->nullable()->comment('公司名称');
             $table->bigInteger('company_contact')->nullable()->comment('公司电话');
             $table->text('company_addres')->nullable()->comment('公司地址');
-            $table->dateTime('create_datetime',$precision = 0)->nullable()->comment('创建时间');
-            $table->dateTime('update_datetime',$precision = 0)->nullable()->comment('更新时间');
             $table->dateTime('last_login_datetime',$precision = 0)->nullable()->comment('上次登录时间');
             $table->string('update_by',100)->nullable()->comment('被谁更新');
             $table->string('ip')->nullable()->comment('访问ip');
@@ -48,6 +46,7 @@ class Clients extends Migration
             $table->string('token')->nullable()->comment('token');
             $table->string('device')->nullable()->comment('设备');
             $table->boolean('status')->default(1)->comment('状态 0=禁用,1=启用');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

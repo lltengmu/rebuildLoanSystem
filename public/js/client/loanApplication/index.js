@@ -144,6 +144,7 @@ var LoanApplicationDataTable = /** @class */function () {
     this.registerDataTable();
     this.registerOpration();
     this.registerFormSubmit();
+    this.registeUpload();
   }
   LoanApplicationDataTable.prototype.registerDataTable = function () {
     this.tableInstance = jquery__WEBPACK_IMPORTED_MODULE_0___default()("#caseTable").DataTable({
@@ -286,7 +287,29 @@ var LoanApplicationDataTable = /** @class */function () {
       },
 
       _viewFile: function _viewFile(id) {
-        return console.log("\u6587\u4EF6\u67E5\u770B:id->".concat(id));
+        var pendingView = new Promise(function (resolve, reject) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+            url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/case-attachments/".concat(id)),
+            method: "get",
+            success: function success(res) {
+              resolve(res);
+            },
+            error: function error(_error2) {
+              return console.log(_error2);
+            }
+          });
+        });
+        pendingView.then(function (res) {
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#render").html(function (key, old) {
+            return res.data;
+          });
+          jquery__WEBPACK_IMPORTED_MODULE_0___default()("#upload-modal").click();
+          var el = document.querySelector("#upload-block");
+          el.onclick = function () {
+            globalThis["case_id"] = id;
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()("input[id=\"uploadFile\"]").click();
+          };
+        }, function () {});
       }
     };
   };
@@ -336,6 +359,40 @@ var LoanApplicationDataTable = /** @class */function () {
     });
   };
 
+  LoanApplicationDataTable.prototype.registeUpload = function () {
+    //注册事件
+    var uploadField = document.querySelector("#uploadFile");
+    uploadField.addEventListener("change", function (event) {
+      var target = event.target;
+      //获取文件类型
+      var type = target.value.match(/\..*/ig)[0];
+      //获取文件对象
+      var file = target.files[0];
+      var formData = new FormData();
+      formData.append("file", file);
+      //发送请求
+      jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/upload-attachment/".concat(globalThis["case_id"])),
+        method: "post",
+        data: formData,
+        headers: {
+          "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+        },
+        processData: false,
+        contentType: false,
+        success: function success(res) {
+          if (res.status == "success") {
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()("#render").html(function (key, old) {
+              return res.data;
+            });
+          }
+        },
+        error: function error(_error3) {
+          return console.log(_error3);
+        }
+      });
+    });
+  };
   return LoanApplicationDataTable;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoanApplicationDataTable);
@@ -538,10 +595,7 @@ var handleError = function handleError(error, callback) {
       var message = item;
       errorsObject_1[key] = message[0];
     });
-    callback({
-      type: "表单验证错误",
-      errorsObject: errorsObject_1
-    });
+    callback(__assign({}, errorsObject_1));
   } else if (error.status == 500) {
     throw new ReferenceError("后端服务器错误!");
   }
@@ -566,6 +620,53 @@ var ajax = function ajax(options) {
 
 /***/ }),
 
+/***/ "./resources/js/utils/formValidate.ts":
+/*!********************************************!*\
+  !*** ./resources/js/utils/formValidate.ts ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "registerFormValidation": () => (/* binding */ registerFormValidation),
+/* harmony export */   "showErrors": () => (/* binding */ showErrors)
+/* harmony export */ });
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery-validation */ "./node_modules/jquery-validation/dist/jquery.validate.js");
+/* harmony import */ var jquery_validation__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery_validation__WEBPACK_IMPORTED_MODULE_1__);
+
+
+/**
+ * 配置表单验证的默认配置项
+ */
+jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
+  errorClass: "validateErrors"
+});
+/**
+ *
+ * @param queryElement 查询DOM的字符串
+ * @param handleSubmit 自定义数据提交的回调函数
+ */
+var registerFormValidation = function registerFormValidation(queryElement, handleSubmit) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate({
+    submitHandler: function submitHandler(form, event) {
+      return handleSubmit(form, event);
+    }
+  });
+};
+/**
+ *
+ * @param queryElement
+ * @param errorMessage
+ */
+var showErrors = function showErrors(queryElement, errorMessage) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()(queryElement).validate().showErrors(errorMessage);
+};
+
+/***/ }),
+
 /***/ "./resources/js/utils/index.ts":
 /*!*************************************!*\
   !*** ./resources/js/utils/index.ts ***!
@@ -577,11 +678,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ajax": () => (/* reexport safe */ _ajax__WEBPACK_IMPORTED_MODULE_0__["default"]),
 /* harmony export */   "loading": () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "registerFormValidation": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.registerFormValidation),
+/* harmony export */   "registerFunction": () => (/* reexport safe */ _registerFunction__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "showErrors": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.showErrors),
 /* harmony export */   "url": () => (/* reexport safe */ _url__WEBPACK_IMPORTED_MODULE_1__["default"])
 /* harmony export */ });
 /* harmony import */ var _ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajax */ "./resources/js/utils/ajax.ts");
 /* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/js/utils/url.ts");
 /* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading */ "./resources/js/utils/loading.ts");
+/* harmony import */ var _formValidate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./formValidate */ "./resources/js/utils/formValidate.ts");
+/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parse */ "./resources/js/utils/parse.ts");
+/* harmony import */ var _registerFunction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registerFunction */ "./resources/js/utils/registerFunction.ts");
+
+
+
 
 
 
@@ -622,6 +733,60 @@ var Loading = /** @class */function () {
   return Loading;
 }();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new Loading());
+
+/***/ }),
+
+/***/ "./resources/js/utils/parse.ts":
+/*!*************************************!*\
+  !*** ./resources/js/utils/parse.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (responseErrors) {
+  var errors = {};
+  Object.entries(responseErrors).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    errors[key] = value[0];
+  });
+  return errors;
+});
+
+/***/ }),
+
+/***/ "./resources/js/utils/registerFunction.ts":
+/*!************************************************!*\
+  !*** ./resources/js/utils/registerFunction.ts ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (options) {
+  var exits = false;
+  //检查window对象 是否与点击事件函数命名冲突
+  Object.entries(window).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    if (Object.keys(options).includes(key)) exits = true;
+  });
+  //冲突则抛出异常
+  if (exits) throw new ReferenceError("自定义函数与window对象内置函数或属性冲突");
+  //否则注册函数
+  else Object.entries(options).forEach(function (_a) {
+    var key = _a[0],
+      value = _a[1];
+    return globalThis[key] = value;
+  });
+});
 
 /***/ }),
 

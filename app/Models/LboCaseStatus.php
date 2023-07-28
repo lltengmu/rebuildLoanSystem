@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class LboCaseStatus extends Model
 {
     use HasFactory;
-    public $timestamps = FALSE;
 
     public function cases()
     {

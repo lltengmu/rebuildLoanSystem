@@ -39,6 +39,9 @@
             @case("clients")
                 @include('public.navigation.client')
                 @break
+            @case("sp")
+                @include('public.navigation.sp')
+                @break
         @endswitch
         
         

@@ -18,6 +18,7 @@ class LboGender extends Migration
             $table->string('label_tc');
             $table->string('label_en');
             $table->boolean('status')->default(1);
+            $table->timestamps();
         });
     }
 

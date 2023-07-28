@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Individual;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddClientRequest;
 use App\Http\Requests\IndividualEditClientInfo;
 use App\Models\Cases;
 use App\Models\Client;
@@ -71,5 +72,10 @@ class ClientManagment extends Controller
         }
         $client->save();
         return $client->wasChanged() ? ["success" => "updated success"] : ["failed" => "no update"];
+    }
+    public function addClient(AddClientRequest $request)
+    {
+        Client::create($request->input());
+        return $this->success(message:"新增成功",data:null);
     }
 }

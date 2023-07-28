@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class LboAppellations extends Model
 {
     use HasFactory;
-    public $timestamps = FALSE;
 }

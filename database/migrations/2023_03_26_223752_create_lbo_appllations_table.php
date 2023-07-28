@@ -19,6 +19,7 @@ class CreateLboAppllationsTable extends Migration
             $table->string('label_en');
             $table->boolean('status')->default(1);
             $table->string('value');
+            $table->timestamps();
         });
     }
 

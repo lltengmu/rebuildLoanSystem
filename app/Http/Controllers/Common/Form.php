@@ -43,7 +43,6 @@ class Form extends Controller
                 "company_name"  => $data["company_name"],
                 "company_contact"=> $data["company_contact"],
                 "company_addres" => $data["company_addres"],
-                "create_datetime" => date("Y-m-d h:m:s"),
                 "ip"              => $request->ip(),
                 "browser"         => app("utils")->browser($request->header("User-Agent"))
             ]);
@@ -53,7 +52,6 @@ class Form extends Controller
                 "loan_amount" => $data["loan_amount"],
                 "repayment_period" => $data["repayment_period"],
                 "purpose"          => $data["purpose"],
-                "create_datetime"  => date("Y-m-d h:m:s")
             ]);
             $case = $client->cases()->save($insertCase);
             $case->save([

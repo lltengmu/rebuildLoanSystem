@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Client;
 use App\Events\ClientCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddLoanRequest;
+use App\Http\Requests\UploadAttachmentRequest;
+use App\Models\Attachment;
 use App\Models\Cases;
 use App\Models\Client;
 use App\Models\Company;
@@ -37,7 +39,7 @@ class LoanApplication extends Controller
     public function cases()
     {
         $data = Client::where("email", session("email"))->with("cases")->select(["id", "sys_id", "first_name", "last_name"])->get()->toArray()[0];
-        
+
         return array_map(function ($key, $item) use ($data) {
             return [
                 "num" => $key + 1,
@@ -76,7 +78,7 @@ class LoanApplication extends Controller
     /**
      * edit loan case
      */
-    public function edit(AddLoanRequest $request,$id)
+    public function edit(AddLoanRequest $request, $id)
     {
         $case = Cases::find($this->decryptID($id));
         $case->loan_amount = $request["loan_amount"];

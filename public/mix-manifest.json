@@ -10,11 +10,14 @@
     "/js/individual/loandetails/index.js": "/js/individual/loandetails/index.js",
     "/js/individual/approvalDetails/index.js": "/js/individual/approvalDetails/index.js",
     "/js/individual/EditClientInfomation/index.js": "/js/individual/EditClientInfomation/index.js",
+    "/js/individual/templateManagment/index.js": "/js/individual/templateManagment/index.js",
     "/js/client/loanApplication/index.js": "/js/client/loanApplication/index.js",
     "/js/client/loanDetails/index.js": "/js/client/loanDetails/index.js",
     "/js/common/Form/index.js": "/js/common/Form/index.js",
     "/js/common/verification/index.js": "/js/common/verification/index.js",
     "/js/client/profile/index.js": "/js/client/profile/index.js",
+    "/js/serviceProvider/loanApplication/index.js": "/js/serviceProvider/loanApplication/index.js",
+    "/js/serviceProvider/approvalManagement/index.js": "/js/serviceProvider/approvalManagement/index.js",
     "/css/global.css": "/css/global.css",
     "/css/app.css": "/css/app.css"
 }

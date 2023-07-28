@@ -8,5 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class LboGenders extends Model
 {
     use HasFactory;
-    public $timestamps = FALSE;
 }

@@ -17,7 +17,6 @@ class IndividualObserver
     {
         $data = $individuals->toArray();
         $individuals->sys_id = Crypt::encrypt($data["id"]);
-        $individuals->create_datetime = date("Y-m-d h:m:s");
         $individuals->save();
     }
 

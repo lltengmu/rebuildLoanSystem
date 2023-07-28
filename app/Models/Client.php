@@ -19,8 +19,6 @@ class Client extends Model
     //HasApitoken 使用这个类，client类就具有生成token的方法
     use HasFactory,HasApiTokens ,Notifiable;
 
-    public $timestamps = FALSE;
-
     //定义数据导入时可被填充的字段
     protected $fillable = [
         "email",
@@ -53,5 +51,9 @@ class Client extends Model
     public function cases()
     {
         return $this->hasMany(Cases::class);
+    }
+    public function attachment()
+    {
+        return $this->hasMany(Attachment::class);
     }
 }

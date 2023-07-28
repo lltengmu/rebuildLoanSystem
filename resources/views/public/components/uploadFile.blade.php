@@ -1,4 +1,4 @@
-<form id="uploadFile">
-    <label for="uploadExcel" class="hidden"></label>
-    <input id="uploadExcel" type="file" class="hidden" name="uploadExcel">
+<form id="upload">
+    <label for="uploadFile" class="hidden"></label>
+    <input id="uploadFile" type="file" class="hidden" name="uploadFile">
 </form>
