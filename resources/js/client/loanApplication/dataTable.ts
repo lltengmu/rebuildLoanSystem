@@ -150,6 +150,10 @@ export default class LoanApplicationDataTable {
                     () => { }
                 )
             },
+            _downloadAttachment: (dom) => {
+                const id = $(dom).attr("attachmentID");
+                window.location.href = url(`/download-attachments/${id}`)
+            }
         }
     }
     private registerFormSubmit() {

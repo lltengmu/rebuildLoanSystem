@@ -22,7 +22,7 @@ class Clients extends Migration
             $table->string('password',100)->nullable()->comment('密码');
             $table->string('HKID')->nullable()->comment('香港身份证号');
             $table->date('date_of_birth')->nullable()->comment('生日');
-            $table->integer('marital_status')->nullable()->comment('尚未明确');
+            $table->integer('marital_status')->nullable()->comment('婚姻状况');
             $table->bigInteger('mobile')->nullable()->comment('手机号');
             $table->string('email',100)->nullable()->comment('邮箱');
             $table->string('nationality',100)->nullable()->comment('国籍');
@@ -38,13 +38,15 @@ class Clients extends Migration
             $table->text('company_name')->nullable()->comment('公司名称');
             $table->bigInteger('company_contact')->nullable()->comment('公司电话');
             $table->text('company_addres')->nullable()->comment('公司地址');
+            $table->dateTime('email_verified_at',$precision = 0)->nullable()->comment('邮箱验证时间');
             $table->dateTime('last_login_datetime',$precision = 0)->nullable()->comment('上次登录时间');
             $table->string('update_by',100)->nullable()->comment('被谁更新');
             $table->string('ip')->nullable()->comment('访问ip');
+            $table->string('platform')->nullable()->comment('平台');
+            $table->string('device')->nullable()->comment('设备');
             $table->string('browser',100)->nullable()->comment('浏览器');
             $table->string('language')->nullable()->comment('语言');
             $table->string('token')->nullable()->comment('token');
-            $table->string('device')->nullable()->comment('设备');
             $table->boolean('status')->default(1)->comment('状态 0=禁用,1=启用');
             $table->timestamps();
             $table->softDeletes();

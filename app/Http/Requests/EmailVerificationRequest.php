@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SetupPasswordRequest extends FormRequest
+class EmailVerificationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class SetupPasswordRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            "password" => "required|confirmed",
-        ];
+        return request()->isMethod("get")
+            ? []
+            : ["password" => "required|confirmed",];
     }
     public function messages()
     {

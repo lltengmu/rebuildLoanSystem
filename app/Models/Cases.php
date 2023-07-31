@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cases extends Model
 {
-    use HasFactory;
-
-    //软删除
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     //数据导入时可被填充的字段
     protected $fillable = [
@@ -47,9 +44,10 @@ class Cases extends Model
     public function LboCaseStatus()
     {
         //自定义关联字段，告诉模型，case 表中的case_status 与lbo_case_status表中的id字段相关联
-        return $this->belongsTo(LboCaseStatus::class,'case_status');
+        return $this->belongsTo(LboCaseStatus::class, 'case_status');
     }
-    public function ServiceProvider(){
+    public function ServiceProvider()
+    {
         return $this->belongsTo(ServiceProvider::class);
     }
     public function attachment()

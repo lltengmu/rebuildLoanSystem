@@ -56,6 +56,6 @@ class AttachmentController extends Controller
     public function download($id)
     {
         $attachment = Attachment::find($id);
-        return Storage::download($attachment->upload_file,$attachment->title);
+        return Storage::download($attachment->upload_file, $attachment->title);
     }
 }

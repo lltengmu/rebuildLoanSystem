@@ -14,9 +14,11 @@ class IndividualSeeder extends Seeder
      */
     public function run()
     {
-        $all = Individuals::factory(20)->create();
-        $client = Individuals::first();
-        $client->email = 'individual@qq.com';
-        $client->save();
+        Individuals::withoutEvents(function () {
+            $all = Individuals::factory(20)->create();
+            $client = Individuals::first();
+            $client->email = 'individual@qq.com';
+            $client->save();
+        });
     }
 }

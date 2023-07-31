@@ -2,7 +2,9 @@
 namespace App\Service;
 
 use App\Models\Client;
+use App\Models\Individuals;
 use App\Models\NotificationTemplates;
+use App\Models\ServiceProvider;
 use App\Models\User;
 use App\Notifications\EmailNotification;
 use Illuminate\Support\Facades\Cache;
@@ -15,10 +17,11 @@ class EmailService
     /**
      * 统一发送的接口
      */
-    public function send(string $email,string $category):void
+    public function send($user):void
     {
-        //获取用户
-        $user = Client::where("email",$email)->first();
+        $category = null;
+
+        if(session("email")=="")$category = "client_create";
         //获取email模板
         $template = NotificationTemplates::where("category",$category)->first()->toArray();
         //处理标题

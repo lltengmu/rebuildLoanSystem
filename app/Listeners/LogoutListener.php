@@ -28,7 +28,7 @@ class LogoutListener
             case "individual":
                 Individuals::where("email", $email)->update(["last_login_datetime" => date("Y-m-d H:m:s")]);
                 break;
-            case "serviceProvider":
+            case "sp":
                 ServiceProvider::where("email", $email)->update(["last_login_datetime" => date("Y-m-d H:m:s")]);
                 break;
         endswitch;

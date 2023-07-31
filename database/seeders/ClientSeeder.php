@@ -15,10 +15,12 @@ class ClientSeeder extends Seeder
      */
     public function run()
     {
-        $all = Client::factory(15)->create();
-        $client = Client::first();
-        $client->email = 'client@qq.com';
-        $client->status = 1;
-        $client->save();
+        $all = Client::withoutEvents(function () {
+            Client::factory(5)->create();
+            $client = Client::first();
+            $client->email = 'client@qq.com';
+            $client->status = 1;
+            $client->save();
+        });
     }
 }

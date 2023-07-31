@@ -16,9 +16,20 @@
         color: #bdc3c7;
     }
 
-    .template {
-        width: 100%;
-        height: 100%;
+    .single-template .active{
+        position: absolute;
+        width: 30px;
+        height:30px;
+        border-radius: 50%;
+        background: #bef5e8;
+        color: #50E3C2;
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        right: 0;
+        transform: translateY(-50%);
     }
 </style>
 @endsection

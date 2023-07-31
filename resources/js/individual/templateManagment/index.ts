@@ -1,16 +1,10 @@
-import { url } from "../../utils";
+import { registerFunction, url } from "../../utils";
 import notification, { customAlert } from "../../plugins/notification";
 
-class Template{
-    constructor(){
+class Template {
+    constructor() {
         this.registerUpload()
-        this.registerEvent()
-    }
-    private registerEvent(){
-        const el = document.querySelector(`#upload-image`) as HTMLButtonElement
-        el.addEventListener("click",() =>{
-            $(`#uploadFile`).click()
-        })
+        registerFunction(this.oprate())
     }
     private registerUpload() {
         //注册事件
@@ -35,15 +29,24 @@ class Template{
                 contentType: false,
                 success: (res) => {
                     console.log(res)
-                    if(res.status == "success"){
-                        $(`#renderImage`).html((index,old) => res.data.imageUrl)
+                    if (res.status == "success") {
+                        $(`#renderImage`).html((index, old) => res.data.imageUrl)
                     }
                 },
                 error: (error) => console.log(error)
             })
         })
     }
+    //定义页面事件
+    private oprate(): Record<string, Function> {
+        return {
+            _setupTemplateContent: (dom: HTMLButtonElement) => {
+                const id = $(dom).attr("loan-template")
+                window.location.href = url(`/individual/templateManagment/detail/${id}`)
+            }
+        }
+    }
 }
-window.onload = () =>{
+window.onload = () => {
     new Template()
 };

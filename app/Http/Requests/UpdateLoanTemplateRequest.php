@@ -13,7 +13,7 @@ class UpdateLoanTemplateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return (bool) session("email");
     }
 
     /**
@@ -24,7 +24,16 @@ class UpdateLoanTemplateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "title" => ["required"],
+            "template_text" => ["required"],
+            "status" => ["required"],
+            "file" => [
+                function ($attribute, $value, $fail) {
+                    if ($value !="undefined" && !in_array(request("file")->extension(), config("system.allowedImagesType"))) {
+                        $fail("不允许上传的文件类型");
+                    }
+                }
+            ]
         ];
     }
 }

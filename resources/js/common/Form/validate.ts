@@ -1,9 +1,6 @@
 import $ from 'jquery';
-import { ajax, url } from "../../utils/index";
-import { customAlert } from "../../plugins/notification"
-import "jquery-validation";
-
-
+import { parse, registerFormValidation, showErrors, url } from "../../utils/index";
+import notification, { customAlert } from "../../plugins/notification"
 
 //定义业务逻辑类
 export default class LoanForm {
@@ -11,33 +8,42 @@ export default class LoanForm {
         this.loginFormValidate();
     }
     private loginFormValidate() {
-        $.validator.setDefaults({ errorClass: "validateErrors" })
-        $("#register").validate({
-            submitHandler: async (form, event: JQueryEventObject) => {
-                //组织浏览器默认提交行为
-                event.preventDefault();
-                //获取表单字段
-                const data = $('#register').serializeArray()
-                if(!$("#agree").prop("checked")){
+        registerFormValidation(
+            `#register`,
+            (form, e) => {
+                e.preventDefault();
+                if (!$("#agree").prop("checked")) {
                     customAlert.open({
-                        type:"warning",
-                        message:"请先同意xxxx协议"
+                        type: "warning",
+                        message: "请先同意xxxx协议"
                     })
                     return;
                 }
-                const res = await ajax({
+                $.ajax({
                     headers: {
                         "X-CSRF-token": (document.querySelector(`input[name="_token"]`) as HTMLInputElement).value,
                     },
-                    url:url(`/new-loanApplication`),
-                    method:"post",
-                    data
-                }) as response
-                if(res.errorsObject && !res.success){
-                    $("#register").validate().showErrors(res.errorsObject)
-                }
-                else window.location.href = `/clients/login`
+                    url: url(`/new-loanApplication`),
+                    method: "post",
+                    data: $('#register').serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#register`).find("input textarea").val("")
+                            $(`#register`).find("select").val(0)
+                            notification(res.message)
+                            setTimeout(() => window.location.href = url(`/clients/login`),2000)
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#register`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    },
+                })
             }
-        })
+        )
     }
 }

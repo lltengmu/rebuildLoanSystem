@@ -26,14 +26,16 @@ class Individuals extends Authenticatable
         'mobile',
         'contact',
         'email',
-        'platform',
         'last_login_datetime',
+        'email_verified_at',
         'language',
         'ip',
-        'remember_token',
+        'token',
         'device',
+        'platform',
         'browser',
-        'status'
+        'status',
+        'password'
     ];
 
     /**

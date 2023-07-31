@@ -29,9 +29,7 @@ class EventServiceProvider extends ServiceProvider
     /**
      * register subscriber
      */
-    protected $subscribe = [
-        SendNotificationSubscriber::class,
-    ];
+    protected $subscribe = [];
 
     /**
      * Register any events for your application.

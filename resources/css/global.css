@@ -32,7 +32,7 @@
  hidden elements
 */
 .hidden{
-    display: none;
+    display: none !important;
 }
 .center{
     display: flex;

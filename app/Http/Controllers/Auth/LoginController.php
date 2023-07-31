@@ -57,7 +57,12 @@ class LoginController extends Controller
                 ]
             );
 
-            return $this->success(message: "登录成功", data: null);
+            return $this->success(
+                message: "登录成功",
+                data: [
+                    "token" => $user->createToken("auth")->plainTextToken
+                ]
+            );
         }
         return view("login.{$identify}-login");
     }

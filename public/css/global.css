@@ -61,7 +61,7 @@ input[disabled],select[disabled]{
  hidden elements
 */
 .hidden{
-    display: none;
+    display: none !important;
 }
 .center{
     display: flex;

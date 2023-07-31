@@ -25,10 +25,12 @@ class CreateServiceProvidersTable extends Migration
             $table->integer('role')->nullable()->comment('规则');
             $table->integer('company_id')->comment('所属机构id');
             $table->dateTime('last_login_datetime',$precision = 0)->nullable()->comment('上次登录时间');
-            $table->string('ip')->nullable()->comment('访问ip');
             $table->boolean('status')->default(1)->comment('状态 0=禁用,1=启用');
             $table->string('token')->nullable()->comment('token');
+            $table->string('ip')->nullable()->comment('访问ip');
             $table->string('browser')->nullable()->comment('浏览器');
+            $table->string('device')->nullable()->comment('设备');
+            $table->string('platform')->nullable()->comment('平台');
             $table->integer('permission1')->nullable();
             $table->integer('permission2')->nullable();
             $table->integer('permission3')->nullable();

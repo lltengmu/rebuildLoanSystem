@@ -11,8 +11,8 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/focus-premium/focus/images/favicon.png') }}">
     @yield("styles")
-    <link rel="stylesheet" href="{{ asset('/focus-premium/focus/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('/focus-premium/focus/css/style.css') }}">
     
 </head>
 

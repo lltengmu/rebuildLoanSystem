@@ -3,21 +3,24 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SetupPasswordRequest;
+use App\Http\Requests\EmailVerificationRequest;
 use App\Models\Client;
-use Illuminate\Http\Request;
 
 class Verification extends Controller
 {
-    public function __invoke($id)
+    public function __invoke(EmailVerificationRequest $request, $id)
     {
-        $client = Client::where("id",$this->decryptID($id))->first()->toArray();
-        return is_null($client["password"]) ? view("public.pages.verification") : redirect("/clients/login");
-    }
-    public function setUpPassword(SetupPasswordRequest $request)
-    {
-        $id = $request->input("id");
-        $client = Client::where("id",$this->decryptID($id))->update(["password" => sha1($request->input("password"))]);
-        return ["success" => "setting success"];
+        $client = Client::find($this->decryptID($id));
+        if ($request->isMethod("post")) {
+            $id = $request["id"];
+            $client->update(
+                [
+                    "password" => sha1($request["password"]),
+                    "email_verified_at" => date("Y-m-d H:m:s")
+                ]
+            );
+            return $this->success(message:"邮箱验证成功",data:null);
+        }
+        return is_null($client->password) ? view("public.pages.verification") : redirect("/clients/login");
     }
 }

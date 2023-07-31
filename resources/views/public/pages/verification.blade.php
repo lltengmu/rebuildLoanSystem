@@ -22,7 +22,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">setting your password</h4>
-                                    <form id="setUpPassword">
+                                    <form id="email-verification">
                                         @csrf
                                         <div class="form-group">
                                             <label for="password"><strong>密码:</strong></label>

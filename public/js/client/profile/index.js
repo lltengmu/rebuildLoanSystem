@@ -255,7 +255,7 @@ var notificationError = function notificationError(message) {
   return notification.error(message);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (message) {
-  return notification.success(message);
+  notification.success(message);
 });
 
 /***/ }),
@@ -491,19 +491,22 @@ var showErrors = function showErrors(queryElement, errorMessage) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ajax": () => (/* reexport safe */ _ajax__WEBPACK_IMPORTED_MODULE_0__["default"]),
-/* harmony export */   "loading": () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_2__["default"]),
-/* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_4__["default"]),
-/* harmony export */   "registerFormValidation": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.registerFormValidation),
-/* harmony export */   "registerFunction": () => (/* reexport safe */ _registerFunction__WEBPACK_IMPORTED_MODULE_5__["default"]),
-/* harmony export */   "showErrors": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_3__.showErrors),
-/* harmony export */   "url": () => (/* reexport safe */ _url__WEBPACK_IMPORTED_MODULE_1__["default"])
+/* harmony export */   "loading": () => (/* reexport safe */ _loading__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "parse": () => (/* reexport safe */ _parse__WEBPACK_IMPORTED_MODULE_5__["default"]),
+/* harmony export */   "registerFormValidation": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_4__.registerFormValidation),
+/* harmony export */   "registerFunction": () => (/* reexport safe */ _registerFunction__WEBPACK_IMPORTED_MODULE_6__["default"]),
+/* harmony export */   "showErrors": () => (/* reexport safe */ _formValidate__WEBPACK_IMPORTED_MODULE_4__.showErrors),
+/* harmony export */   "store": () => (/* reexport safe */ _store__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "url": () => (/* reexport safe */ _url__WEBPACK_IMPORTED_MODULE_2__["default"])
 /* harmony export */ });
 /* harmony import */ var _ajax__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ajax */ "./resources/js/utils/ajax.ts");
-/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./url */ "./resources/js/utils/url.ts");
-/* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./loading */ "./resources/js/utils/loading.ts");
-/* harmony import */ var _formValidate__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./formValidate */ "./resources/js/utils/formValidate.ts");
-/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./parse */ "./resources/js/utils/parse.ts");
-/* harmony import */ var _registerFunction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registerFunction */ "./resources/js/utils/registerFunction.ts");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/utils/store.ts");
+/* harmony import */ var _url__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./url */ "./resources/js/utils/url.ts");
+/* harmony import */ var _loading__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loading */ "./resources/js/utils/loading.ts");
+/* harmony import */ var _formValidate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./formValidate */ "./resources/js/utils/formValidate.ts");
+/* harmony import */ var _parse__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./parse */ "./resources/js/utils/parse.ts");
+/* harmony import */ var _registerFunction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./registerFunction */ "./resources/js/utils/registerFunction.ts");
+
 
 
 
@@ -600,6 +603,42 @@ __webpack_require__.r(__webpack_exports__);
       value = _a[1];
     return globalThis[key] = value;
   });
+});
+
+/***/ }),
+
+/***/ "./resources/js/utils/store.ts":
+/*!*************************************!*\
+  !*** ./resources/js/utils/store.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  set: function set(key, data) {
+    var cache = {
+      data: data
+    };
+    sessionStorage.setItem(key, JSON.stringify(cache));
+  },
+  get: function get(key, defaultValue) {
+    if (defaultValue === void 0) {
+      defaultValue = null;
+    }
+    var cacheStore = sessionStorage.getItem(key);
+    if (cacheStore) {
+      var cache = JSON.parse(cacheStore);
+      return cache.data;
+    }
+    return defaultValue;
+  },
+  remove: function remove(key) {
+    sessionStorage.removeItem(key);
+  }
 });
 
 /***/ }),

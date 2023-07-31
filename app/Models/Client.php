@@ -14,14 +14,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
-    //软删除
-    use SoftDeletes;
     //HasApitoken 使用这个类，client类就具有生成token的方法
-    use HasFactory,HasApiTokens ,Notifiable;
+    use HasFactory, HasApiTokens, Notifiable, SoftDeletes;
 
     //定义数据导入时可被填充的字段
     protected $fillable = [
         "email",
+        "password",
         "appellation",
         "first_name",
         "last_name",
@@ -43,7 +42,9 @@ class Client extends Model
         "create_datetime",
         "ip",
         "browser",
-        "sys_id"
+        "sys_id",
+        "device",
+        "platform"
     ];
     /**
      * 关联cases table

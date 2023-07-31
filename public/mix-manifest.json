@@ -11,6 +11,7 @@
     "/js/individual/approvalDetails/index.js": "/js/individual/approvalDetails/index.js",
     "/js/individual/EditClientInfomation/index.js": "/js/individual/EditClientInfomation/index.js",
     "/js/individual/templateManagment/index.js": "/js/individual/templateManagment/index.js",
+    "/js/individual/loanTemplateDetail/index.js": "/js/individual/loanTemplateDetail/index.js",
     "/js/client/loanApplication/index.js": "/js/client/loanApplication/index.js",
     "/js/client/loanDetails/index.js": "/js/client/loanDetails/index.js",
     "/js/common/Form/index.js": "/js/common/Form/index.js",

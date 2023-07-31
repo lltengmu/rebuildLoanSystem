@@ -1,5 +1,6 @@
 <?php
 
 return [
-    "unAllowedToUploadFiles" => [".zip"]
+    "unAllowedToUploadFiles" => [".zip"],
+    "allowedImagesType" => ["jpeg","png","gif","jpg"]
 ];

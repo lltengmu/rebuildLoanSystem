@@ -1,5 +1,5 @@
 import $ from "jquery"
-import { ajax, parse, registerFormValidation, showErrors, url } from "../utils/index"
+import { ajax, parse, registerFormValidation, showErrors, store, url } from "../utils/index"
 
 
 //定义业务逻辑类
@@ -38,6 +38,7 @@ class IndividualLogin {
                         "X-CSRF-token": (document.querySelector(`input[name="_token"]`) as HTMLInputElement).value,
                     },
                     success:(res) => {
+                        store.set("token",res.data.token)
                         window.location.href = url(`/${identify}/home`)
                     },
                     error:(error) => {
@@ -46,6 +47,7 @@ class IndividualLogin {
                                 `#login-form`,
                                 parse(error.responseJSON.errors)
                             )
+                            if(Object.keys(parse(error.responseJSON.errors)).includes("captcha"))this.refreshCaptcha();
                         }
                     }
                 })

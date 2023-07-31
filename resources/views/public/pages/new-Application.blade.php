@@ -39,7 +39,7 @@
     <div class="row new-loanApplication">
         <div class="col-sm-3">
             <section class="banner">
-                <img src="{{ asset('/images/banner-2.jpg') }}" alt="banner">
+                <img src="{{ asset('/images-default/banner-2.jpg') }}" alt="banner">
             </section>
         </div>
         <div class="col-sm-9">

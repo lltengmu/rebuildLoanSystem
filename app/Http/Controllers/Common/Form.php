@@ -13,7 +13,7 @@ use App\Models\LboDistrict;
 use App\Models\LboEmployment;
 use App\Models\LboLoanPurpose;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
+use Jenssegers\Agent\Agent;
 
 class Form extends Controller
 {
@@ -22,6 +22,7 @@ class Form extends Controller
         if ($request->isMethod('post')) {
             //获取表单数据
             $data = $request->all();
+            $agent = new Agent();
             //新增client 并且添加一条贷款记录
             $client = Client::create([
                 "first_name"    => $data["first_name"],
@@ -44,20 +45,20 @@ class Form extends Controller
                 "company_contact"=> $data["company_contact"],
                 "company_addres" => $data["company_addres"],
                 "ip"              => $request->ip(),
-                "browser"         => app("utils")->browser($request->header("User-Agent"))
+                "browser"         => $agent->browser(),
+                "platform"      => $agent->platform(),
+                "device"        => $agent->device()
             ]);
-            //触发事件
-            event(new ClientCreated($client,"client_create"));
+            $client->update_by = "client_".$client->id;
+            $client->save();
+            //新增case并建立关联关系
             $insertCase = new Cases([
                 "loan_amount" => $data["loan_amount"],
                 "repayment_period" => $data["repayment_period"],
                 "purpose"          => $data["purpose"],
             ]);
             $case = $client->cases()->save($insertCase);
-            $case->save([
-                "sys_id" => Crypt::encrypt($case->id)
-            ]);
-            return ["success" => "register success"];
+            return $this->success(message:"建立贷款成功",data:null);
         } else {
             $appellations = LboAppellations::all();
             $area = LboDistrict::all();
