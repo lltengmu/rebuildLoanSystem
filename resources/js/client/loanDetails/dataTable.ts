@@ -21,18 +21,10 @@ export default class LoanApplicationDataTable {
                 dataSrc: (myJson) => myJson,
             },
             columns: [
-                {
-                    "data": "num"
-                },
-                {
-                    "data": "first_name"
-                },
-                {
-                    "data": "last_name"
-                },
-                {
-                    "data": "loan_amount"
-                },
+                {"data": "num"},
+                {"data": "first_name"},
+                {"data": "last_name"},
+                {"data": "loan_amount"},
                 {
                     "data": "company"
                 },
