@@ -2,36 +2,30 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Events\Logout;
+use App\Events\LoginEvent;
+use App\Events\LogoutEvent;
 use App\Http\Requests\LoginRequest;
-use App\Models\Client;
-use App\Models\Individuals;
-use App\Models\ServiceProvider;
 use Illuminate\Http\Request;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
+use App\Service\UtilsService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    public function __invoke(LoginRequest $request, $identify)
+    public $user;
+
+    public function __invoke(LoginRequest $request, $identify,UtilsService $utilsService)
     {
 
         if (request()->isMethod("post")) {
+            
             $agent = new Agent();
             //根据用户身份进行查询
-            switch ($identify):
-                case "individual":
-                    $user = Individuals::where("email", $request["email"])->first();
-                    break;
-                case "clients":
-                    $user = Client::where("email", $request["email"])->first();
-                    break;
-                case "sp":
-                    $user = ServiceProvider::where("email", $request["email"])->first();
-                    break;
-            endswitch;
+            $user = $utilsService->getUserModel($identify,$request["email"]);
 
             //  密码输入验证
             if (sha1($request["password"]) !== $user->password) throw ValidationException::withMessages(['email' => '错误的账号或者密码', 'password' => '错误的账号或者密码']);
@@ -48,14 +42,17 @@ class LoginController extends Controller
             //存储session
             session()->put(['_user_info' => $user_array, 'email' => $user->email]);
 
-            $user->update(
-                [
-                    "ip" => $request->ip(),
-                    "platform" => $agent->platform(),
-                    "browser" => $agent->browser(),
-                    "device" => $agent->device(),
-                ]
-            );
+            //一些需要存储的信息
+            $equipmentInformation = [
+                "ip" => $request->ip(),
+                "platform" => $agent->platform(),
+                "browser" => $agent->browser(),
+                "device" => $agent->device(),
+            ];
+
+            $user->update($equipmentInformation);
+            //触发登录事件
+            event(new LoginEvent($user,$identify,$equipmentInformation));
 
             return $this->success(
                 message: "登录成功",
@@ -66,13 +63,24 @@ class LoginController extends Controller
         }
         return view("login.{$identify}-login");
     }
-    public function logout()
+    /**
+     * user exit Controller
+     * @return redirect
+     */
+    public function logout(UtilsService $utilsService)
     {
+        //读取当前登录用户的email
         $email = session("email");
+        //获取当前用户的身份
         $identify = session()->get("_user_info.identify");
-        session()->forget("_user_info");
-        session()->forget("email");
-        event(new Logout($identify, $email));
+        //获取当前用户模型
+        $user = $utilsService->getUserModel($identify,$email);
+        //清除session
+        // session()->forget("_user_info");
+        // session()->forget("email");
+        Session::flush();
+        //触发用户退出事件
+        event(new LogoutEvent($user));
         return redirect("/{$identify}/login");
     }
 }

@@ -66,14 +66,17 @@ class LoanApplication extends Controller
      */
     public function add(AddLoanRequest $request)
     {
+        //获取当前用户
         $client = Client::where("email", session("email"))->first();
+        //新增case实例
         $data = new Cases([
             "loan_amount" => $request["loan_amount"],
             "repayment_period" => $request["repayment_period"],
             "purpose" => $request["purpose"]
         ]);
+        //建立关联关系
         $result = $client->cases()->save($data);
-        return !is_null($result) ? ["success" => "add success"] : ["error" => "add failed"];
+        return $this->success(message: "新增成功", data: null);
     }
     /**
      * edit loan case

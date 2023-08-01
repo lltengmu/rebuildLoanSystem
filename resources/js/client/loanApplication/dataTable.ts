@@ -1,5 +1,5 @@
 import $ from "jquery";
-import { ajax, loading, url } from "../../utils";
+import { ajax, loading, parse, registerFormValidation, showErrors, url } from "../../utils";
 import notification, { notificationError } from "../../plugins/notification";
 import 'datatables.net';
 import "jquery-validation";
@@ -127,7 +127,10 @@ export default class LoanApplicationDataTable {
                 }
             },
             _viewFile: (id: string) => {
-                const pendingView = new Promise<Record<string,any>>((resolve, reject) => {
+                const pendingView = new Promise<Record<string, any>>((resolve, reject) => {
+                    //将case id挂载到全局
+                    globalThis["case_id"] = id;
+                    //发起请求
                     $.ajax({
                         url: url(`/case-attachments/${id}`),
                         method: "get",
@@ -139,11 +142,10 @@ export default class LoanApplicationDataTable {
                 })
                 pendingView.then(
                     (res) => {
-                        $(`#render`).html((key,old) => res.data)
+                        $(`#render`).html((key, old) => res.data)
                         $(`#upload-modal`).click()
                         const el = document.querySelector(`#upload-block`) as HTMLDivElement;
                         el.onclick = () => {
-                            globalThis["case_id"] = id;
                             $(`input[id="uploadFile"]`).click();
                         }
                     },
@@ -151,40 +153,59 @@ export default class LoanApplicationDataTable {
                 )
             },
             _downloadAttachment: (dom) => {
-                const id = $(dom).attr("attachmentID");
+                const id = $(dom).attr("attachment-id");
                 window.location.href = url(`/download-attachments/${id}`)
+            },
+            _deleteAttachment: (dom) => {
+                const attachment_id = $(dom).attr("attachment-id");
+                $.ajax({
+                    url: url(`/case/${globalThis['case_id']}/attachment/${attachment_id}`),
+                    method: "delete",
+                    headers: {
+                        "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
+                    },
+                    success: (res) => {
+                        if (res.status == "success") {
+                            $(`#upload-attachment #render`).html((index, old) => res.data)
+                        }
+                    },
+                    error: (error) => { }
+                })
             }
         }
     }
     private registerFormSubmit() {
-        //设置默认配置
-        $.validator.setDefaults({ errorClass: "validateErrors" })
-        //自定义验证规则,这里用不上
-        $.validator.addMethod("selectRequired", function (value, element) {
-            return value != "0" ? true : false;
-        });
-        //初始化表单验证
-        $(`#add`).validate({
-            submitHandler: async (form, event: JQueryEventObject) => {
-                event.preventDefault()
-                const res = await ajax({
+        registerFormValidation(
+            `#add`,
+            (form, e: Event) => {
+                e.preventDefault()
+                $.ajax({
                     url: url(`/clients/home/add`),
+                    method: "post",
                     headers: {
                         "X-CSRF-token": (document.querySelector(`meta[name="csrf-token"]`) as HTMLMetaElement).content,
                     },
-                    method: "post",
-                    data: $(`#add`).serializeArray()
-                }) as response;
-                if (res.errorsObject && !res.success) {
-                    $(`#add`).validate().showErrors(res.errorsObject)
-                };
-                if (res.success) {
-                    notification(res.success)
-                    $(`#add-cancel`).click();
-                    this.tableInstance.ajax.reload();
-                }
+                    data: $(`#add`).serializeArray(),
+                    success: (res) => {
+                        if (res.status == "success") {
+                            notification(res.message)
+                            $(`#add-cancel`).click();
+                            $(`#add`).find("input").val("")
+                            $(`#add`).find("select").val(0)
+                            this.tableInstance.ajax.reload();
+                        }
+                    },
+                    error: (error) => {
+                        if (error.status == 422) {
+                            showErrors(
+                                `#add`,
+                                parse(error.responseJSON.errors)
+                            )
+                        }
+                    }
+                })
             }
-        })
+        )
     }
     private registeUpload() {
         //注册事件

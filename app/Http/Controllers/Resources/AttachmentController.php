@@ -44,6 +44,7 @@ class AttachmentController extends Controller
     public function show($id)
     {
         $attachments = Cases::find($this->decryptID($id))->attachment->toArray();
+
         if (empty($attachments)) {
             return $this->success(message: "获取成功", data: "<div class=\"text-center w-100\">还未有上传文件哦～</div>");
         }
@@ -57,5 +58,20 @@ class AttachmentController extends Controller
     {
         $attachment = Attachment::find($id);
         return Storage::download($attachment->upload_file, $attachment->title);
+    }
+    /**
+     * delete attachment
+     * @return json
+     */
+    public function delete($case_id, $attachment_id)
+    {
+        //删除附件
+        Attachment::destroy($attachment_id);
+        //重新获取附件列表
+        $data = Cases::find($this->decryptID($case_id))->attachment->toArray();
+        if (empty($data)) {
+            return $this->success(message: "获取成功", data: "<div class=\"text-center w-100\">还未有上传文件哦～</div>");
+        }
+        return $this->success(message: "删除成功", data: (string) view("pages.client.attachmentList", ["data" => $data]));
     }
 }

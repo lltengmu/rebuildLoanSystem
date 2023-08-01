@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post("/upload-attachment/{id}", [AttachmentController::class, "store"]);
     Route::get("/case-attachments/{id}", [AttachmentController::class, "show"]);
     Route::get("/download-attachments/{id}", [AttachmentController::class, "download"]);
+    Route::delete("/case/{case_id}/attachment/{attachment_id}",[AttachmentController::class,"delete"]);
     //公共路由
     Route::get("/logout", [LoginController::class, "logout"]);
     //定义individual 路由前缀

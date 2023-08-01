@@ -8,6 +8,9 @@ use App\Models\LboCaseStatus;
 use App\Models\LboDistrict;
 use App\Models\LboEmployment;
 use App\Models\LboLoanPurpose;
+use App\Models\Client;
+use App\Models\Individuals;
+use App\Models\ServiceProvider;
 use Exception;
 
 class UtilsService
@@ -153,23 +156,18 @@ class UtilsService
         }
     }
     /**
-     * get breweo name
+     * get current user by email and identify
+     * @return Individuals | Client | ServicProvider $user
      */
-    public function browser(string $userAgent)
+    public function getUserModel(string $identify, string $email)
     {
-        if (preg_match('/MSIE/i', $userAgent)) {
-            $browser = "Internet Explorer";
-        } elseif (preg_match('/Firefox/i', $userAgent)) {
-            $browser = "Firefox";
-        } elseif (preg_match('/Chrome/i', $userAgent)) {
-            $browser = "Chrome";
-        } elseif (preg_match('/Safari/i', $userAgent)) {
-            $browser = "Safari";
-        } elseif (preg_match('/Opera/i', $userAgent)) {
-            $browser = "Opera";
-        } else {
-            $browser = "Unknown";
-        }
-        return $browser;
+        switch ($identify):
+            case "individual":
+                return Individuals::where("email", $email)->first();
+            case "clients":
+                return Client::where("email", $email)->first();
+            case "sp":
+                return ServiceProvider::where("email", $email)->first();
+        endswitch;
     }
 }

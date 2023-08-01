@@ -57,4 +57,8 @@ class Client extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+    public function verificationlog()
+    {
+        return $this->hasOne(EmailVerificationLog::class);
+    }
 }

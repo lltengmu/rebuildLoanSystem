@@ -288,6 +288,9 @@ var LoanApplicationDataTable = /** @class */function () {
 
       _viewFile: function _viewFile(id) {
         var pendingView = new Promise(function (resolve, reject) {
+          //将case id挂载到全局
+          globalThis["case_id"] = id;
+          //发起请求
           jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
             url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/case-attachments/".concat(id)),
             method: "get",
@@ -306,63 +309,62 @@ var LoanApplicationDataTable = /** @class */function () {
           jquery__WEBPACK_IMPORTED_MODULE_0___default()("#upload-modal").click();
           var el = document.querySelector("#upload-block");
           el.onclick = function () {
-            globalThis["case_id"] = id;
             jquery__WEBPACK_IMPORTED_MODULE_0___default()("input[id=\"uploadFile\"]").click();
           };
         }, function () {});
       },
       _downloadAttachment: function _downloadAttachment(dom) {
-        var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(dom).attr("attachmentID");
+        var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(dom).attr("attachment-id");
         window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/download-attachments/".concat(id));
+      },
+      _deleteAttachment: function _deleteAttachment(dom) {
+        var attachment_id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(dom).attr("attachment-id");
+        jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+          url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/case/".concat(globalThis['case_id'], "/attachment/").concat(attachment_id)),
+          method: "delete",
+          headers: {
+            "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+          },
+          success: function success(res) {
+            if (res.status == "success") {
+              jquery__WEBPACK_IMPORTED_MODULE_0___default()("#upload-attachment #render").html(function (index, old) {
+                return res.data;
+              });
+            }
+          },
+          error: function error(_error3) {}
+        });
       }
     };
   };
   LoanApplicationDataTable.prototype.registerFormSubmit = function () {
     var _this = this;
-    //设置默认配置
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.setDefaults({
-      errorClass: "validateErrors"
-    });
-    //自定义验证规则,这里用不上
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().validator.addMethod("selectRequired", function (value, element) {
-      return value != "0" ? true : false;
-    });
-    //初始化表单验证
-    jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").validate({
-      submitHandler: function submitHandler(form, event) {
-        return __awaiter(_this, void 0, void 0, function () {
-          var res;
-          return __generator(this, function (_a) {
-            switch (_a.label) {
-              case 0:
-                event.preventDefault();
-                return [4 /*yield*/, (0,_utils__WEBPACK_IMPORTED_MODULE_1__.ajax)({
-                  url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/home/add"),
-                  headers: {
-                    "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
-                  },
-                  method: "post",
-                  data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").serializeArray()
-                })];
-              case 1:
-                res = _a.sent();
-                if (res.errorsObject && !res.success) {
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").validate().showErrors(res.errorsObject);
-                }
-                ;
-                if (res.success) {
-                  (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.success);
-                  jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add-cancel").click();
-                  this.tableInstance.ajax.reload();
-                }
-                return [2 /*return*/];
-            }
-          });
-        });
-      }
+    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.registerFormValidation)("#add", function (form, e) {
+      e.preventDefault();
+      jquery__WEBPACK_IMPORTED_MODULE_0___default().ajax({
+        url: (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/clients/home/add"),
+        method: "post",
+        headers: {
+          "X-CSRF-token": document.querySelector("meta[name=\"csrf-token\"]").content
+        },
+        data: jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").serializeArray(),
+        success: function success(res) {
+          if (res.status == "success") {
+            (0,_plugins_notification__WEBPACK_IMPORTED_MODULE_2__["default"])(res.message);
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add-cancel").click();
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").find("input").val("");
+            jquery__WEBPACK_IMPORTED_MODULE_0___default()("#add").find("select").val(0);
+            _this.tableInstance.ajax.reload();
+          }
+        },
+        error: function error(_error4) {
+          if (_error4.status == 422) {
+            (0,_utils__WEBPACK_IMPORTED_MODULE_1__.showErrors)("#add", (0,_utils__WEBPACK_IMPORTED_MODULE_1__.parse)(_error4.responseJSON.errors));
+          }
+        }
+      });
     });
   };
-
   LoanApplicationDataTable.prototype.registeUpload = function () {
     //注册事件
     var uploadField = document.querySelector("#uploadFile");
@@ -391,8 +393,8 @@ var LoanApplicationDataTable = /** @class */function () {
             });
           }
         },
-        error: function error(_error3) {
-          return console.log(_error3);
+        error: function error(_error5) {
+          return console.log(_error5);
         }
       });
     });

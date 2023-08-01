@@ -1,7 +1,6 @@
 import $ from "jquery"
 import { ajax, parse, registerFormValidation, showErrors, store, url } from "../utils/index"
 
-
 //定义业务逻辑类
 class IndividualLogin {
     private loginForm: HTMLFormElement;

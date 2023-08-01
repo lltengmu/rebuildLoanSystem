@@ -4,11 +4,11 @@
         <i class="fa fa-paperclip p-1"></i>
         <p class="m-0 ml-2 attachment-title">{{ $item["title"] }}</p>
         @if(session("_user_info.identify") == "clients")
-        <a class="badge badge-light" style="cursor: pointer;float: right;">
+        <a class="badge badge-light" style="cursor: pointer;float: right;" onclick="_deleteAttachment(this)" attachment-id="{{ $item['id'] }}">
             <i class="fa fa-trash"></i>
         </a>
         @endif
-        <a class="badge badge-light" style="cursor: pointer;float: right;" attachmentID="{{$item['id']}}" onclick="_downloadAttachment(this)">
+        <a class="badge badge-light" style="cursor: pointer;float: right;" attachment-id="{{$item['id']}}" onclick="_downloadAttachment(this)">
             <i class="fa fa-download"></i>
         </a>
     </div>
