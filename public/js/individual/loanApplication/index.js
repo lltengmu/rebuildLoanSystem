@@ -415,7 +415,7 @@ var LoanApplicationDataTable = /** @class */function () {
         return jquery__WEBPACK_IMPORTED_MODULE_0___default()("#uploadFile").click();
       },
       _downloadAttachment: function _downloadAttachment(dom) {
-        var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(dom).attr("attachmentID");
+        var id = jquery__WEBPACK_IMPORTED_MODULE_0___default()(dom).attr("attachment-id");
         window.location.href = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.url)("/download-attachments/".concat(id));
       }
     };

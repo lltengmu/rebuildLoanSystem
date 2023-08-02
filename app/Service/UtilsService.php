@@ -26,7 +26,7 @@ class UtilsService
     /**
      * init labels data
      */
-    public function init()
+    public function __construct()
     {
         $this->appellationArr = LboAppellations::all()->toArray();
         $this->caseStatusArr = LboCaseStatus::all()->toArray();
@@ -58,10 +58,6 @@ class UtilsService
      */
     public function caseStatus($value)
     {
-        // if (!is_int($value)) {
-        //     return LboCaseStatus::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
-        // }
-        // return LboCaseStatus::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
             //如果传递的不是数字，则默认是需要获取id
             foreach ($this->LboCaseStatus as $key => $item) {
@@ -96,11 +92,6 @@ class UtilsService
      */
     public function jobStatus($value)
     {
-
-        // if (!is_int($value)) {
-        //     return LboEmployment::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
-        // }
-        // return LboEmployment::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
             //如果传递的不是数字，则默认是需要获取id
             foreach ($this->LboEmployment as $key => $item) {
@@ -118,10 +109,6 @@ class UtilsService
      */
     public function purpose($value)
     {
-        // if (!is_int($value)) {
-        //     return LboLoanPurpose::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
-        // }
-        // return LboLoanPurpose::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
             //如果传递的不是数字，则默认是需要获取id
             foreach ($this->LboLoanPurpose as $key => $item) {
@@ -139,10 +126,6 @@ class UtilsService
      */
     public function area($value)
     {
-        // if (!is_int($value)) {
-        //     return LboDistrict::where("label_tc", $value)->orWhere("label_en", $value)->first()->id;
-        // }
-        // return LboDistrict::where("id", $value)->first()->label_tc;
         if (!is_int($value)) {
             //如果传递的不是数字，则默认是需要获取id
             foreach ($this->LboDistrict as $key => $item) {

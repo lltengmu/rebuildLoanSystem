@@ -10,4 +10,9 @@ class Attachment extends Model
     use HasFactory;
 
     protected $fillable = [ "cases_id","client_id","title","upload_file","file_type","status","update_by" ];
+
+    public function cases()
+    {
+        return $this->belongsToMany(Cases::class);
+    }
 }

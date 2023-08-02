@@ -2,17 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Attachment;
 use App\Models\Cases;
 use App\Models\Client;
-use App\Models\Config;
 use App\Models\Individuals;
 use App\Models\ServiceProvider as ModelsServiceProvider;
-use App\Observers\CaseObserver;
+use App\Observers\AttachmentObserver;
 use App\Observers\CasesObserver;
 use App\Observers\ClientsObserver;
 use App\Observers\IndividualObserver;
 use App\Observers\ServiceProviderObserver;
-use App\Service\CaptchaService;
 use App\Service\EmailService;
 use App\Service\SmsService;
 use App\Service\UploadService;
@@ -35,8 +34,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->instance('sms',new SmsService);
         //注册文件上传服务
         $this->app->instance('upload', new UploadService);
-        //注册工具助手服务
-        $this->app->instance("utils",new UtilsService());
     }
 
     /**
@@ -46,10 +43,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        app("utils")->init();
-        Cases::observe(CasesObserver::class);
+        //注册工具助手服务
+        $this->app->bind("utils",function($app){
+            return new UtilsService();
+        });
+        //定义client观察者
         Client::observe(ClientsObserver::class);
+        //定义case 观察者
+        Cases::observe(CasesObserver::class);
+        //定义individual观察者
         Individuals::observe(IndividualObserver::class);
+        //定义sp观察者
         ModelsServiceProvider::observe(ServiceProviderObserver::class);
+        //定义附件观察者
+        Attachment::observe(AttachmentObserver::class);
     }
 }

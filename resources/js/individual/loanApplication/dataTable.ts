@@ -150,7 +150,7 @@ export default class LoanApplicationDataTable {
             },
             _uploadExcel: () => $(`#uploadFile`).click(),
             _downloadAttachment: (dom) => {
-                const id = $(dom).attr("attachmentID");
+                const id = $(dom).attr("attachment-id");
                 window.location.href = url(`/download-attachments/${id}`)
             }
         }

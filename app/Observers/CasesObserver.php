@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\CaseLog;
 use App\Models\Cases;
 use Illuminate\Support\Facades\Crypt;
 
@@ -15,6 +16,7 @@ class CasesObserver
      */
     public function created(Cases $cases)
     {
+        //自动填充加密id
         $data = $cases->toArray();
         $cases->sys_id = Crypt::encrypt($data["id"]);
         $cases->save();
@@ -28,39 +30,12 @@ class CasesObserver
      */
     public function updated(Cases $cases)
     {
-        //
-    }
-
-    /**
-     * Handle the Cases "deleted" event.
-     *
-     * @param  \App\Models\Cases  $cases
-     * @return void
-     */
-    public function deleted(Cases $cases)
-    {
-        //
-    }
-
-    /**
-     * Handle the Cases "restored" event.
-     *
-     * @param  \App\Models\Cases  $cases
-     * @return void
-     */
-    public function restored(Cases $cases)
-    {
-        //
-    }
-
-    /**
-     * Handle the Cases "force deleted" event.
-     *
-     * @param  \App\Models\Cases  $cases
-     * @return void
-     */
-    public function forceDeleted(Cases $cases)
-    {
-        //
+        $logInfo = [
+            "cases_id" => $cases->id,
+            "action" => app("utils")->caseStatus((int) $cases->case_status),
+            "when" => date("Y-m-d H:m:s"),
+            "update_by" => session("_user_info.identify") . "_" . session("_user_info.user_id")
+        ];
+        CaseLog::create($logInfo);
     }
 }

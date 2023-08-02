@@ -14,20 +14,15 @@ class AttachmentEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
-    public $user;
-
-    public $action;
-
+    public $insert;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user,string $action)
+    public function __construct(array $insert)
     {
-        $this->user = $user;
-        $this->action = $action;
+        $this->insert = $insert;
     }
 
     /**

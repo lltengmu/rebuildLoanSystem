@@ -20,6 +20,7 @@ class Dashboard extends Controller
     {
         $cards = $this->cards();
         $companies = Company::all();
+    
         return view("pages.individual.dashboard", ['cards' => $cards, 'companies' => $companies]);
     }
     /**
