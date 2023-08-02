@@ -76,8 +76,6 @@ class LoginController extends Controller
         //获取当前用户模型
         $user = $utilsService->getUserModel($identify,$email);
         //清除session
-        // session()->forget("_user_info");
-        // session()->forget("email");
         Session::flush();
         //触发用户退出事件
         event(new LogoutEvent($user));

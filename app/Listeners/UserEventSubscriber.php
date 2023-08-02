@@ -2,10 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Models\Client;
 use App\Models\EmailVerificationLog;
-use App\Models\Individuals;
-use App\Models\ServiceProvider;
 use App\Models\UserLoginLog;
 use Jenssegers\Agent\Agent;
 use Illuminate\Contracts\Queue\ShouldQueue;

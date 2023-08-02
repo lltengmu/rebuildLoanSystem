@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Client;
 use App\Events\ClientCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddLoanRequest;
-use App\Http\Requests\UploadAttachmentRequest;
-use App\Models\Attachment;
 use App\Models\Cases;
 use App\Models\Client;
 use App\Models\Company;
@@ -33,9 +31,7 @@ class LoanApplication extends Controller
             "company" => $company
         ]);
     }
-    /**
-     * 显示贷款详情页
-     */
+    //显示贷款详情页
     public function cases()
     {
         $data = Client::where("email", session("email"))->with("cases")->select(["id", "sys_id", "first_name", "last_name"])->get()->toArray()[0];
@@ -54,16 +50,12 @@ class LoanApplication extends Controller
             ];
         }, array_keys($data["cases"]), array_values($data["cases"]));
     }
-    /**
-     * edit
-     */
+    //edit
     public function details($id)
     {
         return Cases::where("id", $this->decryptID($id))->select(["loan_amount", "repayment_period", "purpose"])->first();
     }
-    /**
-     * add new loan by client
-     */
+    //add new loan by client
     public function add(AddLoanRequest $request)
     {
         //获取当前用户
@@ -78,9 +70,7 @@ class LoanApplication extends Controller
         $result = $client->cases()->save($data);
         return $this->success(message: "新增成功", data: null);
     }
-    /**
-     * edit loan case
-     */
+    //edit loan case
     public function edit(AddLoanRequest $request, $id)
     {
         $case = Cases::find($this->decryptID($id));

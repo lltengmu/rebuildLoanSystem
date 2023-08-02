@@ -15,11 +15,9 @@ class ServiceProviderSeeder extends Seeder
      */
     public function run()
     {
-        ServiceProvider::withoutEvents(function () {
-            $all = ServiceProvider::factory(5)->create();
-            $serviceProvider = ServiceProvider::first();
-            $serviceProvider->email = "sp@qq.com";
-            $serviceProvider->save();
-        });
+        $all = ServiceProvider::factory(5)->create();
+        $serviceProvider = ServiceProvider::first();
+        $serviceProvider->email = "sp@qq.com";
+        $serviceProvider->save();
     }
 }

@@ -13,7 +13,6 @@ use App\Observers\ClientsObserver;
 use App\Observers\IndividualObserver;
 use App\Observers\ServiceProviderObserver;
 use App\Service\EmailService;
-use App\Service\SmsService;
 use App\Service\UploadService;
 use App\Service\UtilsService;
 use Illuminate\Support\ServiceProvider;
@@ -30,8 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //注册验证码服务
         $this->app->instance('email',new EmailService);
-        //注册短信服务
-        $this->app->instance('sms',new SmsService);
         //注册文件上传服务
         $this->app->instance('upload', new UploadService);
     }

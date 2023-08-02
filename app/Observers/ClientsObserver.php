@@ -28,6 +28,6 @@ class ClientsObserver
         if(session("_user_info.identify") == "individual")$category = "admin_add_loan";
         if(session("_user_info.identify") == "sp")$category = "agreed_loan";
         //发送邮件通知
-        app("email")->send($client,$category);
+        if(env("ENABLE_EMAIL_SERVICE"))app("email")->send($client,$category);
     }
 }

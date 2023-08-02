@@ -44,7 +44,8 @@ class Client extends Model
         "browser",
         "sys_id",
         "device",
-        "platform"
+        "platform",
+        "last_login_datetime"
     ];
     /**
      * 关联cases table

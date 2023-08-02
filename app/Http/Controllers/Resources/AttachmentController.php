@@ -33,7 +33,8 @@ class AttachmentController extends Controller
                 "client_id" => $user->id,
                 "title" => $attachInfo["title"],
                 "upload_file" => $attachInfo["path"],
-                "file_type" => $attachInfo["ext"]
+                "file_type" => $attachInfo["ext"],
+                "update_by" => session("_user_info.identify")."_".session("_user_info.user_id"),
             ]
         );
         //获取当前贷款实例的所有附件
@@ -100,7 +101,7 @@ class AttachmentController extends Controller
     public function delete($case_id, $attachment_id)
     {
         //删除附件
-        Attachment::find($attachment_id)->delete();
+        Attachment::destroy($attachment_id);
         
         //重新获取附件列表
         $data = Cases::find($this->decryptID($case_id))->attachment->toArray();
