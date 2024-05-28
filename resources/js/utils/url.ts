@@ -1,2 +1,2 @@
 //返回http://或者https:// 到index.php/的路径,例如http://localhost/public/index.php/
-export default (Interface:string) =>location.href.match(/^(((http:\/\/)|^(https:\/\/)).*index.php)|(http:\/\/127.0.0.1:8000)/ig)?.join() + Interface;
+export default (Interface:string) =>location.href.match(/^(((http:\/\/)|^(https:\/\/)).*index.php)|(http:\/\/127.0.0.1:8001)/ig)?.join() + Interface;

@@ -14,11 +14,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //
-        User::factory(20)->create();//使用数据填充创建20条测试数据
-        $user = User::first();
-        $user->email = 'admin@qq.com';
-        $user->name = '向军大叔';
-        $user->save();
+        User::withoutEvents(function () {
+            User::factory(20)->create(); //使用数据填充创建20条测试数据
+            $user = User::first();
+            $user->email = 'admin@qq.com';
+            $user->name = '向军大叔';
+            $user->save();
+        });
     }
 }
